@@ -1,0 +1,14 @@
+<p>juego works!</p>
+
+<div class="mapa">
+  <div class="loseta" *ngFor="let mapa of datoservice.mapaActual" 
+    [ngStyle]="{'background-color': mapa.carretera ? 'orange' : 'grey'}" >
+    {{ mapa.id }}
+    <button>alternar</button>
+    <!-- 
+    <form action="">
+        <button>Revelar</button>
+        <button>Explorar</button>
+    </form> -->
+  </div>
+</div>
