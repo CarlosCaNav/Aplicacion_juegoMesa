@@ -1,5 +1,3 @@
-<p>juego works!</p>
-
 <div class="todo">
   <div class="mapa">
     <div
@@ -7,13 +5,12 @@
       *ngFor="let mapa of datoservice.mapaActual"
       [ngStyle]="
         mapa.visible
-          ? { 'background-color': mapa.carretera ? 'orange' : 'grey' }
-          : { 'background-color': 'white' }
+          ? { 'background-color': mapa.carretera ? 'grey' : 'orange' }
+          : { 'background-color': 'white' }        
       "
     >
-      {{ mapa.id }}
       <button (click)="alternarTipo(mapa.id)" *ngIf="this.datoservice.editar">
-        terreno
+       Alternar terreno
       </button>
       <div *ngIf="this.datoservice.editar" style="font-size: 10px">
         <span>cH= {{ mapa.calleH }} ... cV= {{ mapa.calleV }}</span
@@ -24,9 +21,12 @@
         <span *ngIf="mapa.enemigo != ''">{{ mapa.enemigo }}</span
         ><br />
       </div>
+      
+      
+      <span>{{ mapa.id }}</span><!-- 
       <button (click)="aplicar(mapa.id)" *ngIf="this.datoservice.editar">
         aplicar
-      </button>
+      </button> -->
       <!-- <button (click)="alternarVisibilidad(mapa.id)" *ngIf="this.datoservice.editar">visible</button> -->
       <button
         (click)="despejar(mapa.id)"
@@ -42,7 +42,7 @@
     </form> -->
     </div>
   </div>
-  <div>
+  <div><!-- 
     <form [formGroup]="parametrosLoseta">
       <table>
         <tr>
@@ -81,19 +81,22 @@
     </form>
 
     <button (click)="limpiarForm()">limpiar</button><br /><br />
+ -->
+<button *ngIf="!this.datoservice.editar" (click)="editar()">Editar</button>
+<button *ngIf="this.datoservice.editar" (click)="editar()">Jugar</button><br /><br /><br /><br /><br /><br />
 
-    <button (click)="aplicarAutomaticamente()">Aplicar datos automaticamente</button><br /><br />
+    <button (click)="aplicarAutomaticamente()">calcular visibilidad</button><br /><br />
 
     <button (click)="guardarDatos()" style="scale: 0.4;">Guardar datos</button><br /><br />
     <button (click)="cargarDatos()">Cargar datos</button><br /><br />
+
+    <!-- 
     calleH: number;<br />
     calleV: number;<br />
     casa: string;<br />
     carretera: boolean;<br />
     enemigo: string;<br />
     visible: boolean;<br />
-    pista: boolean<br />
+    pista: boolean<br /> -->
   </div>
 </div>
-<button (click)="jugar()">Jugar</button>
-<button (click)="editar()">Editar</button>

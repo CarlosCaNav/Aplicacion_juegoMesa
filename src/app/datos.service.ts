@@ -15,7 +15,7 @@ export class DatosService {
       id: 1, // numero de la loseta
       calleH: 1, // numero de la calle horizontal impar
       calleV: 2, // numero de la calle vertical par
-      casa: 'A', // nombre de la casa en letra mayuscula
+      casa: '', // nombre de la casa en letra 
       carretera: true, // loseta de carretera o casa
       enemigo: 'Ninguno', // si hay enemigo en la loseta y su nombre
       visible: false, // si la loseta esta visible

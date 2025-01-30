@@ -42,9 +42,9 @@ export class JuegoComponent {
         calleH: 0,
         calleV: 0,
         casa: '',
-        carretera: false,
+        carretera: true,
         enemigo: '',
-        visible: false,
+        visible: true,
         pista: false,
       });
     }
@@ -58,7 +58,7 @@ export class JuegoComponent {
     this.datoservice.mapaActual[id].visible =
       !this.datoservice.mapaActual[id].visible;
   }
-
+/* 
   jugar() {
     for (var i = 0; i <= this.datoservice.numeroLosetas; ++i) {
       if (this.datoservice.mapaActual[63].visible)
@@ -67,7 +67,7 @@ export class JuegoComponent {
         this.datoservice.mapaActual[i].visible = true;
       }
     }
-  }
+  } */
   editar() {
     this.datoservice.editar = !this.datoservice.editar;
 
@@ -97,10 +97,46 @@ export class JuegoComponent {
   }
 
   aplicarAutomaticamente() {
+    const descarteHorizontal = [0, 8, 16, 24, 32, 40, 48, 56, 64];
     var horizontal: number = 1;
-    const descarteHorizontal = [8, 16, 24, 32, 40, 48, 56];
     var vertical: number = 2;
+    var casa: number = 0;
+    var provisional: string = '';
 
+    //comprobamos horizontalmente si es edificio. Si lo es le aplicamos la C y un número
+    // y comprobamos la siguiente. Si es también edificio se repite el número, si no se cambia
+    for (var i = 0; i <= this.datoservice.numeroLosetas; ++i) {
+      if (this.datoservice.mapaActual[i].carretera == false) {
+        this.datoservice.mapaActual[i].casa = 'c' + casa;
+      } else {
+        casa += 1;
+      }
+    }
+    //prepara las contiguas verticales
+    for (var i = 0; i <= 7; ++i) {
+      for (var j = 0; j <= 63; j += 8) {
+        if (
+          this.datoservice.mapaActual[j + i].casa != '' &&
+          provisional == ''
+        ) {
+          provisional = this.datoservice.mapaActual[j + i].casa;
+        } else if (
+          this.datoservice.mapaActual[j + i].casa != '' &&
+          provisional != ''
+        ) {
+          for (var k = 0; k < this.datoservice.numeroLosetas; ++k) {
+            
+            if (this.datoservice.mapaActual[k].casa == this.datoservice.mapaActual[j + i].casa) {
+              this.datoservice.mapaActual[k].casa = provisional;
+            }
+          }
+        } else {
+          provisional = '';
+        }
+      }
+    }
+
+    // prepara las contiguas horizontales
     for (var i = 0; i <= this.datoservice.numeroLosetas; ++i) {
       if (this.datoservice.mapaActual[i].casa == '') {
         if (descarteHorizontal.includes(i)) {
@@ -111,6 +147,7 @@ export class JuegoComponent {
         horizontal += 2;
       }
     }
+    //prepara las contiguas verticales
     for (var i = 0; i <= 7; ++i) {
       vertical += 2;
       for (var j = 0; j <= 63; j += 8) {
@@ -124,35 +161,37 @@ export class JuegoComponent {
   despejar(id: number) {
     const calleH: number = this.datoservice.mapaActual[id].calleH;
     const calleV: number = this.datoservice.mapaActual[id].calleV;
-    const descarteHorizontal = [8, 16, 32, 40, 48, 56];
+    const descarteHorizontal = [0, 8, 16, 24, 32, 40, 48, 56, 64];
 
     for (var i = 0; i <= this.datoservice.numeroLosetas; ++i) {
+
       if (
         this.datoservice.mapaActual[i].calleH == calleH ||
         this.datoservice.mapaActual[i].calleV == calleV
       ) {
         this.datoservice.mapaActual[i].visible = true;
 
-        if (this.datoservice.mapaActual[i + 8].casa != '' && i + 8 <= 63) {
+        if (i + 8 <= 63 && this.datoservice.mapaActual[i + 8].casa != '') {
           this.datoservice.mapaActual[i + 8].visible = true;
         }
-        if (i >= 8 && this.datoservice.mapaActual[i - 8].casa != ''  ) {
+        if (i >= 8 && this.datoservice.mapaActual[i - 8].casa != '') {
           this.datoservice.mapaActual[i - 8].visible = true;
-        } 
+        }
 
-        
         if (
-          this.datoservice.mapaActual[i + 1].casa != '' &&
-          !descarteHorizontal.includes(i - 1)
+          i < 63 &&
+          !descarteHorizontal.includes(i - 1) &&
+          this.datoservice.mapaActual[i + 1].casa != ''
         ) {
           this.datoservice.mapaActual[i + 1].visible = true;
         }
         if (
-          this.datoservice.mapaActual[i - 1].casa != '' &&
-          !descarteHorizontal.includes(i)
+          i > 0 &&
+          !descarteHorizontal.includes(i) &&
+          this.datoservice.mapaActual[i - 1].casa != ''
         ) {
           this.datoservice.mapaActual[i - 1].visible = true;
-        } 
+        }
       }
     }
   }
