@@ -20,6 +20,8 @@ export class DatosService {
       enemigo: 'Ninguno', // si hay enemigo en la loseta y su nombre
       visible: false, // si la loseta esta visible
       pista: false, // si hay pista en la loseta
+      puertaV: false,
+      puertaH: false,
     },
   ];
 

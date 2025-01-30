@@ -9,7 +9,15 @@
           : { 'background-color': 'white' }        
       "
     >
-      <button (click)="alternarTipo(mapa.id)" *ngIf="this.datoservice.editar">
+
+    <button (click)="puertaV(mapa.id)" class="puertaV" 
+    [ngStyle]="mapa.puertaV ? { 'background-color': 'rgb(59, 22, 5)' } : {}"
+    *ngIf="this.datoservice.editar || (mapa.puertaV && mapa.visible && this.datoservice.mapaActual[mapa.id + 1].visible)"></button>
+    <button (click)="puertaH(mapa.id)" class="puertaH" 
+    [ngStyle]="mapa.puertaH ? { 'background-color': 'rgb(59, 22, 5)' } : {}"
+    *ngIf="this.datoservice.editar || (mapa.puertaH && mapa.visible && this.datoservice.mapaActual[mapa.id + 8].visible)"></button>
+
+      <button style="width: 60px; margin-top: 15px;" (click)="alternarTipo(mapa.id)" *ngIf="this.datoservice.editar">
        Alternar terreno
       </button>
       <div *ngIf="this.datoservice.editar" style="font-size: 10px">
@@ -23,7 +31,7 @@
       </div>
       
       
-      <span>{{ mapa.id }}</span><!-- 
+      <span *ngIf="this.datoservice.editar" >{{ mapa.id }}</span><!-- 
       <button (click)="aplicar(mapa.id)" *ngIf="this.datoservice.editar">
         aplicar
       </button> -->

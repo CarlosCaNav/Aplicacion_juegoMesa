@@ -46,6 +46,8 @@ export class JuegoComponent {
         enemigo: '',
         visible: true,
         pista: false,
+        puertaV: false,
+        puertaH: false,
       });
     }
   }
@@ -58,7 +60,7 @@ export class JuegoComponent {
     this.datoservice.mapaActual[id].visible =
       !this.datoservice.mapaActual[id].visible;
   }
-/* 
+  /* 
   jugar() {
     for (var i = 0; i <= this.datoservice.numeroLosetas; ++i) {
       if (this.datoservice.mapaActual[63].visible)
@@ -103,6 +105,13 @@ export class JuegoComponent {
     var casa: number = 0;
     var provisional: string = '';
 
+    // Borra todos los datos
+    for (var i = 0; i <= this.datoservice.numeroLosetas; ++i) {
+      this.datoservice.mapaActual[i].casa = '';
+      this.datoservice.mapaActual[i].calleH = 0;
+      this.datoservice.mapaActual[i].calleH = 0;
+    }
+
     //comprobamos horizontalmente si es edificio. Si lo es le aplicamos la C y un número
     // y comprobamos la siguiente. Si es también edificio se repite el número, si no se cambia
     for (var i = 0; i <= this.datoservice.numeroLosetas; ++i) {
@@ -125,8 +134,10 @@ export class JuegoComponent {
           provisional != ''
         ) {
           for (var k = 0; k < this.datoservice.numeroLosetas; ++k) {
-            
-            if (this.datoservice.mapaActual[k].casa == this.datoservice.mapaActual[j + i].casa) {
+            if (
+              this.datoservice.mapaActual[k].casa ==
+              this.datoservice.mapaActual[j + i].casa
+            ) {
               this.datoservice.mapaActual[k].casa = provisional;
             }
           }
@@ -158,39 +169,57 @@ export class JuegoComponent {
     }
   }
 
+  puertaV(id: number) {
+    this.datoservice.mapaActual[id].puertaV =
+      !this.datoservice.mapaActual[id].puertaV;
+  }
+
+  puertaH(id: number) {
+    this.datoservice.mapaActual[id].puertaH =
+      !this.datoservice.mapaActual[id].puertaH;
+  }
+
   despejar(id: number) {
     const calleH: number = this.datoservice.mapaActual[id].calleH;
     const calleV: number = this.datoservice.mapaActual[id].calleV;
+    const casa: string = this.datoservice.mapaActual[id].casa;
     const descarteHorizontal = [0, 8, 16, 24, 32, 40, 48, 56, 64];
 
-    for (var i = 0; i <= this.datoservice.numeroLosetas; ++i) {
-
-      if (
-        this.datoservice.mapaActual[i].calleH == calleH ||
-        this.datoservice.mapaActual[i].calleV == calleV
-      ) {
-        this.datoservice.mapaActual[i].visible = true;
-
-        if (i + 8 <= 63 && this.datoservice.mapaActual[i + 8].casa != '') {
-          this.datoservice.mapaActual[i + 8].visible = true;
-        }
-        if (i >= 8 && this.datoservice.mapaActual[i - 8].casa != '') {
-          this.datoservice.mapaActual[i - 8].visible = true;
-        }
-
+    if (this.datoservice.mapaActual[id].casa === '') {
+      for (var i = 0; i <= this.datoservice.numeroLosetas; ++i) {
         if (
-          i < 63 &&
-          !descarteHorizontal.includes(i - 1) &&
-          this.datoservice.mapaActual[i + 1].casa != ''
+          this.datoservice.mapaActual[i].calleH == calleH ||
+          this.datoservice.mapaActual[i].calleV == calleV
         ) {
-          this.datoservice.mapaActual[i + 1].visible = true;
+          this.datoservice.mapaActual[i].visible = true;
+
+          if (i + 8 <= 63 && this.datoservice.mapaActual[i + 8].casa != '') {
+            this.datoservice.mapaActual[i + 8].visible = true;
+          }
+          if (i >= 8 && this.datoservice.mapaActual[i - 8].casa != '') {
+            this.datoservice.mapaActual[i - 8].visible = true;
+          }
+
+          if (
+            i < 63 &&
+            !descarteHorizontal.includes(i - 1) &&
+            this.datoservice.mapaActual[i + 1].casa != ''
+          ) {
+            this.datoservice.mapaActual[i + 1].visible = true;
+          }
+          if (
+            i > 0 &&
+            !descarteHorizontal.includes(i) &&
+            this.datoservice.mapaActual[i - 1].casa != ''
+          ) {
+            this.datoservice.mapaActual[i - 1].visible = true;
+          }
         }
-        if (
-          i > 0 &&
-          !descarteHorizontal.includes(i) &&
-          this.datoservice.mapaActual[i - 1].casa != ''
-        ) {
-          this.datoservice.mapaActual[i - 1].visible = true;
+      }
+    } else {
+      for (var i = 0; i <= this.datoservice.numeroLosetas; ++i) {
+        if (this.datoservice.mapaActual[i].casa === casa){
+          this.datoservice.mapaActual[i].visible = true
         }
       }
     }

@@ -6,5 +6,8 @@ export interface Mapa {
     carretera: boolean;
     enemigo: string;
     visible: boolean;
-    pista: boolean
+    pista: boolean;
+    puertaV: boolean;
+    puertaH: boolean;
+
 }
