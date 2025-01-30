@@ -1,3 +1,9 @@
+.todo {
+  display: flex;
+  justify-content: center;
+}
+
+
 .mapa {
   border: 2px solid black;
   width: 800px;
@@ -6,9 +12,12 @@
 
 .loseta {
     float: left;
+    display: flex;
+    flex-wrap: wrap;
     border: 1px solid black;
     width: calc(100% / 8 - 2px);
     height: calc(100% / 8 - 2px);
+    align-items: center;
 }
 
 

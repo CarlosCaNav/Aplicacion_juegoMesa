@@ -1,14 +1,99 @@
 <p>juego works!</p>
 
-<div class="mapa">
-  <div class="loseta" *ngFor="let mapa of datoservice.mapaActual" 
-    [ngStyle]="{'background-color': mapa.carretera ? 'orange' : 'grey'}" >
-    {{ mapa.id }}
-    <button>alternar</button>
-    <!-- 
+<div class="todo">
+  <div class="mapa">
+    <div
+      class="loseta"
+      *ngFor="let mapa of datoservice.mapaActual"
+      [ngStyle]="
+        mapa.visible
+          ? { 'background-color': mapa.carretera ? 'orange' : 'grey' }
+          : { 'background-color': 'white' }
+      "
+    >
+      {{ mapa.id }}
+      <button (click)="alternarTipo(mapa.id)" *ngIf="this.datoservice.editar">
+        terreno
+      </button>
+      <div *ngIf="this.datoservice.editar" style="font-size: 10px">
+        <span>cH= {{ mapa.calleH }} ... cV= {{ mapa.calleV }}</span
+        ><br />
+        <span>casa= {{ mapa.casa }}</span
+        ><br />
+        <span *ngIf="mapa.pista">pista</span><br />
+        <span *ngIf="mapa.enemigo != ''">{{ mapa.enemigo }}</span
+        ><br />
+      </div>
+      <button (click)="aplicar(mapa.id)" *ngIf="this.datoservice.editar">
+        aplicar
+      </button>
+      <!-- <button (click)="alternarVisibilidad(mapa.id)" *ngIf="this.datoservice.editar">visible</button> -->
+      <button
+        (click)="despejar(mapa.id)"
+        *ngIf="!this.datoservice.editar"
+      >
+        Despejar
+      </button>
+
+      <!-- 
     <form action="">
         <button>Revelar</button>
         <button>Explorar</button>
     </form> -->
+    </div>
+  </div>
+  <div>
+    <form [formGroup]="parametrosLoseta">
+      <table>
+        <tr>
+          <th><label>Calle Horizontal</label></th>
+          <td>
+            <input
+              formControlName="calleH"
+              type="number"
+              style="width: 50px"
+            /><label> numero impar</label>
+          </td>
+        </tr>
+        <tr>
+          <th><label>Calle Vertical</label></th>
+          <td>
+            <input
+              formControlName="calleV"
+              type="number"
+              style="width: 50px"
+            /><label> numero par</label>
+          </td>
+        </tr>
+        <tr>
+          <th><label>Casa</label></th>
+          <td>
+            <input formControlName="casa" type="text" style="width: 50px" />
+          </td>
+        </tr>
+        <tr>
+          <th><label>Enemigo</label></th>
+          <td>
+            <input formControlName="enemigo" type="text" style="width: 50px" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+    <button (click)="limpiarForm()">limpiar</button><br /><br />
+
+    <button (click)="aplicarAutomaticamente()">Aplicar datos automaticamente</button><br /><br />
+
+    <button (click)="guardarDatos()" style="scale: 0.4;">Guardar datos</button><br /><br />
+    <button (click)="cargarDatos()">Cargar datos</button><br /><br />
+    calleH: number;<br />
+    calleV: number;<br />
+    casa: string;<br />
+    carretera: boolean;<br />
+    enemigo: string;<br />
+    visible: boolean;<br />
+    pista: boolean<br />
   </div>
 </div>
+<button (click)="jugar()">Jugar</button>
+<button (click)="editar()">Editar</button>

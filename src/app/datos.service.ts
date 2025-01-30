@@ -7,6 +7,8 @@ import { Mapa } from './interfaz.mapa';
 export class DatosService {
 
   numeroLosetas: number = 63;
+  editar: boolean = true;
+  nombreMapaActual: string = 'Prueba';
 
   public mapaActual: Mapa[] = [
     {
@@ -20,4 +22,5 @@ export class DatosService {
       pista: false, // si hay pista en la loseta
     },
   ];
+
 }
