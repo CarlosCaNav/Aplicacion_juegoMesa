@@ -7,7 +7,9 @@ export interface Mapa {
     enemigo: string;
     visible: boolean;
     pista: boolean;
-    puertaV: boolean;
-    puertaH: boolean;
+    puertaSup: boolean;
+    puertaInf: boolean;
+    puertaDer: boolean;
+    puertaIzq: boolean;
 
 }

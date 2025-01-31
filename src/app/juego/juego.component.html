@@ -6,20 +6,107 @@
       [ngStyle]="
         mapa.visible
           ? { 'background-color': mapa.carretera ? 'grey' : 'orange' }
-          : { 'background-color': 'white' }        
+          : { 'background-color': 'white' }
       "
     >
+      <!-- continuar por aquí -->
+      <button
+        class="puertaSup"
+        [ngStyle]="
+          mapa.puertaSup ? { 'background-color': 'rgb(59, 22, 5)' } : {}
+        "
+        (click)="puerta(mapa.id, 'sup')"
+        *ngIf="
+          this.datoservice.mapaActual[mapa.id].casa != '' &&
+          this.datoservice.mapaActual[mapa.id].visible &&
+          mapa.id >= 8 &&
+            this.datoservice.mapaActual[mapa.id - 8].casa === '' &&
+          (this.datoservice.casasDespejadas.includes(
+            this.datoservice.mapaActual[mapa.id].casa
+          ) ||
+            (mapa.id >= 8 &&
+              this.datoservice.mapaActual[mapa.id - 8].visible)) &&
+          (this.datoservice.editar || mapa.puertaSup)
+        "
+      ></button>
 
+      <button
+        class="puertaInf"
+        [ngStyle]="
+          mapa.puertaInf ? { 'background-color': 'rgb(59, 22, 5)' } : {}
+        "
+        (click)="puerta(mapa.id, 'inf')"
+        *ngIf="
+          this.datoservice.mapaActual[mapa.id].casa != '' &&
+          this.datoservice.mapaActual[mapa.id].visible &&
+          mapa.id <= 52 &&
+            this.datoservice.mapaActual[mapa.id + 8].casa === '' &&
+          (this.datoservice.casasDespejadas.includes(
+            this.datoservice.mapaActual[mapa.id].casa
+          ) ||
+            (mapa.id <= 52 &&
+              this.datoservice.mapaActual[mapa.id + 8].visible)) &&
+          (this.datoservice.editar || mapa.puertaInf)
+        "
+      ></button>
+
+      <!-- No hay nada para evitar que compruebe la primera columna al estar en la última -->
+      <button
+        class="puertaDer"
+        [ngStyle]="
+          mapa.puertaDer ? { 'background-color': 'rgb(59, 22, 5)' } : {}
+        "
+        (click)="puerta(mapa.id, 'der')"
+        *ngIf="
+          this.datoservice.mapaActual[mapa.id].casa != '' &&
+          this.datoservice.mapaActual[mapa.id].visible &&
+          mapa.id <= 63 &&
+            this.datoservice.mapaActual[mapa.id + 1].casa === '' &&
+          (this.datoservice.casasDespejadas.includes(
+            this.datoservice.mapaActual[mapa.id].casa
+          ) ||
+            (mapa.id <= 63 &&
+              this.datoservice.mapaActual[mapa.id + 1].visible)) &&
+          (this.datoservice.editar || mapa.puertaDer)
+        "
+      ></button>
+      <button
+        class="puertaIzq"
+        [ngStyle]="
+          mapa.puertaIzq ? { 'background-color': 'rgb(59, 22, 5)' } : {}
+        "
+        (click)="puerta(mapa.id, 'izq')"
+        *ngIf="
+          this.datoservice.mapaActual[mapa.id].casa != '' &&
+          this.datoservice.mapaActual[mapa.id].visible &&
+          mapa.id >= 1 &&
+            this.datoservice.mapaActual[mapa.id - 1].casa === '' &&
+          (this.datoservice.casasDespejadas.includes(
+            this.datoservice.mapaActual[mapa.id].casa
+          ) ||
+            (mapa.id >= 1 &&
+              this.datoservice.mapaActual[mapa.id - 1].visible)) &&
+          (this.datoservice.editar || mapa.puertaIzq)
+        "
+      ></button>
+      <!-- 
     <button (click)="puertaV(mapa.id)" class="puertaV" 
     [ngStyle]="mapa.puertaV ? { 'background-color': 'rgb(59, 22, 5)' } : {}"
     *ngIf="this.datoservice.editar || (mapa.puertaV && mapa.visible && this.datoservice.mapaActual[mapa.id + 1].visible)"></button>
     <button (click)="puertaH(mapa.id)" class="puertaH" 
     [ngStyle]="mapa.puertaH ? { 'background-color': 'rgb(59, 22, 5)' } : {}"
-    *ngIf="this.datoservice.editar || (mapa.puertaH && mapa.visible && this.datoservice.mapaActual[mapa.id + 8].visible)"></button>
+    *ngIf="this.datoservice.editar || (mapa.puertaH && mapa.visible && this.datoservice.mapaActual[mapa.id + 8].visible) ||
+ this.datoservice.casasDespejadas.includes(this.datoservice.mapaActual[mapa.id].casa)"
+ ></button> -->
 
-      <button style="width: 60px; margin-top: 15px;" (click)="alternarTipo(mapa.id)" *ngIf="this.datoservice.editar">
-       Alternar terreno
+      <button
+        style="width: 60px; margin-top: 15px"
+        (click)="alternarTipo(mapa.id)"
+        *ngIf="this.datoservice.editar"
+      >
+        Alternar terreno
       </button>
+
       <div *ngIf="this.datoservice.editar" style="font-size: 10px">
         <span>cH= {{ mapa.calleH }} ... cV= {{ mapa.calleV }}</span
         ><br />
@@ -29,17 +116,14 @@
         <span *ngIf="mapa.enemigo != ''">{{ mapa.enemigo }}</span
         ><br />
       </div>
-      
-      
-      <span *ngIf="this.datoservice.editar" >{{ mapa.id }}</span><!-- 
+
+      <span *ngIf="this.datoservice.editar">{{ mapa.id }}</span
+      ><!-- 
       <button (click)="aplicar(mapa.id)" *ngIf="this.datoservice.editar">
         aplicar
       </button> -->
       <!-- <button (click)="alternarVisibilidad(mapa.id)" *ngIf="this.datoservice.editar">visible</button> -->
-      <button
-        (click)="despejar(mapa.id)"
-        *ngIf="!this.datoservice.editar"
-      >
+      <button (click)="despejar(mapa.id)" *ngIf="!this.datoservice.editar">
         Despejar
       </button>
 
@@ -50,7 +134,8 @@
     </form> -->
     </div>
   </div>
-  <div><!-- 
+  <div>
+    <!-- 
     <form [formGroup]="parametrosLoseta">
       <table>
         <tr>
@@ -90,12 +175,15 @@
 
     <button (click)="limpiarForm()">limpiar</button><br /><br />
  -->
-<button *ngIf="!this.datoservice.editar" (click)="editar()">Editar</button>
-<button *ngIf="this.datoservice.editar" (click)="editar()">Jugar</button><br /><br /><br /><br /><br /><br />
+    <button *ngIf="!this.datoservice.editar" (click)="editar()">Editar</button>
+    <button *ngIf="this.datoservice.editar" (click)="editar()">Jugar</button
+    ><br /><br /><br /><br /><br /><br />
 
-    <button (click)="aplicarAutomaticamente()">calcular visibilidad</button><br /><br />
+    <button (click)="aplicarAutomaticamente()">calcular visibilidad</button
+    ><br /><br />
 
-    <button (click)="guardarDatos()" style="scale: 0.4;">Guardar datos</button><br /><br />
+    <button (click)="guardarDatos()" style="scale: 0.4">Guardar datos</button
+    ><br /><br />
     <button (click)="cargarDatos()">Cargar datos</button><br /><br />
 
     <!-- 

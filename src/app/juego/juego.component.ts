@@ -46,8 +46,10 @@ export class JuegoComponent {
         enemigo: '',
         visible: true,
         pista: false,
-        puertaV: false,
-        puertaH: false,
+        puertaSup: false,
+        puertaInf: false,
+        puertaDer: false,
+        puertaIzq: false,
       });
     }
   }
@@ -169,14 +171,24 @@ export class JuegoComponent {
     }
   }
 
-  puertaV(id: number) {
-    this.datoservice.mapaActual[id].puertaV =
-      !this.datoservice.mapaActual[id].puertaV;
-  }
+  puerta(id: number, posicion: string) {
+    if (posicion === 'sup') {
+      this.datoservice.mapaActual[id].puertaSup =
+        !this.datoservice.mapaActual[id].puertaSup;
+    }
+    if (posicion === 'inf') {
+      this.datoservice.mapaActual[id].puertaInf =
+        !this.datoservice.mapaActual[id].puertaInf;
+    }
+    if (posicion === 'der') {
+      this.datoservice.mapaActual[id].puertaDer =
+        !this.datoservice.mapaActual[id].puertaDer;
+    }
 
-  puertaH(id: number) {
-    this.datoservice.mapaActual[id].puertaH =
-      !this.datoservice.mapaActual[id].puertaH;
+    if (posicion === 'izq') {
+      this.datoservice.mapaActual[id].puertaIzq =
+        !this.datoservice.mapaActual[id].puertaIzq;
+    }
   }
 
   despejar(id: number) {
@@ -202,7 +214,7 @@ export class JuegoComponent {
 
           if (
             i < 63 &&
-            !descarteHorizontal.includes(i - 1) &&
+            !descarteHorizontal.includes(i + 1) &&
             this.datoservice.mapaActual[i + 1].casa != ''
           ) {
             this.datoservice.mapaActual[i + 1].visible = true;
@@ -218,8 +230,11 @@ export class JuegoComponent {
       }
     } else {
       for (var i = 0; i <= this.datoservice.numeroLosetas; ++i) {
-        if (this.datoservice.mapaActual[i].casa === casa){
-          this.datoservice.mapaActual[i].visible = true
+        if (this.datoservice.mapaActual[i].casa === casa) {
+          this.datoservice.mapaActual[i].visible = true;
+          this.datoservice.casasDespejadas.push(
+            this.datoservice.mapaActual[i].casa
+          );
         }
       }
     }
