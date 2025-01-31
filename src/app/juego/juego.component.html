@@ -9,7 +9,6 @@
           : { 'background-color': 'white' }
       "
     >
-      <!-- continuar por aquí -->
       <button
         class="puertaSup"
         [ngStyle]="
@@ -106,15 +105,17 @@
       >
         Alternar terreno
       </button>
+      <span *ngIf="this.datoservice.editar || (mapa.visible && (mapa.carretera || (mapa.casa != '' && this.datoservice.casasDespejadas.includes(mapa.casa))))" style="color: red;">{{mapa.enemigo}}</span>
+      <span *ngIf="mapa.pista && (this.datoservice.editar || (mapa.casa != '' && this.datoservice.casasDespejadas.includes(mapa.casa)))" style="color: green;">Pista!</span>
 
       <div *ngIf="this.datoservice.editar" style="font-size: 10px">
         <span>cH= {{ mapa.calleH }} ... cV= {{ mapa.calleV }}</span
         ><br />
         <span>casa= {{ mapa.casa }}</span
-        ><br />
+        ><br /><!-- 
         <span *ngIf="mapa.pista">pista</span><br />
         <span *ngIf="mapa.enemigo != ''">{{ mapa.enemigo }}</span
-        ><br />
+        > --><br />
       </div>
 
       <span *ngIf="this.datoservice.editar">{{ mapa.id }}</span
@@ -180,7 +181,9 @@
     ><br /><br /><br /><br /><br /><br />
 
     <button (click)="aplicarAutomaticamente()">calcular visibilidad</button
-    ><br /><br />
+      ><br /><br />
+      <button (click)="generarInicio()">Generar inicio</button
+      ><br /><br />
 
     <button (click)="guardarDatos()" style="scale: 0.4">Guardar datos</button
     ><br /><br />

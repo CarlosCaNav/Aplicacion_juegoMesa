@@ -172,26 +172,27 @@ export class JuegoComponent {
   }
 
   puerta(id: number, posicion: string) {
-if (this.datoservice.editar){
-    if (posicion === 'sup') {
-      this.datoservice.mapaActual[id].puertaSup =
-        !this.datoservice.mapaActual[id].puertaSup;
-    }
-    if (posicion === 'inf') {
-      this.datoservice.mapaActual[id].puertaInf =
-        !this.datoservice.mapaActual[id].puertaInf;
-    }
-    if (posicion === 'der') {
-      this.datoservice.mapaActual[id].puertaDer =
-        !this.datoservice.mapaActual[id].puertaDer;
-    }
+    if (this.datoservice.editar) {
+      if (posicion === 'sup') {
+        this.datoservice.mapaActual[id].puertaSup =
+          !this.datoservice.mapaActual[id].puertaSup;
+      }
+      if (posicion === 'inf') {
+        this.datoservice.mapaActual[id].puertaInf =
+          !this.datoservice.mapaActual[id].puertaInf;
+      }
+      if (posicion === 'der') {
+        this.datoservice.mapaActual[id].puertaDer =
+          !this.datoservice.mapaActual[id].puertaDer;
+      }
 
-    if (posicion === 'izq') {
-      this.datoservice.mapaActual[id].puertaIzq =
-        !this.datoservice.mapaActual[id].puertaIzq;
+      if (posicion === 'izq') {
+        this.datoservice.mapaActual[id].puertaIzq =
+          !this.datoservice.mapaActual[id].puertaIzq;
+      }
+    } else {
+      this.despejar(id);
     }
-  }else {this.despejar(id)}
-
   }
 
   despejar(id: number) {
@@ -243,11 +244,62 @@ if (this.datoservice.editar){
     }
   }
 
+  generarInicio() {
+    //limpia todas las losetas de mostruos y pistas
+    for (let i = 0; i <= this.datoservice.numeroLosetas; ++i) {
+      this.datoservice.mapaActual[i].enemigo === '';
+      this.datoservice.mapaActual[i].pista === false;
+    }
+
+    //Generar enemigos iniciales repartidos, los llamaremos "MICRO"
+    for (let i = 0; i <= this.datoservice.numeroLosetas; ++i) {
+      if (Math.random() < 0.1) {
+        // 10% chance to place an enemy
+        this.datoservice.mapaActual[i].enemigo = 'MICRO';
+      }
+    }
+
+    //-----------------------Generar Pistas-----------------------------
+    //comprobamos qué casillas contienen casas
+    let casas: number[] = [];
+
+    for (let i = 0; i <= this.datoservice.numeroLosetas; ++i) {
+      if (this.datoservice.mapaActual[i].casa != '') {
+        casas.push(i);
+      }
+    }
+    //generamos números aleatorio entre las casas posibles
+    let pistas: number[] = [];
+    let resultado: number = 0;
+    for (
+      var i = 8888888888888888888888888888888888888888888888888888888888888888888888888;
+      pistas.length <= this.datoservice.pistasIniciales;
+      'holi'
+    ) {
+      resultado = this.generarPistasRecursivamente(casas.length);
+      if (!pistas.includes(casas[resultado])) {
+        pistas.push(casas[resultado]);
+      }
+    }
+    for (i = 0; i <= pistas.length -1; ++i) {
+      console.log('hemos llegado aquí ' + pistas[i]);
+      
+      this.datoservice.mapaActual[pistas[i]].pista = true;
+    }
+  }
+  generarPistasRecursivamente(probabilidades: number) {
+    const numeroAleatorio = Math.floor(Math.random() * probabilidades);
+    console.log(numeroAleatorio);
+
+    return numeroAleatorio;
+  }
+
   guardarDatos() {
     const data = JSON.stringify(this.datoservice.mapaActual);
     localStorage.setItem(this.datoservice.nombreMapaActual, data);
   }
   cargarDatos() {
+    this.datoservice.casasDespejadas = [];
     const data = localStorage.getItem(this.datoservice.nombreMapaActual);
     if (data) {
       this.datoservice.mapaActual = JSON.parse(data);

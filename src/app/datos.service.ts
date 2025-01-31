@@ -6,6 +6,9 @@ import { Mapa } from './interfaz.mapa';
 })
 export class DatosService {
 
+enemigosIniciales: number = 10;
+pistasIniciales: number = 10;
+
   numeroLosetas: number = 63;
   editar: boolean = true;
   nombreMapaActual: string = 'Prueba';
