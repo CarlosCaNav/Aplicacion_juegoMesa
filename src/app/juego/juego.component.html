@@ -16,10 +16,10 @@
         "
         (click)="puerta(mapa.id, 'sup')"
         *ngIf="
-          this.datoservice.mapaActual[mapa.id].casa != '' &&
-          this.datoservice.mapaActual[mapa.id].visible &&
+          !mapa.carretera &&
+          mapa.visible &&
           mapa.id >= 8 &&
-            this.datoservice.mapaActual[mapa.id - 8].casa === '' &&
+          this.datoservice.mapaActual[mapa.id - 8].carretera &&
           (this.datoservice.casasDespejadas.includes(
             this.datoservice.mapaActual[mapa.id].casa
           ) ||
@@ -36,10 +36,10 @@
         "
         (click)="puerta(mapa.id, 'inf')"
         *ngIf="
-          this.datoservice.mapaActual[mapa.id].casa != '' &&
-          this.datoservice.mapaActual[mapa.id].visible &&
+          !mapa.carretera &&
+          mapa.visible &&
           mapa.id <= 52 &&
-            this.datoservice.mapaActual[mapa.id + 8].casa === '' &&
+          this.datoservice.mapaActual[mapa.id + 8].carretera &&
           (this.datoservice.casasDespejadas.includes(
             this.datoservice.mapaActual[mapa.id].casa
           ) ||
@@ -57,10 +57,10 @@
         "
         (click)="puerta(mapa.id, 'der')"
         *ngIf="
-          this.datoservice.mapaActual[mapa.id].casa != '' &&
+          !mapa.carretera &&
           this.datoservice.mapaActual[mapa.id].visible &&
           mapa.id <= 63 &&
-            this.datoservice.mapaActual[mapa.id + 1].casa === '' &&
+          this.datoservice.mapaActual[mapa.id + 1].carretera &&
           (this.datoservice.casasDespejadas.includes(
             this.datoservice.mapaActual[mapa.id].casa
           ) ||
@@ -76,10 +76,10 @@
         "
         (click)="puerta(mapa.id, 'izq')"
         *ngIf="
-          this.datoservice.mapaActual[mapa.id].casa != '' &&
-          this.datoservice.mapaActual[mapa.id].visible &&
+          !mapa.carretera &&
+          mapa.visible &&
           mapa.id >= 1 &&
-            this.datoservice.mapaActual[mapa.id - 1].casa === '' &&
+          this.datoservice.mapaActual[mapa.id - 1].carretera &&
           (this.datoservice.casasDespejadas.includes(
             this.datoservice.mapaActual[mapa.id].casa
           ) ||
@@ -88,15 +88,6 @@
           (this.datoservice.editar || mapa.puertaIzq)
         "
       ></button>
-      <!-- 
-    <button (click)="puertaV(mapa.id)" class="puertaV" 
-    [ngStyle]="mapa.puertaV ? { 'background-color': 'rgb(59, 22, 5)' } : {}"
-    *ngIf="this.datoservice.editar || (mapa.puertaV && mapa.visible && this.datoservice.mapaActual[mapa.id + 1].visible)"></button>
-    <button (click)="puertaH(mapa.id)" class="puertaH" 
-    [ngStyle]="mapa.puertaH ? { 'background-color': 'rgb(59, 22, 5)' } : {}"
-    *ngIf="this.datoservice.editar || (mapa.puertaH && mapa.visible && this.datoservice.mapaActual[mapa.id + 8].visible) ||
- this.datoservice.casasDespejadas.includes(this.datoservice.mapaActual[mapa.id].casa)"
- ></button> -->
 
       <button
         style="width: 60px; margin-top: 15px"
@@ -105,97 +96,62 @@
       >
         Alternar terreno
       </button>
-      <span *ngIf="this.datoservice.editar || (mapa.visible && (mapa.carretera || (mapa.casa != '' && this.datoservice.casasDespejadas.includes(mapa.casa))))" style="color: red;">{{mapa.enemigo}}</span>
-      <span *ngIf="mapa.pista && (this.datoservice.editar || (mapa.casa != '' && this.datoservice.casasDespejadas.includes(mapa.casa)))" style="color: green;">Pista!</span>
+      <span
+        *ngIf="
+          this.datoservice.editar ||
+          (mapa.visible &&
+            (mapa.carretera ||
+              (mapa.casa != '' &&
+                this.datoservice.casasDespejadas.includes(mapa.casa))))
+        "
+        style="color: red"
+        >{{ mapa.enemigo }}</span
+      >
+      <span
+        *ngIf="
+          mapa.pista &&
+          (this.datoservice.editar ||
+            (mapa.casa != '' &&
+              this.datoservice.casasDespejadas.includes(mapa.casa)))
+        "
+        style="color: green; background-color: greenyellow;"
+        >Pista!</span
+      >
 
       <div *ngIf="this.datoservice.editar" style="font-size: 10px">
         <span>cH= {{ mapa.calleH }} ... cV= {{ mapa.calleV }}</span
         ><br />
         <span>casa= {{ mapa.casa }}</span
-        ><br /><!-- 
-        <span *ngIf="mapa.pista">pista</span><br />
-        <span *ngIf="mapa.enemigo != ''">{{ mapa.enemigo }}</span
-        > --><br />
+        ><br />
+       <br />
       </div>
 
       <span *ngIf="this.datoservice.editar">{{ mapa.id }}</span
-      ><!-- 
-      <button (click)="aplicar(mapa.id)" *ngIf="this.datoservice.editar">
-        aplicar
-      </button> -->
-      <!-- <button (click)="alternarVisibilidad(mapa.id)" *ngIf="this.datoservice.editar">visible</button> -->
-      <button (click)="despejar(mapa.id)" *ngIf="!this.datoservice.editar && !(this.datoservice.casasDespejadas.includes(mapa.casa))">
+      >
+      <button
+        (click)="despejar(mapa.id)"
+        *ngIf="
+          !this.datoservice.editar &&
+          !this.datoservice.casasDespejadas.includes(mapa.casa)
+        "
+      >
         Despejar
       </button>
 
-      <!-- 
-    <form action="">
-        <button>Revelar</button>
-        <button>Explorar</button>
-    </form> -->
     </div>
   </div>
   <div>
-    <!-- 
-    <form [formGroup]="parametrosLoseta">
-      <table>
-        <tr>
-          <th><label>Calle Horizontal</label></th>
-          <td>
-            <input
-              formControlName="calleH"
-              type="number"
-              style="width: 50px"
-            /><label> numero impar</label>
-          </td>
-        </tr>
-        <tr>
-          <th><label>Calle Vertical</label></th>
-          <td>
-            <input
-              formControlName="calleV"
-              type="number"
-              style="width: 50px"
-            /><label> numero par</label>
-          </td>
-        </tr>
-        <tr>
-          <th><label>Casa</label></th>
-          <td>
-            <input formControlName="casa" type="text" style="width: 50px" />
-          </td>
-        </tr>
-        <tr>
-          <th><label>Enemigo</label></th>
-          <td>
-            <input formControlName="enemigo" type="text" style="width: 50px" />
-          </td>
-        </tr>
-      </table>
-    </form>
-
-    <button (click)="limpiarForm()">limpiar</button><br /><br />
- -->
     <button *ngIf="!this.datoservice.editar" (click)="editar()">Editar</button>
     <button *ngIf="this.datoservice.editar" (click)="editar()">Jugar</button
     ><br /><br /><br /><br /><br /><br />
 
     <button (click)="aplicarAutomaticamente()">calcular visibilidad</button
-      ><br /><br />
-      <button (click)="generarInicio()">Generar inicio</button
-      ><br /><br />
+    ><br /><br />
+    <button (click)="generarInicio()">Generar inicio</button><br /><br />
 
     <button (click)="guardarDatos()" style="scale: 0.4">Guardar datos</button
     ><br /><br />
     <button (click)="cargarDatos()">Cargar datos</button><br /><br />
 
-    <!-- 
-    calleH: number;<br />
-    calleV: number;<br />
-    casa: string;<br />
-    carretera: boolean;<br />
-    enemigo: string;<br />
-    visible: boolean;<br />
-    pista: boolean<br /> -->
   </div>
 </div>
