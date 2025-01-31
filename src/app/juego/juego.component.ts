@@ -172,6 +172,7 @@ export class JuegoComponent {
   }
 
   puerta(id: number, posicion: string) {
+if (this.datoservice.editar){
     if (posicion === 'sup') {
       this.datoservice.mapaActual[id].puertaSup =
         !this.datoservice.mapaActual[id].puertaSup;
@@ -189,6 +190,8 @@ export class JuegoComponent {
       this.datoservice.mapaActual[id].puertaIzq =
         !this.datoservice.mapaActual[id].puertaIzq;
     }
+  }else {this.despejar(id)}
+
   }
 
   despejar(id: number) {
