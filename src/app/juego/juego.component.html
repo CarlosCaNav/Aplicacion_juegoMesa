@@ -137,6 +137,15 @@
       >
         Despejar
       </button>
+      <button
+        (click)="buscar(mapa.casa)"
+        *ngIf="
+          !this.datoservice.editar  &&
+          this.datoservice.casasDespejadas.includes(mapa.casa)
+        "
+      >
+        Buscar
+      </button>
 
     </div>
   </div>
@@ -147,8 +156,14 @@
 
     <button (click)="aplicarAutomaticamente()">calcular visibilidad</button
     ><br /><br />
-    <button (click)="generarInicio()">Generar inicio</button><br /><br />
-
+    <button (click)="generarInicio()">Generar inicio</button>
+    <br /><br />
+    <br /><br /><span *ngFor="let arma of this.datoservice.recursosCasas[0]">{{arma}}<br></span>
+    <br /><br /><span *ngFor="let arma of this.datoservice.recursosCasas[1]">{{arma}}<br></span>
+    <br /><br /> 
+   
+    {{this.datoservice.armaEncontrada}}
+    <br /><br /><br />
     <button (click)="guardarDatos()" style="scale: 0.4">Guardar datos</button
     ><br /><br />
     <button (click)="cargarDatos()">Cargar datos</button><br /><br />

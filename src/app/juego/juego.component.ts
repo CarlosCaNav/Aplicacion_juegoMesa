@@ -171,6 +171,68 @@ export class JuegoComponent {
     }
   }
 
+  crearRecursos() {
+    //borramos el array
+
+    //juntamos todas las probabliidades de búsqueda
+    let probablilidades: number = 0;
+    let sumatorio = 0;
+    let recursos: string[] = [];
+
+    for (let i = 0; i <= this.datoservice.armasMunicion.length - 1; ++i) {
+      probablilidades += this.datoservice.armasMunicion[i].probabilidad;
+    }
+    //y creamos 20 objetos en cada casa
+    for (let i = 0; i <= this.datoservice.numeroDeObjetos; ++i) {
+      const aleatorio = Math.floor(Math.random() * probablilidades);
+
+      sumatorio = 0;
+      for (let j = 0; j <= aleatorio - 1; ++j) {
+        sumatorio += this.datoservice.armasMunicion[j].probabilidad;
+
+        if (sumatorio >= aleatorio) {
+          recursos.push(this.datoservice.armasMunicion[j].arma);
+          break;
+        }
+      }
+    }
+    this.datoservice.recursosCasas.push(recursos);
+  }
+
+  buscar(casa: string) {
+    const aleatorio = Math.floor(
+      Math.random() * this.datoservice.numeroDeObjetos
+    );
+
+    if (this.datoservice.idenficadorCasas.length == 0) {
+      this.datoservice.idenficadorCasas.push(casa);
+      this.crearRecursos();
+    }
+
+let resultadoEncontrado: boolean = false;
+
+    for (let i = 0; i <= this.datoservice.idenficadorCasas.length; ++i) {
+      if (casa === this.datoservice.idenficadorCasas[i]) {
+        resultadoEncontrado = true;
+        this.datoservice.armaEncontrada =
+          this.datoservice.recursosCasas[i][aleatorio];
+        this.datoservice.recursosCasas[i][aleatorio] = '';
+        this.datoservice.recursosCasas = [...this.datoservice.recursosCasas];
+      }
+    }
+    if (resultadoEncontrado == false){
+      this.crearRecursos();
+      this.datoservice.idenficadorCasas.push(casa);
+      this.buscar(casa)
+    }
+
+    /* 
+    const aleatorio = Math.floor(Math.random() * this.datoservice.recursosCasas.length);
+    this.datoservice.armaEncontrada = this.datoservice.recursosCasas[aleatorio];
+    this.datoservice.recursosCasas[aleatorio]='';
+    this.datoservice.recursosCasas = [...this.datoservice.recursosCasas] */
+  }
+
   puerta(id: number, posicion: string) {
     if (this.datoservice.editar) {
       if (posicion === 'sup') {
@@ -281,9 +343,9 @@ export class JuegoComponent {
         pistas.push(casas[resultado]);
       }
     }
-    for (i = 0; i <= pistas.length -1; ++i) {
+    for (i = 0; i <= pistas.length - 1; ++i) {
       console.log('hemos llegado aquí ' + pistas[i]);
-      
+
       this.datoservice.mapaActual[pistas[i]].pista = true;
     }
   }
