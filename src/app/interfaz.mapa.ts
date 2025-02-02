@@ -4,7 +4,8 @@ export interface Mapa {
     calleV: number;
     casa: string;
     carretera: boolean;
-    enemigo: string;
+    enemigos: string[];
+    rutasEnemigos: number[];
     visible: boolean;
     pista: boolean;
     puertaSup: boolean;

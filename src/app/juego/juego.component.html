@@ -92,10 +92,22 @@
       <button
         style="width: 60px; margin-top: 15px"
         (click)="alternarTipo(mapa.id)"
-        *ngIf="this.datoservice.editar"
-      >
+        *ngIf="this.datoservice.editar && !this.datoservice.editarRutas"
+      >     
         Alternar terreno
       </button>
+
+      <!-- ruta de salida enemigos -->
+      <span style="font-size: 8px;">{{this.datoservice.mapaActual[mapa.id].rutasEnemigos}} </span>
+      <button
+        style="width: 60px; margin-top: 15px; height: 40px;"
+        [ngStyle]="this.rutaActual.includes(mapa.id) ? { 'background-color': 'green' } : {}"
+        (click)="editarRutas('ruta', mapa.id)"
+        *ngIf="this.datoservice.editar && this.datoservice.editarRutas"
+      >
+        Ruta
+      </button>
+      <!-- Enemigos -->
       <span
         *ngIf="
           this.datoservice.editar ||
@@ -105,7 +117,7 @@
                 this.datoservice.casasDespejadas.includes(mapa.casa))))
         "
         style="color: red"
-        >{{ mapa.enemigo }}</span
+        >{{ mapa.enemigos[0] }}<br>{{mapa.enemigos[1]}}<br>{{mapa.enemigos[2]}}{{mapa.enemigos[3]}}{{mapa.enemigos[4]}}</span
       >
       <span
         *ngIf="
@@ -150,17 +162,21 @@
     </div>
   </div>
   <div>
+    <span>Ronda número {{this.datoservice.ronda}}</span><br />
+    <button *ngIf="!this.datoservice.editar" (click)="ronda()">Turno de enemigos</button><br />
     <button *ngIf="!this.datoservice.editar" (click)="editar()">Editar</button>
-    <button *ngIf="this.datoservice.editar" (click)="editar()">Jugar</button
-    ><br /><br /><br /><br /><br /><br />
+    <button *ngIf="this.datoservice.editar" (click)="editar()">Jugar</button><br /><br />
+    <button *ngIf="this.datoservice.editar" (click)="editarRutas('alternar', 99)">Crear rutas</button><br />
+    <button *ngIf="this.datoservice.editar && this.datoservice.editarRutas" (click)="editarRutas('aplicar', 99)">Aplicar ruta actual</button>
+   <br /><br /><br />
 
     <button (click)="aplicarAutomaticamente()">calcular visibilidad</button
     ><br /><br />
     <button (click)="generarInicio()">Generar inicio</button>
-    <br /><br />
+    <br /><br /><!-- 
     <br /><br /><span *ngFor="let arma of this.datoservice.recursosCasas[0]">{{arma}}<br></span>
     <br /><br /><span *ngFor="let arma of this.datoservice.recursosCasas[1]">{{arma}}<br></span>
-    <br /><br /> 
+    <br /><br />  -->
    
     {{this.datoservice.armaEncontrada}}
     <br /><br /><br />
