@@ -372,7 +372,7 @@ arrayConSalidaDeEnemigos(){
   //añadimos los sitios posibles de donde aparencen enemigos
   this.datoservice.casillasConSalidaEnemigos = [];
   for (let i = 0; i <= this.datoservice.mapaActual.length - 1; ++i) {
-    if (this.datoservice.mapaActual[i].rutasEnemigos != undefined) {
+    if (this.datoservice.mapaActual[i].rutasEnemigos.length > 0) {
       this.datoservice.casillasConSalidaEnemigos.push(i);
     }
   }}
@@ -396,6 +396,17 @@ arrayConSalidaDeEnemigos(){
       ) {
         this.datoservice.mapaActual[i].pista = false;
         this.datoservice.mapaActual[i].enemigos = [];
+        // Eliminamos las rutas de los enemigos que estaban en esta casilla
+        for (let j = 0; j < this.datoservice.Enemigos.length; ++j) {
+          for (let k = 0; k < this.datoservice.Enemigos[j].rutas.length; ++k) {
+            const ruta = this.datoservice.Enemigos[j].rutas[k];
+            if (ruta.includes(i)) {
+              // Si el enemigo tiene una ruta que pasa por esta casilla, eliminamos esa ruta
+              this.datoservice.Enemigos[j].rutas.splice(k, 1);
+              k--; // Ajustamos el índice porque eliminamos un elemento
+            }
+          }
+        }
       }
     }
   
