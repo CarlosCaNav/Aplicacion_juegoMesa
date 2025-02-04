@@ -103,9 +103,9 @@ export class JuegoComponent {
   aplicarAutomaticamente() {
     //con esto comprobamos la visibilidad de cada loseta
     const descarteHorizontal = [0, 8, 16, 24, 32, 40, 48, 56, 64];
-    var horizontal: number = 1;
-    var vertical: number = 2;
-    var casa: number = 0;
+    var horizontal: number = 1; //horizontales impares
+    var vertical: number = 2; //verticales pares
+    var casa: number = 0; //C seguido de número
     var provisional: string = '';
 
     // Borra todos los datos
@@ -118,37 +118,40 @@ export class JuegoComponent {
     //comprobamos horizontalmente si es edificio. Si lo es le aplicamos la C y un número
     // y comprobamos la siguiente. Si es también edificio se repite el número, si no se cambia
     for (var i = 0; i <= this.datoservice.numeroLosetas; ++i) {
-      if (this.datoservice.mapaActual[i].carretera == false) {
-        this.datoservice.mapaActual[i].casa = 'c' + casa;
+      if (this.datoservice.mapaActual[i].carretera === false) {
+        this.datoservice.mapaActual[i].casa = 'casa' + casa;
+        //si es el final de la línea, igualmente sumamos uno
+        if (descarteHorizontal.includes(i + 1)) {
+          casa++;
+        }
       } else {
-        casa += 1;
+        casa++;
       }
-    }
+    } 
     //prepara las contiguas verticales
     for (var i = 0; i <= 7; ++i) {
       for (var j = 0; j <= 63; j += 8) {
         if (
-          this.datoservice.mapaActual[j + i].casa != '' &&
-          provisional == ''
+          this.datoservice.mapaActual[j + i].carretera === false &&
+          provisional === ''
         ) {
           provisional = this.datoservice.mapaActual[j + i].casa;
         } else if (
-          this.datoservice.mapaActual[j + i].casa != '' &&
+          this.datoservice.mapaActual[j + i].carretera === false &&
           provisional != ''
         ) {
           for (var k = 0; k < this.datoservice.numeroLosetas; ++k) {
-            if (
-              this.datoservice.mapaActual[k].casa ==
-              this.datoservice.mapaActual[j + i].casa
+            if (provisional === this.datoservice.mapaActual[k].casa
             ) {
-              this.datoservice.mapaActual[k].casa = provisional;
+              this.datoservice.mapaActual[k].casa = this.datoservice.mapaActual[j + i].casa;
             }
           }
+          provisional = this.datoservice.mapaActual[j + i].casa
         } else {
           provisional = '';
         }
-      }
-    }
+      }provisional = '';
+    } 
 
     // prepara las contiguas horizontales
     for (var i = 0; i <= this.datoservice.numeroLosetas; ++i) {
@@ -258,6 +261,7 @@ export class JuegoComponent {
     const casa: string = this.datoservice.mapaActual[id].casa;
     const descarteHorizontal = [0, 8, 16, 24, 32, 40, 48, 56, 64];
 
+    //comprobamos que no sea una casa
     if (this.datoservice.mapaActual[id].casa === '') {
       for (var i = 0; i <= this.datoservice.numeroLosetas; ++i) {
         if (
@@ -289,6 +293,7 @@ export class JuegoComponent {
           }
         }
       }
+      //si es una casa
     } else {
       for (var i = 0; i <= this.datoservice.numeroLosetas; ++i) {
         if (this.datoservice.mapaActual[i].casa === casa) {
@@ -302,48 +307,61 @@ export class JuegoComponent {
   }
 
   generarInicio() {
-    //limpia todas las losetas de mostruos y pistas
+    //comprobamos que hay casas suficientes para las pistas
+    let numeroDeCasas: number = 0;
     for (let i = 0; i <= this.datoservice.numeroLosetas; ++i) {
-      this.datoservice.mapaActual[i].enemigos = [];
-      this.datoservice.mapaActual[i].pista = false;
-    }
-
-    //Generar enemigos iniciales repartidos, los llamaremos "reptador"
-    for (let i = 0; i <= this.datoservice.numeroLosetas; ++i) {
-      if (Math.random() < 0.1) {
-        // 10% chance to place an enemy
-        this.datoservice.mapaActual[i].enemigos = ['reptador'];
+      if (this.datoservice.mapaActual[i].carretera === false) {
+        numeroDeCasas++;        
       }
     }
 
-    //-----------------------Generar Pistas-----------------------------
-    //comprobamos qué casillas contienen casas
-    let casas: number[] = [];
-
-    for (let i = 0; i <= this.datoservice.numeroLosetas; ++i) {
-      if (this.datoservice.mapaActual[i].casa != '') {
-        casas.push(i);
+    if (numeroDeCasas <= this.datoservice.pistasIniciales + 5) {
+      alert('no hay losetas de casas suficientes');
+    } else {
+      //limpia todas las losetas de mostruos y pistas
+      for (let i = 0; i <= this.datoservice.numeroLosetas; ++i) {
+        this.datoservice.mapaActual[i].enemigos = [];
+        this.datoservice.mapaActual[i].pista = false;
       }
-    }
-    //generamos números aleatorio entre las casas posibles
 
-    //ARREGLAR ESTOOOOOOOOOO QUE NO SE OLVIDEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-    let pistas: number[] = [];
-    let resultado: number = 0;
-    for (
-      var i = 8888888888888888888888888888888888888888888888888888888888888888888888888;
-      pistas.length <= this.datoservice.pistasIniciales;
-      'holi'
-    ) {
-      resultado = this.generarPistasRecursivamente(casas.length);
-      if (!pistas.includes(casas[resultado])) {
-        pistas.push(casas[resultado]);
+      //Generar enemigos iniciales repartidos, los llamaremos "reptador"
+      for (let i = 0; i <= this.datoservice.numeroLosetas; ++i) {
+        if (Math.random() < 0.1) {
+          // 10% chance to place an enemy
+          this.datoservice.mapaActual[i].enemigos = ['reptador'];
+        }
       }
-    }
-    for (i = 0; i <= pistas.length - 1; ++i) {
-      this.datoservice.mapaActual[pistas[i]].pista = true;
+
+      //-----------------------Generar Pistas-----------------------------
+      //comprobamos qué casillas contienen casas
+      let casas: number[] = [];
+
+      for (let i = 0; i <= this.datoservice.numeroLosetas; ++i) {
+        if (this.datoservice.mapaActual[i].carretera === false) {
+          casas.push(i);
+        }
+      }
+      //generamos números aleatorio entre las casas posibles
+
+      //ARREGLAR ESTOOOOOOOOOO QUE NO SE OLVIDEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+      let pistas: number[] = [];
+      let resultado: number = 0;
+      for (
+        var i = 8888888888888888888888888888888888888888888888888888888888888888888888888;
+        pistas.length <= this.datoservice.pistasIniciales;
+        'holi'
+      ) {
+        resultado = this.generarPistasRecursivamente(casas.length);
+        if (!pistas.includes(casas[resultado])) {
+          pistas.push(casas[resultado]);
+        }
+      }
+      for (i = 0; i <= pistas.length - 1; ++i) {
+        this.datoservice.mapaActual[pistas[i]].pista = true;
+      }
     }
   }
+
   generarPistasRecursivamente(probabilidades: number) {
     const numeroAleatorio = Math.floor(Math.random() * probabilidades);
 
@@ -580,7 +598,7 @@ export class JuegoComponent {
     if (data) {
       this.datoservice.mapaActual = JSON.parse(data);
     }
-    this.nombreMapa.reset()
+    this.nombreMapa.reset();
     this.obtenerClavesLocalStorage();
   }
 

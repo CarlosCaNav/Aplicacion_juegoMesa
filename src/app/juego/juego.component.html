@@ -108,6 +108,8 @@
         Ruta
       </button>
       <!-- Enemigos -->
+       
+      <!-- 
       <span
         *ngIf="
           this.datoservice.editar ||
@@ -118,7 +120,7 @@
         "
         style="color: red"
         >{{ mapa.enemigos[0] }}<br>{{mapa.enemigos[1]}}<br>{{mapa.enemigos[2]}}{{mapa.enemigos[3]}}{{mapa.enemigos[4]}}</span
-      >
+      > -->
       <span
         *ngIf="
           mapa.pista &&
@@ -127,16 +129,16 @@
               this.datoservice.casasDespejadas.includes(mapa.casa)))
         "
         style="color: green; background-color: greenyellow;"
-        >Pista!</span
-      ><!-- 
+        >Pista!</span>
 
+     
       <div *ngIf="this.datoservice.editar" style="font-size: 10px">
         <span>cH= {{ mapa.calleH }} ... cV= {{ mapa.calleV }}</span
         ><br />
         <span>casa= {{ mapa.casa }}</span
         ><br />
        <br />
-      </div> -->
+      </div>
 
 <span *ngIf="this.datoservice.editar">{{ mapa.id }}</span> 
 
@@ -158,7 +160,6 @@
       >
         Buscar
       </button>
-
     </div>
   </div>
   <div>

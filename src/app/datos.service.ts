@@ -53,6 +53,8 @@ export class DatosService {
     { arma: 'Munición Rifle', probabilidad: 5 },
     { arma: 'Botiquin', probabilidad: 1 },
     { arma: 'Adrenalina', probabilidad: 3 },
+    { arma: 'Mechero', probabilidad: 1 },
+    { arma: 'Gasolina', probabilidad: 2 },
   ];
 
   Enemigos: { enemigo: string; rutas: Array<number>[];fase: number; probabilidad: number; avance: number; vida: number}[] = [
