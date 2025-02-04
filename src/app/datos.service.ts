@@ -20,6 +20,7 @@ export class DatosService {
   casasDespejadas: string[] = [];
   recursosCasas: Array<string>[]=[];
   idenficadorCasas: string[]=[]; //esto es una chapuza... sirve para saber qué array va con qué casa. Lo suyo sería usar mapas o records
+  clavesLocalStorage: string[] = [];
 
   public mapaActual: Mapa[] = [
     {
@@ -55,7 +56,7 @@ export class DatosService {
   ];
 
   Enemigos: { enemigo: string; rutas: Array<number>[];fase: number; probabilidad: number; avance: number; vida: number}[] = [
-    { enemigo: 'rectador', rutas: [], fase: 0, probabilidad: 1, avance: 1, vida: 2},
+    { enemigo: 'reptador', rutas: [], fase: 0, probabilidad: 1, avance: 1, vida: 2},
     { enemigo: 'caminante', rutas: [], fase: 1, probabilidad: 4, avance: 2, vida: 2},
     { enemigo: 'Gordo', rutas: [], fase: 1, probabilidad: 2, avance: 1, vida: 5},
     { enemigo: 'Primigenio', rutas: [], fase: 3, probabilidad: 0, avance: 1, vida: 2},

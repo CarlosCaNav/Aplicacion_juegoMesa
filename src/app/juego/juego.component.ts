@@ -12,6 +12,7 @@ import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 export class JuegoComponent {
   constructor(public datoservice: DatosService) {
     this.crearmapa();
+    this.obtenerClavesLocalStorage();
   }
 
   /* 
@@ -23,7 +24,7 @@ export class JuegoComponent {
       pista: boolean */
 
   nombreMapa: FormGroup = new FormGroup({
-    nombre: new FormGroup(''),
+    nombre: new FormControl(''),
   });
 
   parametrosLoseta: FormGroup = new FormGroup({
@@ -307,11 +308,11 @@ export class JuegoComponent {
       this.datoservice.mapaActual[i].pista = false;
     }
 
-    //Generar enemigos iniciales repartidos, los llamaremos "rectador"
+    //Generar enemigos iniciales repartidos, los llamaremos "reptador"
     for (let i = 0; i <= this.datoservice.numeroLosetas; ++i) {
       if (Math.random() < 0.1) {
         // 10% chance to place an enemy
-        this.datoservice.mapaActual[i].enemigos = ['rectador'];
+        this.datoservice.mapaActual[i].enemigos = ['reptador'];
       }
     }
 
@@ -367,32 +368,42 @@ export class JuegoComponent {
     }
   }
 
-arrayConSalidaDeEnemigos(){
-
-  //añadimos los sitios posibles de donde aparencen enemigos
-  this.datoservice.casillasConSalidaEnemigos = [];
-  for (let i = 0; i <= this.datoservice.mapaActual.length - 1; ++i) {
-    if (this.datoservice.mapaActual[i].rutasEnemigos.length > 0) {
-      this.datoservice.casillasConSalidaEnemigos.push(i);
+  arrayConSalidaDeEnemigos() {
+    let array: number[] = [];
+    //añadimos los sitios posibles de donde aparencen enemigos
+    this.datoservice.casillasConSalidaEnemigos = [];
+    for (let i = 0; i <= this.datoservice.mapaActual.length - 1; ++i) {
+      if (
+        this.datoservice.mapaActual[i].rutasEnemigos &&
+        this.datoservice.mapaActual[i].rutasEnemigos.length !== 0
+      ) {
+        /*  this.datoservice.casillasConSalidaEnemigos.push(i)? */
+        array.push(i);
+      }
     }
-  }}
+    return array;
+  }
 
   ronda() {
     if (this.datoservice.casillasConSalidaEnemigos.length === 0) {
-      this.arrayConSalidaDeEnemigos();
+      this.datoservice.casillasConSalidaEnemigos =
+        this.arrayConSalidaDeEnemigos();
       console.log('Casillas de inicio creadas.');
     }
-  
+
     const enemigoAleatorio = Math.floor(Math.random() * 2);
     const losetaAleatoria = Math.floor(
-      Math.random() * this.datoservice.casillasConSalidaEnemigos.length);
-  
+      Math.random() * this.datoservice.casillasConSalidaEnemigos.length
+    );
+
     // Limpiamos el mapa
     for (let i = 0; i < this.datoservice.mapaActual.length; ++i) {
       if (
         this.datoservice.mapaActual[i].visible &&
         (this.datoservice.mapaActual[i].carretera ||
-          this.datoservice.casasDespejadas.includes(this.datoservice.mapaActual[i].casa))
+          this.datoservice.casasDespejadas.includes(
+            this.datoservice.mapaActual[i].casa
+          ))
       ) {
         this.datoservice.mapaActual[i].pista = false;
         this.datoservice.mapaActual[i].enemigos = [];
@@ -400,26 +411,39 @@ arrayConSalidaDeEnemigos(){
         for (let j = 0; j < this.datoservice.Enemigos.length; ++j) {
           for (let k = 0; k < this.datoservice.Enemigos[j].rutas.length; ++k) {
             const ruta = this.datoservice.Enemigos[j].rutas[k];
+
+            /* 
             if (ruta.includes(i)) {
               // Si el enemigo tiene una ruta que pasa por esta casilla, eliminamos esa ruta
               this.datoservice.Enemigos[j].rutas.splice(k, 1);
               k--; // Ajustamos el índice porque eliminamos un elemento
+            } */
+
+            if (ruta[0] == i) {
+              // Si el enemigo tiene una ruta que pasa por esta casilla, eliminamos esa ruta
+              /*  this.datoservice.Enemigos[j].rutas[k].shift(); */
+              this.datoservice.Enemigos[j].rutas.splice(k, 1);
             }
           }
         }
       }
     }
-  
+
     // Movemos a los enemigos
     for (let i = 0; i < this.datoservice.Enemigos.length; ++i) {
       for (let j = 0; j < this.datoservice.Enemigos[i].rutas.length; ++j) {
         const ruta = this.datoservice.Enemigos[i].rutas[j];
         if (ruta.length > 0) {
-          let pasos = Math.min(ruta.length, this.datoservice.Enemigos[i].avance);
+          let pasos = Math.min(
+            ruta.length,
+            this.datoservice.Enemigos[i].avance
+          );
           ruta.splice(0, pasos);
-  
+
           if (ruta.length > 0) {
-            this.datoservice.mapaActual[ruta[0]].enemigos.push(this.datoservice.Enemigos[i].enemigo);
+            this.datoservice.mapaActual[ruta[0]].enemigos.push(
+              this.datoservice.Enemigos[i].enemigo
+            );
           }
         } else {
           this.datoservice.Enemigos[i].rutas.splice(j, 1);
@@ -427,32 +451,40 @@ arrayConSalidaDeEnemigos(){
         }
       }
     }
-  
+
     // Añadimos un nuevo enemigo
-    const nuevaRuta = [...this.datoservice.mapaActual[this.datoservice.casillasConSalidaEnemigos[losetaAleatoria]].rutasEnemigos];
+    //Le añadimos la ruta a seguir al enemigo
+    const nuevaRuta = [
+      ...this.datoservice.mapaActual[
+        this.datoservice.casillasConSalidaEnemigos[losetaAleatoria]
+      ].rutasEnemigos,
+    ];
+
+    console.log('a ver la puta ruta ' + nuevaRuta);
+
     this.datoservice.Enemigos[enemigoAleatorio].rutas.push(nuevaRuta);
-  
-    this.datoservice.mapaActual[this.datoservice.casillasConSalidaEnemigos[losetaAleatoria]].enemigos.push(this.datoservice.Enemigos[enemigoAleatorio].enemigo);
-  
+
+    //marcamos en el mapa la ubicación del enemigo
+    this.datoservice.mapaActual[
+      this.datoservice.casillasConSalidaEnemigos[losetaAleatoria]
+    ].enemigos.push(this.datoservice.Enemigos[enemigoAleatorio].enemigo);
+
     // Incrementamos la ronda
     this.datoservice.ronda++;
   }
 
-
   rondaQUEHICEYOYESTAMAL() {
-
-    if ( this.datoservice.casillasConSalidaEnemigos.length === 0){
+    if (this.datoservice.casillasConSalidaEnemigos.length === 0) {
       this.arrayConSalidaDeEnemigos();
       console.log('creamos las casillas de inicio.');
-      
-      }
+    }
     //creamos un número aleatorio entre los enemigos posibles y sus probabilidades
 
     // Esto lo haré en un futuro, pero ahora sólo me voy a centrar en dos
     const enemigoAleatorio: number = Math.floor(Math.random() * 2);
-    const losetaAleatorias: number = 16
-    
-   /*  Math.floor(
+    const losetaAleatorias: number = 16;
+
+    /*  Math.floor(
       Math.random() * this.datoservice.casillasConSalidaEnemigos.length
     ); */
 
@@ -478,10 +510,9 @@ arrayConSalidaDeEnemigos(){
         //y comprobamos cuanto avanza cada enemigo para dejar atrás y eliminar ese número de casillas
 
         for (let k = 0; k <= this.datoservice.Enemigos[i].avance - 1; ++k) {
-
           if (this.datoservice.Enemigos[i].rutas[j] != undefined) {
             console.log('todo el array' + this.datoservice.Enemigos[i].rutas);
-            
+
             this.datoservice.Enemigos[i].rutas[j].shift();
             console.log('ruta actual' + this.datoservice.Enemigos[i].rutas[j]);
           } else this.datoservice.Enemigos[i].rutas[j].splice(j, 1);
@@ -493,14 +524,17 @@ arrayConSalidaDeEnemigos(){
           this.datoservice.mapaActual[
             this.datoservice.Enemigos[i].rutas[j][0]
           ].enemigos.push(this.datoservice.Enemigos[i].enemigo);
-        }else{this.datoservice.Enemigos[i].rutas.splice(j, 1)}
+        } else {
+          this.datoservice.Enemigos[i].rutas.splice(j, 1);
+        }
       }
     }
 
     console.log(
-      'de aquí sale algo ' + this.datoservice.casillasConSalidaEnemigos[losetaAleatorias]
+      'de aquí sale algo ' +
+        this.datoservice.casillasConSalidaEnemigos[losetaAleatorias]
     );
-// colocamos una nueva ruta/enemigo a los enemigos
+    // colocamos una nueva ruta/enemigo a los enemigos
     this.datoservice.Enemigos[enemigoAleatorio].rutas.push(
       this.datoservice.mapaActual[
         this.datoservice.casillasConSalidaEnemigos[losetaAleatorias]
@@ -516,15 +550,49 @@ arrayConSalidaDeEnemigos(){
     ++this.datoservice.ronda;
   }
 
-  guardarDatos() {
-    const data = JSON.stringify(this.datoservice.mapaActual);
-    localStorage.setItem(this.datoservice.nombreMapaActual, data);
+  obtenerClavesLocalStorage() {
+    this.datoservice.clavesLocalStorage = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const clave = localStorage.key(i);
+      if (clave !== null) {
+        // Verifica si la clave no es nula
+        this.datoservice.clavesLocalStorage.push(clave);
+      }
+    }
   }
-  cargarDatos() {
+  guardarDatos(option: string) {
+    const data = JSON.stringify(this.datoservice.mapaActual);
+    const name: string = this.nombreMapa.value.nombre;
+
+    if (option === 'sobrescribir') {
+      localStorage.setItem(this.datoservice.nombreMapaActual, data);
+    } else if (option === 'nuevo') {
+      localStorage.setItem(name, data);
+    }
+    this.obtenerClavesLocalStorage();
+  }
+
+  cargarDatos(name: string) {
     this.datoservice.casasDespejadas = [];
-    const data = localStorage.getItem(this.datoservice.nombreMapaActual);
+
+    const data = localStorage.getItem(name);
+
     if (data) {
       this.datoservice.mapaActual = JSON.parse(data);
     }
+    this.nombreMapa.reset()
+    this.obtenerClavesLocalStorage();
+  }
+
+  borrarDatos(mapa: string) {
+    const confirmacion = confirm(
+      '¿Estás seguro de que deseas eliminar los datos?'
+    );
+
+    if (confirmacion) {
+      localStorage.removeItem(mapa);
+      alert('Datos eliminados correctamente');
+    }
+    this.obtenerClavesLocalStorage();
   }
 }

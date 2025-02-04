@@ -38,12 +38,12 @@
         *ngIf="
           !mapa.carretera &&
           mapa.visible &&
-          mapa.id <= 52 &&
+          mapa.id <= 55 &&
           this.datoservice.mapaActual[mapa.id + 8].carretera &&
           (this.datoservice.casasDespejadas.includes(
             this.datoservice.mapaActual[mapa.id].casa
           ) ||
-            (mapa.id <= 52 &&
+            (mapa.id <= 55 &&
               this.datoservice.mapaActual[mapa.id + 8].visible)) &&
           (this.datoservice.editar || mapa.puertaInf)
         "
@@ -98,9 +98,9 @@
       </button>
 
       <!-- ruta de salida enemigos -->
-      <span style="font-size: 8px;">{{this.datoservice.mapaActual[mapa.id].rutasEnemigos}} </span>
+      <span *ngIf="this.datoservice.editar" style="font-size: 8px;">{{this.datoservice.mapaActual[mapa.id].rutasEnemigos}} </span>
       <button
-        style="width: 60px; margin-top: 15px; height: 40px;"
+        style="width: 60px; margin-top: 5px; height: 20px;"
         [ngStyle]="this.rutaActual.includes(mapa.id) ? { 'background-color': 'green' } : {}"
         (click)="editarRutas('ruta', mapa.id)"
         *ngIf="this.datoservice.editar && this.datoservice.editarRutas"
@@ -128,7 +128,7 @@
         "
         style="color: green; background-color: greenyellow;"
         >Pista!</span
-      >
+      ><!-- 
 
       <div *ngIf="this.datoservice.editar" style="font-size: 10px">
         <span>cH= {{ mapa.calleH }} ... cV= {{ mapa.calleV }}</span
@@ -136,10 +136,10 @@
         <span>casa= {{ mapa.casa }}</span
         ><br />
        <br />
-      </div>
+      </div> -->
 
-      <span *ngIf="this.datoservice.editar">{{ mapa.id }}</span
-      >
+<span *ngIf="this.datoservice.editar">{{ mapa.id }}</span> 
+
       <button
         (click)="despejar(mapa.id)"
         *ngIf="
@@ -180,9 +180,30 @@
    
     {{this.datoservice.armaEncontrada}}
     <br /><br /><br />
-    <button (click)="guardarDatos()" style="scale: 0.4">Guardar datos</button
-    ><br /><br />
-    <button (click)="cargarDatos()">Cargar datos</button><br /><br />
+
+    <div>Nombre mapa: <br>{{this.nombreMapa.value.nombre}}</div>
+    <details>
+      <summary>Guardar y cargar datos</summary>
+    <button (click)="guardarDatos('sobrescribir')">Sobrescribir actual</button>
+   <br /><br />
+  
+   <form
+   [formGroup]="nombreMapa"
+ >
+   <input
+   formControlName="nombre"
+   type="text"
+   id="nombre"
+   name="nombre"
+   placeholder="Mapa"
+ /></form>
+   <button (click)="guardarDatos('nuevo')">Guardar nuevo</button><br /><br />
+
+   <li *ngIf="this.datoservice.clavesLocalStorage.length === 0">No hay usuarios guardados</li>
+
+  <div *ngFor="let mapa of this.datoservice.clavesLocalStorage">
+       <button (click)="cargarDatos(mapa)">{{mapa}}</button> <button (click)="borrarDatos(mapa)">borrar</button> <br> <br></div>
+  </details>
 
   </div>
 </div>
