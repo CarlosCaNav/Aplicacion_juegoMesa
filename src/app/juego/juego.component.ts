@@ -79,6 +79,8 @@ export class JuegoComponent {
         this.datoservice.mapaActual[i].visible = false;
       }
     }
+
+    this.generarInicio()
   }
   /* 
   Esto también creo que ya no se usa
@@ -323,7 +325,7 @@ export class JuegoComponent {
 
     if (numeroDeCasas <= this.datoservice.pistasIniciales + 5) {
       alert('no hay losetas de casas suficientes');
-    } else {
+          } else {
       //limpia todas las losetas de mostruos y pistas
       for (let i = 0; i <= this.datoservice.numeroLosetas; ++i) {
         this.datoservice.mapaActual[i].enemigos = [];
@@ -475,9 +477,15 @@ export class JuegoComponent {
         }
       }
     }
+//comprobamos si algún enemigo se mueve una casilla más
+    const numeroAleatorio = Math.floor(Math.random() * 100);
+    const enemigoAleatorio = Math.floor(Math.random() * (this.datoservice.fase + 1));
+    if ( numeroAleatorio < this.datoservice.probabilidadAvanceDoble && enemigoAleatorio < this.datoservice.fase + 1){
+alert('Atención, avanza una casilla adicional, los enemigos "' + this.datoservice.Enemigos[enemigoAleatorio].enemigo + '"')
+    }
 
 
-//comprobamos si hay que crementar la fase
+//comprobamos si hay que incrementar la fase
 switch (this.datoservice.ronda){
   case this.datoservice.rondaPrimeraaFase: 
     this.datoservice.fase = 1;

@@ -14,6 +14,7 @@ export class DatosService {
   rondaPrimeraaFase: number = 1;
   rondaSegundaFase: number = 8;
   rondaTerceraFase: number = 99;
+  probabilidadAvanceDoble: number = 1;
   
   ronda: number = 0;
   fase: number = 0; //las diferentes fases para ir subiendo de dificultad
