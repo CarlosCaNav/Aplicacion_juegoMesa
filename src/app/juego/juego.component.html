@@ -6,7 +6,7 @@
       [ngStyle]="
         mapa.visible
           ? { 'background-color': mapa.carretera ? 'grey' : 'orange' }
-          : { 'background-color': 'white' }
+          : { 'background-color': ' rgba(0, 0, 0, 0)' }
       "
     >
       <button
@@ -59,12 +59,12 @@
         *ngIf="
           !mapa.carretera &&
           this.datoservice.mapaActual[mapa.id].visible &&
-          mapa.id <= 63 &&
+          mapa.id < 63 &&
           this.datoservice.mapaActual[mapa.id + 1].carretera &&
           (this.datoservice.casasDespejadas.includes(
             this.datoservice.mapaActual[mapa.id].casa
           ) ||
-            (mapa.id <= 63 &&
+            (mapa.id < 63 &&
               this.datoservice.mapaActual[mapa.id + 1].visible)) &&
           (this.datoservice.editar || mapa.puertaDer)
         "
@@ -109,7 +109,7 @@
       </button>
       <!-- Enemigos -->
        
-      <!-- 
+   
       <span
         *ngIf="
           this.datoservice.editar ||
@@ -120,7 +120,7 @@
         "
         style="color: red"
         >{{ mapa.enemigos[0] }}<br>{{mapa.enemigos[1]}}<br>{{mapa.enemigos[2]}}{{mapa.enemigos[3]}}{{mapa.enemigos[4]}}</span
-      > -->
+      > 
       <span
         *ngIf="
           mapa.pista &&
@@ -142,16 +142,16 @@
 
 <span *ngIf="this.datoservice.editar">{{ mapa.id }}</span> 
 
-      <button
+      <button class="boton"
         (click)="despejar(mapa.id)"
         *ngIf="
           !this.datoservice.editar &&
           !this.datoservice.casasDespejadas.includes(mapa.casa)
-        "
+        " 
       >
         Despejar
       </button>
-      <button
+      <button class="boton"
         (click)="buscar(mapa.casa)"
         *ngIf="
           !this.datoservice.editar  &&
@@ -162,7 +162,7 @@
       </button>
     </div>
   </div>
-  <div>
+  <div style="color: white;">
     <span>Ronda número {{this.datoservice.ronda}}</span><br />
     <button *ngIf="!this.datoservice.editar" (click)="ronda()">Turno de enemigos</button><br />
     <button *ngIf="!this.datoservice.editar" (click)="editar()">Editar</button>
@@ -203,8 +203,10 @@
    <li *ngIf="this.datoservice.clavesLocalStorage.length === 0">No hay usuarios guardados</li>
 
   <div *ngFor="let mapa of this.datoservice.clavesLocalStorage">
-       <button (click)="cargarDatos(mapa)">{{mapa}}</button> <button (click)="borrarDatos(mapa)">borrar</button> <br> <br></div>
+    <button (click)="cargarDatos(mapa)">{{mapa}}</button> <button (click)="borrarDatos(mapa)">borrar</button> <br> <br></div>
+
   </details>
+  <button (click)="descargarJSON()">descargarJSON</button>
 
   </div>
 </div>
