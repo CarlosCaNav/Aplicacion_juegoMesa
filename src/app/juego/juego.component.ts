@@ -390,6 +390,10 @@ export class JuegoComponent {
         this.rutaActual;
       this.rutaActual = [];
     }
+
+    if (accion === 'deshacer') {
+      this.rutaActual = [];
+    }
   }
 
   arrayConSalidaDeEnemigos() {
