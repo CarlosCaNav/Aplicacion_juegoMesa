@@ -118,7 +118,7 @@
               (mapa.casa != '' &&
                 this.datoservice.casasDespejadas.includes(mapa.casa))))
         "
-        style="color: red"
+        style="color: red;  margin-top: -50%;"
         >{{ mapa.enemigos[0] }}<br>{{mapa.enemigos[1]}}<br>{{mapa.enemigos[2]}}{{mapa.enemigos[3]}}{{mapa.enemigos[4]}}</span
       > 
       <span
@@ -128,7 +128,7 @@
             (mapa.casa != '' &&
               this.datoservice.casasDespejadas.includes(mapa.casa)))
         "
-        style="color: green; background-color: greenyellow;"
+        style="color: green; background-color: greenyellow; margin-top: 50%;"
         >Pista!</span>
 
      
@@ -147,7 +147,7 @@
         *ngIf="
           !this.datoservice.editar &&
           !this.datoservice.casasDespejadas.includes(mapa.casa)
-        " 
+          " style="position: absolute;"
       >
         Despejar
       </button>
@@ -156,7 +156,7 @@
         *ngIf="
           !this.datoservice.editar  &&
           this.datoservice.casasDespejadas.includes(mapa.casa)
-        "
+        " style="position: absolute;"
       >
         Buscar
       </button>
@@ -204,9 +204,9 @@
 
   <div *ngFor="let mapa of this.datoservice.clavesLocalStorage">
     <button (click)="cargarDatos(mapa)">{{mapa}}</button> <button (click)="borrarDatos(mapa)">borrar</button> <br> <br></div>
-
+    <br>
+    <button (click)="descargarJSON()">descargarJSON</button>
   </details>
-  <button (click)="descargarJSON()">descargarJSON</button>
 
   </div>
 </div>

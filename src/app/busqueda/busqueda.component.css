@@ -3,8 +3,12 @@
     color: wheat;
     margin-top: -10%;
     margin-bottom: 20px;
+    text-shadow: 2px 2px 40px rgb(0, 0, 0);
 }
 
 .imagen{
     height: 400px;
+    box-shadow: 0px 0px 200px rgb(242, 174, 79);
+    border: 5px solid black;
+    border-radius: 20px;
 }

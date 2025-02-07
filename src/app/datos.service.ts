@@ -6,8 +6,8 @@ import { Mapa } from './interfaz.mapa';
 })
 export class DatosService {
   enemigosIniciales: number = 10;
-  pistasIniciales: number = 10;
-  numeroDeObjetos: number = 20; //numero de objetos en cada casa
+  pistasIniciales: number = 6; //el 0 cuenta
+  numeroDeObjetos: number = 15; //numero de objetos en cada casa
   numeroLosetas: number = 63;
   //dificultad
   mazoEnemigosSimples: number = 15; 

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { DatosService } from '../datos.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-busqueda',
-  imports: [],
+  imports: [NgIf],
   templateUrl: './busqueda.component.html',
   styleUrl: './busqueda.component.css'
 })

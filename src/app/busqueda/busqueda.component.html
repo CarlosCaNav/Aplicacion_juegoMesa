@@ -1,5 +1,5 @@
 <div class="nombre">{{this.datosService.armaEncontrada}}</div>
 
-<div>
-    <img class="imagen" [src]="this.datosService.rutaImagen"  alt="Imagen">
+<div *ngIf="this.datosService.armaEncontrada != 'Nada'">
+    <img class="imagen" [src]="this.datosService.rutaImagen" height="400px" alt="Imagen">
   </div>
