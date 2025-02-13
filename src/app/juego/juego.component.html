@@ -135,7 +135,12 @@
             (mapa.casa != '' &&
               this.datoservice.casasDespejadas.includes(mapa.casa)))
         "
-        style="color: green; background-color: greenyellow; margin-top: 50%; border-radius: 5px;"
+        style="
+          color: green;
+          background-color: greenyellow;
+          margin-top: 50%;
+          border-radius: 5px;
+        "
         >Pista!</span
       >
 
@@ -167,93 +172,129 @@
           !this.datoservice.editar &&
           this.datoservice.casasDespejadas.includes(mapa.casa)
         "
-        style="position: absolute; background-color: yellow; box-shadow: 0px 0px 20px yellow;"
+        style="
+          position: absolute;
+          background-color: yellow;
+          box-shadow: 0px 0px 20px yellow;
+        "
       >
         Buscar
       </button>
     </div>
   </div>
-  <div style="color: white; margin-top: 2vh">
-      <span>Ronda número {{ this.datoservice.ronda }}</span
-      ><br /> <br />
-      <button  *ngIf="this.datoservice.editar" (click)="cargarAleatorio()" 
-      style="background-color: aqua; border: none; border-radius: 10px; box-shadow: 0px 0px 20px aqua;">
-      Empezar con <br> mapa aleatorio</button><br /> <br />
-      <button *ngIf="!this.datoservice.editar" (click)="ronda()" 
-      style="background-color: red; border: none; border-radius: 10px; box-shadow: 0px 0px 20px red;">
-        Turno de los <br> enemigos</button>
-      <div *ngIf="this.datoservice.editar == true" style="color: white; margin-top: 2vh">
-     
+  <div class="menu">
     <div style="color: white; margin-top: 2vh">
-      <button *ngIf="!this.datoservice.editar" (click)="editar()">
-        Editar
-      </button>
-      <button *ngIf="this.datoservice.editar" (click)="editar()">Jugar</button
-      ><br /><br />
+      <span>Ronda número {{ this.datoservice.ronda }}</span
+      ><br />
+      <br />
       <button
         *ngIf="this.datoservice.editar"
-        (click)="editarRutas('alternar', 99)"
+        (click)="cargarAleatorio()"
+        style="
+          background-color: aqua;
+          border: none;
+          border-radius: 10px;
+          box-shadow: 0px 0px 20px aqua;
+        "
       >
-        Crear rutas</button
+        Empezar con <br />
+        mapa aleatorio</button
       ><br />
+      <br />
       <button
-        *ngIf="this.datoservice.editar && this.datoservice.editarRutas"
-        (click)="editarRutas('aplicar', 99)"
+        *ngIf="!this.datoservice.editar"
+        (click)="ronda()"
+        style="
+          background-color: red;
+          border: none;
+          border-radius: 10px;
+          box-shadow: 0px 0px 20px red;
+        "
       >
-        Aplicar ruta actual
-      </button><br>
-      <button
-        *ngIf="this.datoservice.editar && this.datoservice.editarRutas && this.rutaActual.length > 0"
-        (click)="editarRutas('deshacer', 99)"
-      >
-        Deshacer ruta actual
+        Turno de los <br />
+        enemigos
       </button>
-      <br /><br /><br />
+      <div
+        *ngIf="this.datoservice.editar == true"
+        style="color: white; margin-top: 2vh"
+      >
+        <div style="color: white; margin-top: 2vh">
+          <button *ngIf="!this.datoservice.editar" (click)="editar()">
+            Editar
+          </button>
+          <button *ngIf="this.datoservice.editar" (click)="editar()">
+            Jugar</button
+          ><br /><br />
+          <button
+            *ngIf="this.datoservice.editar"
+            (click)="editarRutas('alternar', 99)"
+          >
+            Crear rutas</button
+          ><br />
+          <button
+            *ngIf="this.datoservice.editar && this.datoservice.editarRutas"
+            (click)="editarRutas('aplicar', 99)"
+          >
+            Aplicar ruta actual</button
+          ><br />
+          <button
+            *ngIf="
+              this.datoservice.editar &&
+              this.datoservice.editarRutas &&
+              this.rutaActual.length > 0
+            "
+            (click)="editarRutas('deshacer', 99)"
+          >
+            Deshacer ruta actual
+          </button>
+          <br /><br /><br />
 
-      <button (click)="aplicarAutomaticamente()">calcular visibilidad</button
-      ><br /><br />
-      <button (click)="generarInicio()">Generar inicio</button>
-      <br /><br /><!-- 
+          <button (click)="aplicarAutomaticamente()">
+            calcular visibilidad</button
+          ><br /><br />
+          <button (click)="generarInicio()">Generar inicio</button>
+          <br /><br /><!-- 
     <br /><br /><span *ngFor="let arma of this.datoservice.recursosCasas[0]">{{arma}}<br></span>
     <br /><br /><span *ngFor="let arma of this.datoservice.recursosCasas[1]">{{arma}}<br></span>
     <br /><br />  -->
 
-      {{ this.datoservice.armaEncontrada }}
-      <br /><br /><br />
+          {{ this.datoservice.armaEncontrada }}
+          <br /><br /><br />
 
-      <div>Nombre mapa: <br />{{ this.nombreMapa.value.nombre }}</div>
-      <details>
-        <summary>Guardar y cargar datos</summary>
-        <button (click)="guardarDatos('sobrescribir')">
-          Sobrescribir actual
-        </button>
-        <br /><br />
+          <div>Nombre mapa: <br />{{ this.nombreMapa.value.nombre }}</div>
+          <details>
+            <summary>Guardar y cargar datos</summary>
+            <button (click)="guardarDatos('sobrescribir')">
+              Sobrescribir actual
+            </button>
+            <br /><br />
 
-        <form [formGroup]="nombreMapa">
-          <input
-            formControlName="nombre"
-            type="text"
-            id="nombre"
-            name="nombre"
-            placeholder="Mapa"
-          />
-        </form>
-        <button (click)="guardarDatos('nuevo')">Guardar nuevo</button
-        ><br /><br />
+            <form [formGroup]="nombreMapa">
+              <input
+                formControlName="nombre"
+                type="text"
+                id="nombre"
+                name="nombre"
+                placeholder="Mapa"
+              />
+            </form>
+            <button (click)="guardarDatos('nuevo')">Guardar nuevo</button
+            ><br /><br />
 
-        <li *ngIf="this.datoservice.clavesLocalStorage.length === 0">
-          No hay usuarios guardados
-        </li>
+            <li *ngIf="this.datoservice.clavesLocalStorage.length === 0">
+              No hay usuarios guardados
+            </li>
 
-        <div *ngFor="let mapa of this.datoservice.clavesLocalStorage">
-          <button (click)="cargarDatos(mapa)">{{ mapa }}</button>
-          <button (click)="borrarDatos(mapa)">borrar</button> <br />
-          <br />
+            <div *ngFor="let mapa of this.datoservice.clavesLocalStorage">
+              <button (click)="cargarDatos(mapa)">{{ mapa }}</button>
+              <button (click)="borrarDatos(mapa)">borrar</button> <br />
+              <br />
+            </div>
+            <br />
+            <button (click)="descargarJSON()">descargarJSON</button>
+          </details>
         </div>
-        <br />
-        <button (click)="descargarJSON()">descargarJSON</button>
-      </details>
+      </div>
     </div>
   </div>
-</div>
 </div>
