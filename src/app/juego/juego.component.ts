@@ -1,7 +1,11 @@
 import { NgFor, NgIf, NgStyle } from '@angular/common';
 import { Component } from '@angular/core';
 import { DatosService } from '../datos.service';
+import { MapasService } from '../mapas.service';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { get } from '@angular/fire/database';
 
 @Component({
   selector: 'app-juego',
@@ -10,7 +14,7 @@ import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
   styleUrl: './juego.component.css',
 })
 export class JuegoComponent {
-  constructor(public datoservice: DatosService) {
+  constructor(public datoservice: DatosService, public mapasService: MapasService, private http: HttpClient) {
     this.crearmapa();
     this.obtenerClavesLocalStorage();
   }
@@ -356,14 +360,14 @@ export class JuegoComponent {
       let resultado: number = 0;
       for (
         var i = 8888888888888888888888888888888888888888888888888888888888888888888888888;
-        pistas.length <= this.datoservice.pistasIniciales;
+        pistas.length <= this.datoservice.pistasIniciales - 1;
         'holi'
       ) {
         resultado = this.generarPistasRecursivamente(casas.length);
         if (!pistas.includes(casas[resultado])) {
           pistas.push(casas[resultado]);
         }
-      }
+      } 
       for (i = 0; i <= pistas.length - 1; ++i) {
         this.datoservice.mapaActual[pistas[i]].pista = true;
       }
@@ -453,7 +457,7 @@ export class JuegoComponent {
           }
         }
       }
-    }
+    }    
 
     // Movemos a los enemigos
     for (let i = 0; i < this.datoservice.Enemigos.length; ++i) {
@@ -493,8 +497,9 @@ switch (this.datoservice.ronda){
   case this.datoservice.rondaSegundaFase: 
     this.datoservice.fase = 2;
     break;
-  case this.datoservice.rondaPrimeraaFase: 
-    this.datoservice.fase = 4;
+  case this.datoservice.rondaTerceraFase: 
+    this.datoservice.fase = 3;
+    alert('Aparece el primigenio en una casilla aleatoria')
     break;
 }
 
@@ -618,5 +623,25 @@ descargarJSON(){/*
       alert('Datos eliminados correctamente');
     }
     this.obtenerClavesLocalStorage();
+  }
+
+  cargarAleatorio() {
+    const inicioJugadores:number = Math.floor(Math.random() * this.datoservice.numeroLosetas);
+
+
+      this.datoservice.mapaActual = this.mapasService.cargarMapaAleatorio();
+      setTimeout(() => {
+        this.aplicarAutomaticamente();
+        setTimeout(() => {
+          this.editar()
+this.datoservice.mapaActual[inicioJugadores].visible = true;
+        }, 2000);
+      }, 2000);
+
+
+      /* 
+     this.aplicarAutomaticamente();
+     this.generarInicio(); */
+    
   }
 }

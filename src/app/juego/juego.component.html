@@ -135,7 +135,7 @@
             (mapa.casa != '' &&
               this.datoservice.casasDespejadas.includes(mapa.casa)))
         "
-        style="color: green; background-color: greenyellow; margin-top: 50%"
+        style="color: green; background-color: greenyellow; margin-top: 50%; border-radius: 5px;"
         >Pista!</span
       >
 
@@ -167,7 +167,7 @@
           !this.datoservice.editar &&
           this.datoservice.casasDespejadas.includes(mapa.casa)
         "
-        style="position: absolute"
+        style="position: absolute; background-color: yellow; box-shadow: 0px 0px 20px yellow;"
       >
         Buscar
       </button>
@@ -176,8 +176,12 @@
   <div style="color: white; margin-top: 2vh">
       <span>Ronda número {{ this.datoservice.ronda }}</span
       ><br /> <br />
-      <button *ngIf="!this.datoservice.editar" (click)="ronda()">
-        Turno de enemigos</button>
+      <button  *ngIf="this.datoservice.editar" (click)="cargarAleatorio()" 
+      style="background-color: aqua; border: none; border-radius: 10px; box-shadow: 0px 0px 20px aqua;">
+      Empezar con <br> mapa aleatorio</button><br /> <br />
+      <button *ngIf="!this.datoservice.editar" (click)="ronda()" 
+      style="background-color: red; border: none; border-radius: 10px; box-shadow: 0px 0px 20px red;">
+        Turno de los <br> enemigos</button>
       <div *ngIf="this.datoservice.editar == true" style="color: white; margin-top: 2vh">
      
     <div style="color: white; margin-top: 2vh">

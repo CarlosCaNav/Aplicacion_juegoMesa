@@ -6,16 +6,16 @@ import { Mapa } from './interfaz.mapa';
 })
 export class DatosService {
   enemigosIniciales: number = 10;
-  pistasIniciales: number = 6; //el 0 cuenta
+  pistasIniciales: number = 8; 
   numeroDeObjetos: number = 15; //numero de objetos en cada casa
-  numeroLosetas: number = 63;
-  //dificultad
-  mazoEnemigosSimples: number = 15; 
+    //dificultad
+  mazoEnemigosSimples: number = 15; // a partir de qué ronda aparece un segundo enemigo en cada ronda. Hasta entonces, la probabilidad de que aparezca es progresiva.
   rondaPrimeraaFase: number = 1;
   rondaSegundaFase: number = 8;
-  rondaTerceraFase: number = 99;
-  probabilidadAvanceDoble: number = 1;
+  rondaTerceraFase: number = 20;
+  probabilidadAvanceDoble: number = 8; //sobre 100
   
+  numeroLosetas: number = 63;
   ronda: number = 0;
   fase: number = 0; //las diferentes fases para ir subiendo de dificultad
   armaEncontrada: string = '';
