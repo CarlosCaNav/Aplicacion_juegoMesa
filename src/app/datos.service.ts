@@ -12,13 +12,16 @@ export class DatosService {
   mazoEnemigosSimples: number = 15; // a partir de qué ronda aparece un segundo enemigo en cada ronda. Hasta entonces, la probabilidad de que aparezca es progresiva.
   rondaPrimeraaFase: number = 1;
   rondaSegundaFase: number = 8;
-  rondaTerceraFase: number = 20;
+  rondaTerceraFase: number = 18;
+  rondaCuartaFase: number = 25;
   probabilidadAvanceDoble: number = 8; //sobre 100
   
   numeroLosetas: number = 63;
   ronda: number = 0;
   fase: number = 0; //las diferentes fases para ir subiendo de dificultad
+  pistasEncontradas: number = 0;
   armaEncontrada: string = '';
+  casillaPrimigenio: number = 0;
   rutaImagen: string = '';
   editar: boolean = true;
   editarRutas: boolean = false;
@@ -90,6 +93,19 @@ export class DatosService {
 
 actualizarImagen() {
   this.rutaImagen = this.imagenes[this.armaEncontrada] || 'assets/images/default.jpg';
+}
+pistas(operacion: string){
+  if (operacion === 'sumar') {
+    this.pistasEncontradas++;
+  } else {
+    this.pistasEncontradas--;
+  }
+  if (this.pistasEncontradas === 2 && this.fase === 3 && this.mapaActual[this.casillaPrimigenio].visible === false){
+    this.mapaActual[this.casillaPrimigenio].visible = true;
+  }
+  if(this.pistasEncontradas == 3){
+    alert('El primigenio pierde 10 puntos de vida')
+  }
 }
   
 }

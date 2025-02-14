@@ -17,6 +17,9 @@ export class JuegoComponent {
   constructor(public datoservice: DatosService, public mapasService: MapasService, private http: HttpClient) {
     this.crearmapa();
     this.obtenerClavesLocalStorage();
+    if (/Mobi|Android/i.test(navigator.userAgent)) {
+      this.cargarAleatorio();
+    }
   }
 
   /* 
@@ -499,8 +502,20 @@ switch (this.datoservice.ronda){
     break;
   case this.datoservice.rondaTerceraFase: 
     this.datoservice.fase = 3;
-    alert('Aparece el primigenio en una casilla aleatoria')
+    alert('El primigenio está despertando')
+    const numeroAleatorio = Math.floor(Math.random() * this.datoservice.numeroLosetas);
+    this.datoservice.mapaActual[numeroAleatorio].enemigos.push('PRIMIGENIO');
+    this.datoservice.casillaPrimigenio = numeroAleatorio;
+    if (this.datoservice.mapaActual[numeroAleatorio].visible == false){
+    {if (this.datoservice.pistasEncontradas >= 2){
+      this.datoservice.mapaActual[numeroAleatorio].visible = true;
+    }}
+    }
     break;
+    case this.datoservice.rondaCuartaFase: 
+      this.datoservice.fase = 4;
+      alert('El primigenio ha despertado, los investigadores pierden la partida')
+      break;
 }
 
 console.log('la fase es ' + this.datoservice.fase);
@@ -635,8 +650,8 @@ descargarJSON(){/*
         setTimeout(() => {
           this.editar()
 this.datoservice.mapaActual[inicioJugadores].visible = true;
-        }, 2000);
-      }, 2000);
+        }, 1000);
+      }, 1000);
 
 
       /* 

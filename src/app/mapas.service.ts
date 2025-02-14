@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MapasService {
-  constructor(public datosService: DatosService, private http: HttpClient) { }
+  constructor(public datosService: DatosService, private http: HttpClient) {   }
 
   private valenzuela = '/mapas/valenzuela_city.json';
   private bolanios = '/mapas/bolanios.json';
