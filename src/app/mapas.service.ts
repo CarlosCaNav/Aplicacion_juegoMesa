@@ -13,9 +13,10 @@ export class MapasService {
   private bolanios = '/mapas/bolanios.json';
   private almagro = '/mapas/almagro.json';
   private primer = '/mapas/primer.json';
+  private galo = '/mapas/galo.json';
 
 
-  mapasDisponibles: string[] = [this.valenzuela,this.bolanios,this.almagro,this.primer];
+  mapasDisponibles: string[] = [this.valenzuela,this.bolanios,this.almagro,this.primer,this.galo];
 /* 
   cargarMapa(): Observable<any> {
     return this.http.get(this.valenzuela);
@@ -26,6 +27,8 @@ export class MapasService {
 cargarMapaAleatorio(){
   const aleatorio = Math.floor(Math.random() * this.mapasDisponibles.length);
 
+  console.log(aleatorio);
+  
 let mapa: any[] = []
 
    this.http.get<any[]>(this.mapasDisponibles[aleatorio]).subscribe(data => {

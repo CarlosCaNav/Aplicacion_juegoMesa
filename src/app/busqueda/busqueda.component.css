@@ -12,3 +12,15 @@
     border: 5px solid black;
     border-radius: 20px;
 }
+
+
+@media (max-width: 768px) {
+    .nombre{
+        font-size: 40px;
+        margin-top: -10vh;
+    }
+    .imagen{
+        width: 90vw;
+        height: 68vw;
+    }
+}

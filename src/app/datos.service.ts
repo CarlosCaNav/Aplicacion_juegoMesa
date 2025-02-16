@@ -55,10 +55,10 @@ export class DatosService {
   armasMunicion: { arma: string; probabilidad: number }[] = [
     { arma: 'Palanca', probabilidad: 6 },
     { arma: 'Hacha', probabilidad: 5 },
-    { arma: 'Espada', probabilidad: 5 },
+    { arma: 'Espada', probabilidad: 4 },
     { arma: 'Pistola', probabilidad: 6 },
     { arma: 'Escopeta', probabilidad: 5 },
-    { arma: 'Rifle', probabilidad: 5 },
+    { arma: 'Rifle', probabilidad: 4 },
     { arma: 'Munición Pistola', probabilidad: 8 },
     { arma: 'Munición Escopeta', probabilidad: 7 },
     { arma: 'Munición Rifle', probabilidad: 5 },
@@ -71,7 +71,8 @@ export class DatosService {
     { enemigo: 'reptador', rutas: [], fase: 0, probabilidad: 1, avance: 1, vida: 2},
     { enemigo: 'caminante', rutas: [], fase: 1, probabilidad: 4, avance: 2, vida: 2},
     { enemigo: 'Gordo', rutas: [], fase: 2, probabilidad: 2, avance: 1, vida: 5},
-    { enemigo: 'Primigenio', rutas: [], fase: 3, probabilidad: 0, avance: 1, vida: 2},
+    { enemigo: 'Gordo', rutas: [], fase: 3, probabilidad: 2, avance: 1, vida: 5}, //lo repito para que en la fase 3 haya más gordos
+    { enemigo: 'Primigenio', rutas: [], fase: 4, probabilidad: 0, avance: 1, vida: 2},
   ];
   
 
