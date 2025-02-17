@@ -14,7 +14,11 @@ import { get } from '@angular/fire/database';
   styleUrl: './juego.component.css',
 })
 export class JuegoComponent {
-  constructor(public datoservice: DatosService, public mapasService: MapasService, private http: HttpClient) {
+  constructor(
+    public datoservice: DatosService,
+    public mapasService: MapasService,
+    private http: HttpClient
+  ) {
     this.crearmapa();
     this.obtenerClavesLocalStorage();
     if (/Mobi|Android/i.test(navigator.userAgent)) {
@@ -87,7 +91,7 @@ export class JuegoComponent {
       }
     }
 
-    this.generarInicio()
+    this.generarInicio();
   }
   /* 
   Esto también creo que ya no se usa
@@ -136,7 +140,7 @@ export class JuegoComponent {
       } else {
         casa++;
       }
-    } 
+    }
     //prepara las contiguas verticales
     for (var i = 0; i <= 7; ++i) {
       for (var j = 0; j <= 63; j += 8) {
@@ -150,17 +154,18 @@ export class JuegoComponent {
           provisional != ''
         ) {
           for (var k = 0; k < this.datoservice.numeroLosetas; ++k) {
-            if (provisional === this.datoservice.mapaActual[k].casa
-            ) {
-              this.datoservice.mapaActual[k].casa = this.datoservice.mapaActual[j + i].casa;
+            if (provisional === this.datoservice.mapaActual[k].casa) {
+              this.datoservice.mapaActual[k].casa =
+                this.datoservice.mapaActual[j + i].casa;
             }
           }
-          provisional = this.datoservice.mapaActual[j + i].casa
+          provisional = this.datoservice.mapaActual[j + i].casa;
         } else {
           provisional = '';
         }
-      }provisional = '';
-    } 
+      }
+      provisional = '';
+    }
 
     // prepara las contiguas horizontales
     for (var i = 0; i <= this.datoservice.numeroLosetas; ++i) {
@@ -217,7 +222,6 @@ export class JuegoComponent {
       Math.random() * this.datoservice.numeroDeObjetos
     );
 
-
     this.datoservice.armaEncontrada = '';
 
     if (this.datoservice.idenficadorCasas.length == 0) {
@@ -241,9 +245,8 @@ export class JuegoComponent {
       this.datoservice.idenficadorCasas.push(casa);
       this.buscar(casa);
     }
-    this.datoservice.actualizarImagen()
+    this.datoservice.actualizarImagen();
     console.log(this.datoservice.rutaImagen);
-    
   }
 
   puerta(id: number, posicion: string) {
@@ -326,13 +329,13 @@ export class JuegoComponent {
     let numeroDeCasas: number = 0;
     for (let i = 0; i <= this.datoservice.numeroLosetas; ++i) {
       if (this.datoservice.mapaActual[i].carretera === false) {
-        numeroDeCasas++;        
+        numeroDeCasas++;
       }
     }
 
     if (numeroDeCasas <= this.datoservice.pistasIniciales + 5) {
       alert('no hay losetas de casas suficientes');
-          } else {
+    } else {
       //limpia todas las losetas de mostruos y pistas
       for (let i = 0; i <= this.datoservice.numeroLosetas; ++i) {
         this.datoservice.mapaActual[i].enemigos = [];
@@ -370,7 +373,7 @@ export class JuegoComponent {
         if (!pistas.includes(casas[resultado])) {
           pistas.push(casas[resultado]);
         }
-      } 
+      }
       for (i = 0; i <= pistas.length - 1; ++i) {
         this.datoservice.mapaActual[pistas[i]].pista = true;
       }
@@ -428,7 +431,6 @@ export class JuegoComponent {
       console.log('Casillas de inicio creadas.');
     }
 
-
     // Limpiamos el mapa
     for (let i = 0; i < this.datoservice.mapaActual.length; ++i) {
       if (
@@ -441,9 +443,9 @@ export class JuegoComponent {
         this.datoservice.mapaActual[i].pista = false;
         this.datoservice.mapaActual[i].enemigos = [];
         // Eliminamos las rutas de los enemigos que estaban en esta casilla
-        for (let j = 0; j < this.datoservice.Enemigos.length; ++j) {
-          for (let k = 0; k < this.datoservice.Enemigos[j].rutas.length; ++k) {
-            const ruta = this.datoservice.Enemigos[j].rutas[k];
+        for (let j = 0; j < this.datoservice.enemigos.length; ++j) {
+          for (let k = 0; k < this.datoservice.enemigos[j].rutas.length; ++k) {
+            const ruta = this.datoservice.enemigos[j].rutas[k];
 
             /* 
             if (ruta.includes(i)) {
@@ -455,95 +457,123 @@ export class JuegoComponent {
             if (ruta[0] == i) {
               // Si el enemigo tiene una ruta que pasa por esta casilla, eliminamos esa ruta
               /*  this.datoservice.Enemigos[j].rutas[k].shift(); */
-              this.datoservice.Enemigos[j].rutas.splice(k, 1);
+              this.datoservice.enemigos[j].rutas.splice(k, 1);
             }
           }
         }
       }
-    }    
+    }
 
     // Movemos a los enemigos
-    for (let i = 0; i < this.datoservice.Enemigos.length; ++i) {
-      for (let j = 0; j < this.datoservice.Enemigos[i].rutas.length; ++j) {
-        const ruta = this.datoservice.Enemigos[i].rutas[j];
+    for (let i = 0; i < this.datoservice.enemigos.length; ++i) {
+      for (let j = 0; j < this.datoservice.enemigos[i].rutas.length; ++j) {
+        const ruta = this.datoservice.enemigos[i].rutas[j];
         if (ruta.length > 0) {
           let pasos = Math.min(
             ruta.length,
-            this.datoservice.Enemigos[i].avance
+            this.datoservice.enemigos[i].avance
           );
           ruta.splice(0, pasos);
 
           if (ruta.length > 0) {
             this.datoservice.mapaActual[ruta[0]].enemigos.push(
-              this.datoservice.Enemigos[i].enemigo
+              this.datoservice.enemigos[i].enemigo
             );
           }
         } else {
-          this.datoservice.Enemigos[i].rutas.splice(j, 1);
+          this.datoservice.enemigos[i].rutas.splice(j, 1);
           j--;
         }
       }
     }
-//comprobamos si algún enemigo se mueve una casilla más
+    //comprobamos si algún enemigo se mueve una casilla más
     const numeroAleatorio = Math.floor(Math.random() * 100);
-    const enemigoAleatorio = Math.floor(Math.random() * (this.datoservice.fase + 1));
-    if ( numeroAleatorio < this.datoservice.probabilidadAvanceDoble && enemigoAleatorio < this.datoservice.fase + 1){
-alert('Atención, avanza una casilla adicional, los enemigos "' + this.datoservice.Enemigos[enemigoAleatorio].enemigo + '"')
+    const enemigoAleatorio = Math.floor(
+      Math.random() * (this.datoservice.fase + 1)
+    );
+    if (
+      numeroAleatorio < this.datoservice.probabilidadAvanceDoble &&
+      enemigoAleatorio < this.datoservice.fase + 1
+    ) {
+      alert(
+        'Atención, avanza una casilla adicional, los enemigos "' +
+          this.datoservice.enemigos[enemigoAleatorio].enemigo +
+          '"'
+      );
     }
 
-
-//comprobamos si hay que incrementar la fase
-switch (this.datoservice.ronda){
-  case this.datoservice.rondaPrimeraaFase: 
-    this.datoservice.fase = 1;
-    break;
-  case this.datoservice.rondaSegundaFase: 
-    this.datoservice.fase = 2;
-    break;
-  case this.datoservice.rondaTerceraFase: 
-    this.datoservice.fase = 3;
-    alert('El primigenio está despertando')
-    const numeroAleatorio = Math.floor(Math.random() * this.datoservice.numeroLosetas);
-    this.datoservice.mapaActual[numeroAleatorio].enemigos.push('PRIMIGENIO');
-    this.datoservice.casillaPrimigenio = numeroAleatorio;
-    if (this.datoservice.mapaActual[numeroAleatorio].visible == false){
-    {if (this.datoservice.pistasEncontradas >= 2){
-      this.datoservice.mapaActual[numeroAleatorio].visible = true;
-    }}
+    //comprobamos si hay que incrementar la fase
+    switch (this.datoservice.ronda) {
+      case this.datoservice.rondaPrimeraaFase:
+        this.datoservice.fase = 1;
+        break;
+      case this.datoservice.rondaSegundaFase:
+        this.datoservice.fase = 2;
+        break;
+      case this.datoservice.rondaTerceraFase:
+        this.datoservice.fase = 3;
+        alert('El primigenio está despertando');
+        const numeroAleatorio = Math.floor(
+          Math.random() * this.datoservice.numeroLosetas
+        );
+        this.datoservice.mapaActual[numeroAleatorio].enemigos.push(
+          'PRIMIGENIO'
+        );
+        this.datoservice.casillaPrimigenio = numeroAleatorio;
+        if (this.datoservice.mapaActual[numeroAleatorio].visible == false) {
+          {
+            if (this.datoservice.pistasEncontradas >= 2) {
+              this.datoservice.mapaActual[numeroAleatorio].visible = true;
+            }
+          }
+        }
+        break;
+      case this.datoservice.rondaCuartaFase:
+        this.datoservice.fase = 4;
+        alert(
+          'El primigenio ha despertado, los investigadores pierden la partida'
+        );
+        break;
     }
-    break;
-    case this.datoservice.rondaCuartaFase: 
-      this.datoservice.fase = 4;
-      alert('El primigenio ha despertado, los investigadores pierden la partida')
-      break;
-}
 
-console.log('la fase es ' + this.datoservice.fase);
-
-
-
+    console.log('la fase es ' + this.datoservice.fase);
 
     //creamos enemigos nuevos
     //creamos el primer enemigo obligatorio
-    this.nuevoEnemigo()
+    this.nuevoEnemigo();
     //comprobamos si añadimos un segundo
-    if (this.datoservice.ronda > this.datoservice.mazoEnemigosSimples){
-      this.nuevoEnemigo()
-    }else {
-      const numeroPosibleAleatorio = Math.floor(Math.random() * (this.datoservice.mazoEnemigosSimples - this.datoservice.ronda));
-      console.log('el número es ' + numeroPosibleAleatorio + 'y el posible' + (this.datoservice.mazoEnemigosSimples - this.datoservice.ronda));
-      if (numeroPosibleAleatorio === 0){this.nuevoEnemigo()}
+    if (this.datoservice.ronda > this.datoservice.mazoEnemigosSimples) {
+      this.nuevoEnemigo();
+    } else {
+      const numeroPosibleAleatorio = Math.floor(
+        Math.random() *
+          (this.datoservice.mazoEnemigosSimples - this.datoservice.ronda)
+      );
+      console.log(
+        'el número es ' +
+          numeroPosibleAleatorio +
+          'y el posible' +
+          (this.datoservice.mazoEnemigosSimples - this.datoservice.ronda)
+      );
+      if (numeroPosibleAleatorio === 0) {
+        this.nuevoEnemigo();
+      }
     }
 
     // Incrementamos la ronda
     this.datoservice.ronda++;
+    
+    // Guardamos los datos
+    this.guardadoAutomatico();
   }
 
-  nuevoEnemigo(){
-    //El enemigo aleatorio hay que cambiarlo en un futuro, ya que ahora hay sólo 4, 
+  nuevoEnemigo() {
+    //El enemigo aleatorio hay que cambiarlo en un futuro, ya que ahora hay sólo 4,
     // pero en el futuro puede haber diferentes enemigos en una misma fase.
     //a demás no cuenta la probabilidad de cada uno
-    const enemigoAleatorio = Math.floor(Math.random() * (this.datoservice.fase + 1));
+    const enemigoAleatorio = Math.floor(
+      Math.random() * (this.datoservice.fase + 1)
+    );
     const losetaAleatoria = Math.floor(
       Math.random() * this.datoservice.casillasConSalidaEnemigos.length
     );
@@ -556,19 +586,16 @@ console.log('la fase es ' + this.datoservice.fase);
       ].rutasEnemigos,
     ];
 
-    this.datoservice.Enemigos[enemigoAleatorio].rutas.push(nuevaRuta);
+    this.datoservice.enemigos[enemigoAleatorio].rutas.push(nuevaRuta);
 
     //marcamos en el mapa la ubicación del enemigo
     this.datoservice.mapaActual[
       this.datoservice.casillasConSalidaEnemigos[losetaAleatoria]
-    ].enemigos.push(this.datoservice.Enemigos[enemigoAleatorio].enemigo);
-}
+    ].enemigos.push(this.datoservice.enemigos[enemigoAleatorio].enemigo);
+  }
 
-
-
-
-
-descargarJSON(){/* 
+  descargarJSON() {
+    /* 
   const data = localStorage.getItem(this.datoservice.nombreMapaActual);
 
   if (data) {
@@ -576,22 +603,20 @@ descargarJSON(){/*
   }
  */
 
-  const jsonString = localStorage.getItem(this.datoservice.nombreMapaActual);
+    const jsonString = localStorage.getItem(this.datoservice.nombreMapaActual);
 
-  if (jsonString) {
-    const blob = new Blob([jsonString], { type: 'application/json' });
-    const url = window.URL.createObjectURL(blob);
+    if (jsonString) {
+      const blob = new Blob([jsonString], { type: 'application/json' });
+      const url = window.URL.createObjectURL(blob);
 
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', this.datoservice.nombreMapaActual);
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', this.datoservice.nombreMapaActual);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
   }
-}
-
 
   obtenerClavesLocalStorage() {
     this.datoservice.clavesLocalStorage = [];
@@ -613,6 +638,61 @@ descargarJSON(){/*
       localStorage.setItem(name, data);
     }
     this.obtenerClavesLocalStorage();
+  }
+
+  guardadoAutomatico() {
+    const autoguardado = [this.datoservice.mapaActual, this.datoservice.enemigos, this.datoservice.ronda, this.datoservice.pistasEncontradas, this.datoservice.armaEncontrada, this.datoservice.casillaPrimigenio, this.datoservice.rutaImagen, this.datoservice.editar, this.datoservice.editarRutas, this.datoservice.nombreMapaActual, this.datoservice.casillasConSalidaEnemigos, this.datoservice.casasDespejadas, this.datoservice.recursosCasas, this.datoservice.idenficadorCasas, this.datoservice.clavesLocalStorage, this.datoservice.emergenteMostrado];
+  const data = JSON.stringify(autoguardado);
+  
+  localStorage.setItem('autoguardado', data);
+    /*  const dataMapa = JSON.stringify(this.datoservice.mapaActual);
+    const dataEnemigos = JSON.stringify(this.datoservice.enemigos);
+    const nameMapa: string = 'autoguardadoMapa';
+    const nameEnemigos: string = 'autoguardadoEnemigos';
+
+    localStorage.setItem(nameMapa, dataMapa);
+    localStorage.setItem(nameEnemigos, dataEnemigos); */
+  }
+
+  cargarPartidaAnterior() {
+    const data = localStorage.getItem('autoguardado');
+    if (data) {
+      const [
+        mapaActual,
+        enemigos,
+        ronda,
+        pistasEncontradas,
+        armaEncontrada,
+        casillaPrimigenio,
+        rutaImagen,
+        editar,
+        editarRutas,
+        nombreMapaActual,
+        casillasConSalidaEnemigos,
+        casasDespejadas,
+        recursosCasas,
+        idenficadorCasas,
+        clavesLocalStorage,
+        emergenteMostrado
+      ] = JSON.parse(data);
+
+      this.datoservice.mapaActual = mapaActual;
+      this.datoservice.enemigos = enemigos;
+      this.datoservice.ronda = ronda;
+      this.datoservice.pistasEncontradas = pistasEncontradas;
+      this.datoservice.armaEncontrada = armaEncontrada;
+      this.datoservice.casillaPrimigenio = casillaPrimigenio;
+      this.datoservice.rutaImagen = rutaImagen;
+      this.datoservice.editar = editar;
+      this.datoservice.editarRutas = editarRutas;
+      this.datoservice.nombreMapaActual = nombreMapaActual;
+      this.datoservice.casillasConSalidaEnemigos = casillasConSalidaEnemigos;
+      this.datoservice.casasDespejadas = casasDespejadas;
+      this.datoservice.recursosCasas = recursosCasas;
+      this.datoservice.idenficadorCasas = idenficadorCasas;
+      this.datoservice.clavesLocalStorage = clavesLocalStorage;
+      this.datoservice.emergenteMostrado = emergenteMostrado;
+    }
   }
 
   cargarDatos(name: string) {
@@ -641,22 +721,21 @@ descargarJSON(){/*
   }
 
   cargarAleatorio() {
-    const inicioJugadores:number = Math.floor(Math.random() * this.datoservice.numeroLosetas);
+    const inicioJugadores: number = Math.floor(
+      Math.random() * this.datoservice.numeroLosetas
+    );
 
-
-      this.datoservice.mapaActual = this.mapasService.cargarMapaAleatorio();
+    this.datoservice.mapaActual = this.mapasService.cargarMapaAleatorio();
+    setTimeout(() => {
+      this.aplicarAutomaticamente();
       setTimeout(() => {
-        this.aplicarAutomaticamente();
-        setTimeout(() => {
-          this.editar()
-this.datoservice.mapaActual[inicioJugadores].visible = true;
-        }, 1000);
+        this.editar();
+        this.datoservice.mapaActual[inicioJugadores].visible = true;
       }, 1000);
+    }, 1000);
 
-
-      /* 
+    /* 
      this.aplicarAutomaticamente();
      this.generarInicio(); */
-    
   }
 }

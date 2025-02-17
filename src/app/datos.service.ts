@@ -67,7 +67,7 @@ export class DatosService {
     { arma: 'Molotov', probabilidad: 1 },
   ];
 
-  Enemigos: { enemigo: string; rutas: Array<number>[];fase: number; probabilidad: number; avance: number; vida: number}[] = [
+  enemigos: { enemigo: string; rutas: Array<number>[];fase: number; probabilidad: number; avance: number; vida: number}[] = [
     { enemigo: 'reptador', rutas: [], fase: 0, probabilidad: 1, avance: 1, vida: 2},
     { enemigo: 'caminante', rutas: [], fase: 1, probabilidad: 4, avance: 2, vida: 2},
     { enemigo: 'Gordo', rutas: [], fase: 2, probabilidad: 2, avance: 1, vida: 5},

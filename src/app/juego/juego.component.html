@@ -200,6 +200,19 @@
       >
         Empezar con <br />
         mapa aleatorio</button
+      ><br /><br />
+      <button
+        *ngIf="this.datoservice.editar"
+        (click)="cargarPartidaAnterior()"
+        style="
+          background-color: greenyellow;
+          border: none;
+          border-radius: 10px;
+          box-shadow: 0px 0px 20px greenyellow;
+        "
+      >
+        Continuar la <br />
+        partida anterior</button
       ><br />
       <button
         *ngIf="!this.datoservice.editar"
