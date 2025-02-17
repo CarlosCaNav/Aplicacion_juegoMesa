@@ -29,45 +29,32 @@
   justify-content: center;
 }
 
-.puertaDer {
+.puertas{
   position: absolute;
   z-index: 2;
+  background-color: rgba(82, 15, 15, 0.178);
+  border: none;
+  border-radius: 0.5vh;}
+
+.puertaDer {
   height: 5vh;
   width: 2vh;
   margin-left: 10vh;
-  background-color: rgba(82, 15, 15, 0.178);
-  border: none;
-  border-radius: 0.5vh;
 }
 .puertaIzq {
-  position: absolute;
-  z-index: 2;
   height: 5vh;
   width: 2vh;
   margin-left: -10vh;
-  background-color: rgba(82, 15, 15, 0.178);
-  border: none;
-  border-radius: 0.5vh;
 }
 .puertaInf {
-  position: absolute;
-  z-index: 2;
   height: 2vh;
   width: 5vh;
   margin-top: 10vh;
-  background-color: rgba(82, 15, 15, 0.178);
-  border: none;
-  border-radius: 0.5vh;
 }
 .puertaSup {
-  position: absolute;
-  z-index: 2;
   height: 2vh;
   width: 5vh;
   margin-top: -10vh;
-  background-color: rgba(82, 15, 15, 0.178);
-  border: none;
-  border-radius: 0.5vh;
 }
 .boton {
   background-color: rgba(196, 196, 196, 0.384);
@@ -114,32 +101,41 @@
     justify-content: center;
   }
 
+  .puertas{
+    border-radius: 0.5vw;
+  }
   .puertaDer {
     height: 5vw;
     width: 2vw;
     margin-left: 10vw;
-    border-radius: 0.5vw;
   }
   .puertaIzq {
     height: 5vw;
     width: 2vw;
     margin-left: -10vw;
-    border-radius: 0.5vw;
   }
   .puertaInf {
     height: 2vw;
     width: 5vw;
     margin-top: 10vw;
-    border-radius: 0.5vw;
   }
   .puertaSup {
     height: 2vw;
     width: 5vw;
     margin-top: -10vw;
-    border-radius: 0.5vw;
   }
   .boton {
     border-radius: 5px;
     font-size: 8px;
   }
+
+  .botonesInicio{
+      border: none;
+      border-radius: 10px;
+      width: 25px;
+      padding: 5px;
+      margin: 5px;
+      box-shadow: 0px 0px 20px green;
+      background-color: green;
+    }
 }

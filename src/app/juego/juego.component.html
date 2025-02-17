@@ -1,5 +1,5 @@
 <div class="todo">
-  <div class="mapa">
+  <div class="mapa" *ngIf="this.mostrarMapa">
     <div
       class="loseta"
       *ngFor="let mapa of datoservice.mapaActual"
@@ -9,8 +9,12 @@
           : { 'background-color': ' rgba(0, 0, 0, 0)' }
       "
     >
-      <button
-        class="puertaSup"
+
+
+
+    <!-- -------------Puertas----------------- -->
+      <div
+        class="puertaSup puertas"
         [ngStyle]="
           mapa.puertaSup ? { 'background-color': 'rgb(59, 22, 5)' } : {}
         "
@@ -27,10 +31,9 @@
               this.datoservice.mapaActual[mapa.id - 8].visible)) &&
           (this.datoservice.editar || mapa.puertaSup)
         "
-      ></button>
-
-      <button
-        class="puertaInf"
+      ></div>
+      <div
+        class="puertaInf puertas"
         [ngStyle]="
           mapa.puertaInf ? { 'background-color': 'rgb(59, 22, 5)' } : {}
         "
@@ -47,11 +50,11 @@
               this.datoservice.mapaActual[mapa.id + 8].visible)) &&
           (this.datoservice.editar || mapa.puertaInf)
         "
-      ></button>
+      ></div>
 
       <!-- No hay nada para evitar que compruebe la primera columna al estar en la última -->
-      <button
-        class="puertaDer"
+      <div
+        class="puertaDer puertas"
         [ngStyle]="
           mapa.puertaDer ? { 'background-color': 'rgb(59, 22, 5)' } : {}
         "
@@ -68,9 +71,9 @@
               this.datoservice.mapaActual[mapa.id + 1].visible)) &&
           (this.datoservice.editar || mapa.puertaDer)
         "
-      ></button>
-      <button
-        class="puertaIzq"
+      ></div>
+      <div
+        class="puertaIzq puertas"
         [ngStyle]="
           mapa.puertaIzq ? { 'background-color': 'rgb(59, 22, 5)' } : {}
         "
@@ -87,15 +90,15 @@
               this.datoservice.mapaActual[mapa.id - 1].visible)) &&
           (this.datoservice.editar || mapa.puertaIzq)
         "
-      ></button>
+      ></div>
 
-      <button
-        style="width: 60px; margin-top: 15px"
+      <div
+        style="width: 60px; margin-top: 15px; color: black; background-color: rgba(170, 161, 34, 0.281);"
         (click)="alternarTipo(mapa.id)"
         *ngIf="this.datoservice.editar && !this.datoservice.editarRutas"
       >
         Alternar terreno
-      </button>
+      </div>
 
       <!-- ruta de salida enemigos -->
       <span *ngIf="this.datoservice.editar" style="font-size: 8px"
@@ -185,108 +188,109 @@
     </div>
   </div>
   <div class="menu">
-    <div style="color: white; margin-top: 5px">
-      <span>Ronda número {{ this.datoservice.ronda }}</span
-      ><br />
+
+
+    <!------------------- Menú modo juego -------------------->
+    <div
+      *ngIf="!this.datoservice.editar"
+      style="display: flex; flex-direction: column; align-items: center;"
+    >
+      <span style="font-size:medium;">Ronda número {{ this.datoservice.ronda }}</span>
+
       <button
-        *ngIf="this.datoservice.editar"
-        (click)="cargarAleatorio()"
-        style="
-          background-color: aqua;
-          border: none;
-          border-radius: 10px;
-          box-shadow: 0px 0px 20px aqua;
-        "
-      >
-        Empezar con <br />
-        mapa aleatorio</button
-      ><br /><br />
-      <button
-        *ngIf="this.datoservice.editar"
-        (click)="cargarPartidaAnterior()"
-        style="
-          background-color: greenyellow;
-          border: none;
-          border-radius: 10px;
-          box-shadow: 0px 0px 20px greenyellow;
-        "
-      >
-        Continuar la <br />
-        partida anterior</button
-      ><br />
-      <button
-        *ngIf="!this.datoservice.editar"
+        class="botonesInicio"
         (click)="ronda()"
         style="
           background-color: red;
-          border: none;
-          border-radius: 10px;
           box-shadow: 0px 0px 20px red;
-          margin-bottom: 10px;
+          width: 100px;
         "
       >
         Turno de los <br />
         enemigos
       </button>
       <br />
-      <br />
-      <span *ngIf="!this.datoservice.editar"
-        >{{ this.datoservice.pistasEncontradas }} pistas encontradas.</span
-      ><br />
-      <button
-        *ngIf="!this.datoservice.editar"
-        (click)="this.datoservice.pistas('sumar')"
-        style="
-          background-color: green;
-          border: none;
-          border-radius: 10px;
-          box-shadow: 0px 0px 20px green;
-          width: 25px;
-          padding: 5px;
-          margin: 10px;
-        "
+      <span style="font-size:medium;">{{ this.datoservice.pistasEncontradas }} pistas encontradas.</span
       >
+
+      <div >
+      <button class="botonesInicio" (click)="this.datoservice.pistas('sumar')" 
+      style="background-color: green;
+        box-shadow: 0px 0px 20px green;
+        height: 30px; width: 30px;
+        border-radius: 10px;">
         +</button
       ><button
-        *ngIf="!this.datoservice.editar"
+        class="botonesInicio"
         (click)="this.datoservice.pistas('restar')"
-        style="
-          background-color: green;
-          border: none;
-          border-radius: 10px;
-          width: 25px;
+        style="background-color: green;
           box-shadow: 0px 0px 20px green;
-          padding: 5px;
-        "
+        height: 30px; width: 30px;
+        border-radius: 10px;"
       >
         -
-      </button>
+      </button></div>
+      <br />
+
+      <!-- 
+      <button
+        class="botonesInicio"
+        (click)="editar()"
+        style="background-color: grey; box-shadow: none; float: right;;"
+      >
+        Editar
+      </button> -->
+    </div>
+
+
+
+    <!-- ------------- Editar------------------ -->
+    <div style="color: white; margin-top: 5px" 
+    *ngIf="this.datoservice.editar">
+           <button class="botonesInicio"
+        (click)="cargarAleatorio()"
+        style="
+          background-color: rgb(0, 141, 141);
+          box-shadow: 0px 0px 20px aqua;
+          width: 100px;
+        "
+      >
+        Empezar con <br />
+        mapa aleatorio</button
+      ><br /><br />
+      <button class="botonesInicio"
+        (click)="cargarPartidaAnterior()"
+        style="
+          background-color: rgb(85, 141, 0);
+          box-shadow: 0px 0px 20px greenyellow;
+          width: 100px;
+        "
+      >
+        Continuar la <br />
+        partida anterior</button
+      ><br />
+
       <div
-        *ngIf="this.datoservice.editar == true"
         style="color: white; margin-top: 2vh"
       >
         <div style="color: white; margin-top: 2vh">
-          <button *ngIf="!this.datoservice.editar" (click)="editar()">
-            Editar
-          </button>
-          <button *ngIf="this.datoservice.editar" (click)="editar()">
+          <!-- 
+          <button (click)="editar()">
             Jugar</button
-          ><br />
+          ><br /> -->
           <button
-            *ngIf="this.datoservice.editar"
             (click)="editarRutas('alternar', 99)"
           >
             Crear rutas</button
           ><br />
           <button
-            *ngIf="this.datoservice.editar && this.datoservice.editarRutas"
+            *ngIf="this.datoservice.editarRutas"
             (click)="editarRutas('aplicar', 99)"
           >
             Aplicar ruta actual</button
-          ><br />
+          >
           <button
             *ngIf="
-              this.datoservice.editar &&
               this.datoservice.editarRutas &&
               this.rutaActual.length > 0
             "
@@ -300,7 +304,7 @@
             calcular visibilidad</button
           ><br />
           <button (click)="generarInicio()">Generar inicio</button>
-          <br /><!-- 
+          <br /><br /><!-- 
     <br /><br /><span *ngFor="let arma of this.datoservice.recursosCasas[0]">{{arma}}<br></span>
     <br /><br /><span *ngFor="let arma of this.datoservice.recursosCasas[1]">{{arma}}<br></span>
     <br /><br />  -->

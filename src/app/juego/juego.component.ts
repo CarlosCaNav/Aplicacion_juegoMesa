@@ -22,7 +22,7 @@ export class JuegoComponent {
     this.crearmapa();
     this.obtenerClavesLocalStorage();
     if (/Mobi|Android/i.test(navigator.userAgent)) {
-      this.cargarAleatorio();
+      this.mostrarMapa = false
     }
   }
 
@@ -33,6 +33,8 @@ export class JuegoComponent {
       visible: boolean;
       enemigo: string;
       pista: boolean */
+
+mostrarMapa= true;
 
   nombreMapa: FormGroup = new FormGroup({
     nombre: new FormControl(''),
@@ -562,7 +564,7 @@ export class JuegoComponent {
 
     // Incrementamos la ronda
     this.datoservice.ronda++;
-    
+
     // Guardamos los datos
     this.guardadoAutomatico();
   }
@@ -641,10 +643,27 @@ export class JuegoComponent {
   }
 
   guardadoAutomatico() {
-    const autoguardado = [this.datoservice.mapaActual, this.datoservice.enemigos, this.datoservice.ronda, this.datoservice.pistasEncontradas, this.datoservice.armaEncontrada, this.datoservice.casillaPrimigenio, this.datoservice.rutaImagen, this.datoservice.editar, this.datoservice.editarRutas, this.datoservice.nombreMapaActual, this.datoservice.casillasConSalidaEnemigos, this.datoservice.casasDespejadas, this.datoservice.recursosCasas, this.datoservice.idenficadorCasas, this.datoservice.clavesLocalStorage, this.datoservice.emergenteMostrado];
-  const data = JSON.stringify(autoguardado);
-  
-  localStorage.setItem('autoguardado', data);
+    const autoguardado = [
+      this.datoservice.mapaActual,
+      this.datoservice.enemigos,
+      this.datoservice.ronda,
+      this.datoservice.pistasEncontradas,
+      this.datoservice.armaEncontrada,
+      this.datoservice.casillaPrimigenio,
+      this.datoservice.rutaImagen,
+      this.datoservice.editar,
+      this.datoservice.editarRutas,
+      this.datoservice.nombreMapaActual,
+      this.datoservice.casillasConSalidaEnemigos,
+      this.datoservice.casasDespejadas,
+      this.datoservice.recursosCasas,
+      this.datoservice.idenficadorCasas,
+      this.datoservice.clavesLocalStorage,
+      this.datoservice.emergenteMostrado,
+    ];
+    const data = JSON.stringify(autoguardado);
+
+    localStorage.setItem('autoguardado', data);
     /*  const dataMapa = JSON.stringify(this.datoservice.mapaActual);
     const dataEnemigos = JSON.stringify(this.datoservice.enemigos);
     const nameMapa: string = 'autoguardadoMapa';
@@ -673,7 +692,7 @@ export class JuegoComponent {
         recursosCasas,
         idenficadorCasas,
         clavesLocalStorage,
-        emergenteMostrado
+        emergenteMostrado,
       ] = JSON.parse(data);
 
       this.datoservice.mapaActual = mapaActual;
@@ -692,7 +711,10 @@ export class JuegoComponent {
       this.datoservice.idenficadorCasas = idenficadorCasas;
       this.datoservice.clavesLocalStorage = clavesLocalStorage;
       this.datoservice.emergenteMostrado = emergenteMostrado;
+    } else {
+      alert('No hay datos guardados');
     }
+    this.mostrarMapa = true;
   }
 
   cargarDatos(name: string) {
@@ -731,7 +753,8 @@ export class JuegoComponent {
       setTimeout(() => {
         this.editar();
         this.datoservice.mapaActual[inicioJugadores].visible = true;
-      }, 1000);
+      }, 1500);
+      this.mostrarMapa = true;
     }, 1000);
 
     /* 
