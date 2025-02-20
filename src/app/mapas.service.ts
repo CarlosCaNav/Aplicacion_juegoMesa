@@ -14,9 +14,10 @@ export class MapasService {
   private almagro = '/mapas/almagro.json';
   private primer = '/mapas/primer.json';
   private galo = '/mapas/galo.json';
+  private elara = '/mapas/elara.json';
 
 
-  mapasDisponibles: string[] = [this.valenzuela,this.bolanios,this.almagro,this.primer,this.galo];
+  mapasDisponibles: string[] = [this.valenzuela,this.bolanios,this.almagro,this.primer,this.galo, this.elara];
 /* 
   cargarMapa(): Observable<any> {
     return this.http.get(this.valenzuela);

@@ -32,7 +32,7 @@
 
 .puertas{
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   background-color: rgba(82, 15, 15, 0.178);
   border: none;
   border-radius: 0.5vh;}
