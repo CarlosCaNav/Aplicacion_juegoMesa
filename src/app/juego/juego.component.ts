@@ -35,6 +35,7 @@ export class JuegoComponent {
       pista: boolean */
 
 mostrarMapa= true;
+posicionEnemigosIniciales: number[] = [];
 
   nombreMapa: FormGroup = new FormGroup({
     nombre: new FormControl(''),
@@ -73,12 +74,6 @@ mostrarMapa= true;
     this.datoservice.mapaActual[id].carretera =
       !this.datoservice.mapaActual[id].carretera;
   }
-  /* 
-  creo que esto ya no se usa así que lo voy a comentar para asegurarme
-  alternarVisibilidad(id: number) {
-    this.datoservice.mapaActual[id].visible =
-      !this.datoservice.mapaActual[id].visible;
-  } */
 
   editar() {
     this.datoservice.editar = !this.datoservice.editar;
@@ -95,25 +90,6 @@ mostrarMapa= true;
 
     this.generarInicio();
   }
-  /* 
-  Esto también creo que ya no se usa
-  limpiarForm() {
-    this.parametrosLoseta.reset();
-  } */
-
-  /* 
-    Esto también creo que ya no se usa
-  aplicar(id: number) {
-    if (this.parametrosLoseta.value.calleH != 0) {
-      this.datoservice.mapaActual[id].calleH =
-        this.parametrosLoseta.value.calleH;
-    } else if (this.parametrosLoseta.value.calleH != 0) {
-      this.datoservice.mapaActual[id].calleV =
-        this.parametrosLoseta.value.calleV;
-    } else if (this.parametrosLoseta.value.calleH != 0) {
-      this.datoservice.mapaActual[id].casa = this.parametrosLoseta.value.casa;
-    }
-  } */
 
   aplicarAutomaticamente() {
     //con esto comprobamos la visibilidad de cada loseta
@@ -346,9 +322,9 @@ mostrarMapa= true;
 
       //Generar enemigos iniciales repartidos, los llamaremos "reptador"
       for (let i = 0; i <= this.datoservice.numeroLosetas; ++i) {
-        if (Math.random() < 0.1) {
-          // 10% chance to place an enemy
+        if (Math.random() < (this.datoservice.enemigosIniciales / 100)) {
           this.datoservice.mapaActual[i].enemigos = ['reptador'];
+          this.posicionEnemigosIniciales.push(i);
         }
       }
 
@@ -429,6 +405,7 @@ mostrarMapa= true;
 
     // Limpiamos el mapa
     for (let i = 0; i < this.datoservice.mapaActual.length; ++i) {
+      this.datoservice.mapaActual[i].enemigos = [];
       if (
         this.datoservice.mapaActual[i].visible &&
         (this.datoservice.mapaActual[i].carretera ||
@@ -458,6 +435,9 @@ mostrarMapa= true;
           }
         }
       }
+      //añadimos los enemigos iniciales
+      else if (this.posicionEnemigosIniciales.includes(i) && this.datoservice.mapaActual[i].visible == false) {
+        this.datoservice.mapaActual[i].enemigos = ['reptador'];}
     }
 
     // Movemos a los enemigos
@@ -500,7 +480,7 @@ mostrarMapa= true;
 
     //comprobamos si hay que incrementar la fase
     switch (this.datoservice.ronda) {
-      case this.datoservice.rondaPrimeraaFase:
+      case this.datoservice.rondaPrimeraFase:
         this.datoservice.fase = 1;
         break;
       case this.datoservice.rondaSegundaFase:
@@ -543,15 +523,9 @@ mostrarMapa= true;
     } else {
       const numeroPosibleAleatorio = Math.floor(
         Math.random() *
-          (this.datoservice.mazoEnemigosSimples - this.datoservice.ronda)
+          (this.datoservice.mazoEnemigosSimples)
       );
-      console.log(
-        'el número es ' +
-          numeroPosibleAleatorio +
-          'y el posible' +
-          (this.datoservice.mazoEnemigosSimples - this.datoservice.ronda)
-      );
-      if (numeroPosibleAleatorio === 0) {
+      if (numeroPosibleAleatorio < this.datoservice.ronda) {
         this.nuevoEnemigo();
       }
     }
@@ -654,6 +628,7 @@ mostrarMapa= true;
       this.datoservice.idenficadorCasas,
       this.datoservice.clavesLocalStorage,
       this.datoservice.emergenteMostrado,
+      this.posicionEnemigosIniciales,
     ];
     const data = JSON.stringify(autoguardado);
 
@@ -687,6 +662,7 @@ mostrarMapa= true;
         idenficadorCasas,
         clavesLocalStorage,
         emergenteMostrado,
+        posicionEnemigosIniciales,
       ] = JSON.parse(data);
 
       this.datoservice.mapaActual = mapaActual;
@@ -705,6 +681,7 @@ mostrarMapa= true;
       this.datoservice.idenficadorCasas = idenficadorCasas;
       this.datoservice.clavesLocalStorage = clavesLocalStorage;
       this.datoservice.emergenteMostrado = emergenteMostrado;
+      this.posicionEnemigosIniciales = posicionEnemigosIniciales;
     } else {
       alert('No hay datos guardados');
     }
