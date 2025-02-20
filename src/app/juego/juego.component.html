@@ -93,7 +93,7 @@
       ></div>
 
       <div
-        style="width: 60px; margin-top: 15px; color: black; background-color: rgba(170, 161, 34, 0.281);"
+        style="width: 60px; margin-top: 0.8vh; color: black; background-color: rgba(170, 161, 34, 0.281); position: absolute;"
         (click)="alternarTipo(mapa.id)"
         *ngIf="this.datoservice.editar && !this.datoservice.editarRutas"
       >
@@ -119,6 +119,7 @@
       <!-- Enemigos -->
 
       <span
+      class="enemigos"
         *ngIf="
           this.datoservice.editar ||
           (mapa.visible &&
@@ -128,28 +129,28 @@
           (this.datoservice.pistasEncontradas >= 2 &&
             mapa.enemigos.includes('PRIMIGENIO'))
         "
-        style="color: red; margin-top: -50%"
-        >{{ mapa.enemigos[0] }}<br />{{ mapa.enemigos[1] }}<br />{{
+      
+      ><span *ngFor="let enemigos of mapa.enemigos"> {{enemigos}}</span>
+        <!-- 
+        {{ mapa.enemigos[0] }}<br />{{ mapa.enemigos[1] }}<br />{{
           mapa.enemigos[2]
-        }}{{ mapa.enemigos[3] }}{{ mapa.enemigos[4] }}</span
+        }}<br />{{ mapa.enemigos[3] }}<br />{{ mapa.enemigos[4] }}<br />{{ mapa.enemigos[5] }} --></span
       >
+
+
+      <!-- pista -->
       <span
+        class="pista"
         *ngIf="
           mapa.pista &&
           (this.datoservice.editar ||
             (mapa.casa != '' &&
               this.datoservice.casasDespejadas.includes(mapa.casa)))
         "
-        style="
-          color: green;
-          background-color: greenyellow;
-          margin-top: 50%;
-          border-radius: 5px;
-        "
-        >Pista!</span
+        >¡Pista!</span
       >
 
-      <div *ngIf="this.datoservice.editar" style="font-size: 10px">
+      <div *ngIf="this.datoservice.editar" style="font-size: 10px; color: grey; margin-top: 8vh">
         <span>cH= {{ mapa.calleH }} ... cV= {{ mapa.calleV }}</span
         ><br />
         <span>casa= {{ mapa.casa }}</span
@@ -166,7 +167,7 @@
           !this.datoservice.editar &&
           !this.datoservice.casasDespejadas.includes(mapa.casa)
         "
-        style="position: absolute"
+        style="position: absolute; z-index: 4;"
       >
         Despejar
       </button>
@@ -179,6 +180,7 @@
         "
         style="
           position: absolute;
+          z-index: 4;
           background-color: yellow;
           box-shadow: 0px 0px 20px yellow;
         "
@@ -273,7 +275,7 @@
       <div
         style="color: white; margin-top: 2vh"
       >
-        <div style="color: white; margin-top: 2vh">
+        <div *ngIf="this.mostrarMapa" style="color: white; margin-top: 2vh">
           <!-- 
           <button (click)="editar()">
             Jugar</button

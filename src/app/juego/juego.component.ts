@@ -363,20 +363,14 @@ mostrarMapa= true;
       }
       //generamos números aleatorio entre las casas posibles
 
-      //ARREGLAR ESTOOOOOOOOOO QUE NO SE OLVIDEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
       let pistas: number[] = [];
-      let resultado: number = 0;
-      for (
-        var i = 8888888888888888888888888888888888888888888888888888888888888888888888888;
-        pistas.length <= this.datoservice.pistasIniciales - 1;
-        'holi'
-      ) {
-        resultado = this.generarPistasRecursivamente(casas.length);
+      while (pistas.length < this.datoservice.pistasIniciales) {
+        const resultado = this.generarPistasRecursivamente(casas.length);
         if (!pistas.includes(casas[resultado])) {
           pistas.push(casas[resultado]);
         }
       }
-      for (i = 0; i <= pistas.length - 1; ++i) {
+      for (let i = 0; i <= pistas.length - 1; ++i) {
         this.datoservice.mapaActual[pistas[i]].pista = true;
       }
     }
