@@ -577,6 +577,8 @@ export class JuegoComponent {
     ].enemigos.push(this.datoservice.enemigos[enemigoAleatorio].enemigo);
   }
 
+
+
   descargarJSON() {
     /* 
   const data = localStorage.getItem(this.datoservice.nombreMapaActual);
