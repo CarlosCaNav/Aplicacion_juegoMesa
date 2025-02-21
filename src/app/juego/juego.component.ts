@@ -22,7 +22,7 @@ export class JuegoComponent {
     this.crearmapa();
     this.obtenerClavesLocalStorage();
     if (/Mobi|Android/i.test(navigator.userAgent)) {
-      this.mostrarMapa = false
+      this.mostrarMapa = false;
     }
   }
 
@@ -34,8 +34,8 @@ export class JuegoComponent {
       enemigo: string;
       pista: boolean */
 
-mostrarMapa= true;
-posicionEnemigosIniciales: number[] = [];
+  mostrarMapa = true;
+  posicionEnemigosIniciales: number[] = [];
 
   nombreMapa: FormGroup = new FormGroup({
     nombre: new FormControl(''),
@@ -322,7 +322,7 @@ posicionEnemigosIniciales: number[] = [];
 
       //Generar enemigos iniciales repartidos, los llamaremos "reptador"
       for (let i = 0; i <= this.datoservice.numeroLosetas; ++i) {
-        if (Math.random() < (this.datoservice.enemigosIniciales / 100)) {
+        if (Math.random() < this.datoservice.enemigosIniciales / 100) {
           this.datoservice.mapaActual[i].enemigos = ['reptador'];
           this.posicionEnemigosIniciales.push(i);
         }
@@ -436,8 +436,12 @@ posicionEnemigosIniciales: number[] = [];
         }
       }
       //añadimos los enemigos iniciales
-      else if (this.posicionEnemigosIniciales.includes(i) && this.datoservice.mapaActual[i].visible == false) {
-        this.datoservice.mapaActual[i].enemigos = ['reptador'];}
+      else if (
+        this.posicionEnemigosIniciales.includes(i) &&
+        this.datoservice.mapaActual[i].visible == false
+      ) {
+        this.datoservice.mapaActual[i].enemigos = ['reptador'];
+      }
     }
 
     // Movemos a los enemigos
@@ -517,15 +521,24 @@ posicionEnemigosIniciales: number[] = [];
     //creamos enemigos nuevos
     //creamos el primer enemigo obligatorio
     this.nuevoEnemigo();
+    //creamos un número aleatorio entre 0 y el mazo de enemigos simples
+    const numerOMAzoAleatorio = Math.floor(
+      Math.random() * this.datoservice.mazoEnemigosSimples
+    );
+    console.log(numerOMAzoAleatorio + ' y ronda ' + this.datoservice.ronda);
+
     //comprobamos si añadimos un segundo
     if (this.datoservice.ronda > this.datoservice.mazoEnemigosSimples) {
       this.nuevoEnemigo();
+      //comprobamos si añadimos un tercero
+      if (
+        numerOMAzoAleatorio + this.datoservice.mazoEnemigosSimples <
+        this.datoservice.ronda
+      ) {
+        this.nuevoEnemigo();
+      }
     } else {
-      const numeroPosibleAleatorio = Math.floor(
-        Math.random() *
-          (this.datoservice.mazoEnemigosSimples)
-      );
-      if (numeroPosibleAleatorio < this.datoservice.ronda) {
+      if (numerOMAzoAleatorio < this.datoservice.ronda) {
         this.nuevoEnemigo();
       }
     }

@@ -8,7 +8,9 @@ export class DatosService {
   enemigosIniciales: number = 10; // probabilidad sobre 100 de que haya un enemigo por cada loseta
   pistasIniciales: number = 8; 
   numeroDeObjetos: number = 15; //numero de objetos en cada casa
+  
     //dificultad
+    //he añadido que cuando el mazo de enemigos simples se acabe, se vuelva a barajar añadiendo un enemigo más
   mazoEnemigosSimples: number = 10; // a partir de qué ronda aparece un segundo enemigo en cada ronda. Hasta entonces, la probabilidad de que aparezca es progresiva.
   rondaPrimeraFase: number = 1;
   rondaSegundaFase: number = 8;

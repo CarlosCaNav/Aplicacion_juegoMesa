@@ -10,7 +10,7 @@
 }
 
 .mapa {
-  margin: 1.5vh;
+  margin: 1vh;
   border: 5px solid grey;
   width: 95vh;
   height: 95vh;
@@ -30,12 +30,13 @@
   justify-content: center;
 }
 
-.puertas{
+.puertas {
   position: absolute;
   z-index: 3;
   background-color: rgba(82, 15, 15, 0.178);
   border: none;
-  border-radius: 0.5vh;}
+  border-radius: 0.5vh;
+}
 
 .puertaDer {
   height: 5vh;
@@ -71,11 +72,11 @@
   border: 1px solid black;
   border-radius: 5px;
   box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.493);
-  margin: 3px;
+  margin: 10px;
   padding: 3px;
 }
 
-.enemigos{
+.enemigos {
   color: red;
   position: absolute;
   display: flex;
@@ -87,26 +88,26 @@
   height: 11vh;
   width: 11vh;
   scrollbar-color: rgb(255, 0, 0) rgba(0, 0, 0, 0);
-  scrollbar-width:thin;
+  scrollbar-width: thin;
 }
-.pista{
+.pista {
   position: absolute;
   z-index: 2;
-    color: green;
-    background-color: greenyellow;
-    border-radius: 5px;
-    margin-top: 6vh;
-    padding: 1px;
-    box-shadow: 0px 0px 5px greenyellow;
-  }
-
-
+  color: green;
+  background-color: greenyellow;
+  border-radius: 5px;
+  margin-top: 6vh;
+  padding: 1px;
+  box-shadow: 0px 0px 5px greenyellow;
+}
 
 @media (max-width: 768px) {
   .todo {
     flex-direction: column-reverse;
   }
-  span{font-size: 10px;}
+  span {
+    font-size: 10px;
+  }
 
   .mapa {
     margin: 0;
@@ -129,7 +130,7 @@
     justify-content: center;
   }
 
-  .puertas{
+  .puertas {
     border-radius: 0.5vw;
   }
   .puertaDer {
@@ -157,20 +158,20 @@
     font-size: 8px;
   }
 
-  .botonesInicio{
-      border: none;
-      border-radius: 10px;
-      width: 25px;
-      padding: 5px;
-      margin: 5px;
-      box-shadow: 0px 0px 20px green;
-      background-color: green;
-    }
-    .enemigos{
-      height: 11vw;
-      width: 11vw;
-    }
-    .pista{
-        margin-top: 6vw;
-      }
+  .botonesInicio {
+    border: none;
+    border-radius: 10px;
+    width: 25px;
+    padding: 5px;
+    margin: 5px;
+    box-shadow: 0px 0px 20px green;
+    background-color: green;
+  }
+  .enemigos {
+    height: 11vw;
+    width: 11vw;
+  }
+  .pista {
+    margin-top: 6vw;
+  }
 }
