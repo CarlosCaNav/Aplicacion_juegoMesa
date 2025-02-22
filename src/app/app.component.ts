@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+/* import { RouterOutlet } from '@angular/router'; */
 import { JuegoComponent } from "./juego/juego.component";
 import { BusquedaComponent } from "./busqueda/busqueda.component";
 import { NgIf } from '@angular/common';
-import { DatosService } from './datos.service';
+import { DatosService } from './services/datos.service';
+import { SeleccionMapaComponent } from "./seleccion-mapa/seleccion-mapa.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, JuegoComponent, BusquedaComponent, NgIf],
+  imports: [JuegoComponent, BusquedaComponent, NgIf, SeleccionMapaComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

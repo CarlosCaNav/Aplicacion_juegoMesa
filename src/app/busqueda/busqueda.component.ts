@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DatosService } from '../datos.service';
+import { DatosService } from '../services/datos.service';
 import { NgIf } from '@angular/common';
 
 @Component({

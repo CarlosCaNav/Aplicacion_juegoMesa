@@ -1,4 +1,8 @@
 <div (click)="cerrarBusqueda()"  *ngIf="this.datosService.armaEncontrada != ''">
     <app-busqueda class="busqueda"/></div>
 
+<div *ngIf="this.datosService.emergenteMostrado === 'elegirMapa'">
+    <app-seleccion-mapa class="mapa" />
+</div>
+
 <app-juego/>

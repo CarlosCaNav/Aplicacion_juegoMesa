@@ -1,0 +1,52 @@
+
+.mapa {
+    margin: 1vh;
+    border: 5px solid orange;
+    width: 25vh;
+    height: 25vh;
+    padding: 1vh;
+    align-content: space-between;
+  }
+  
+  .loseta {
+    float: left;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid rgb(35, 35, 35);
+    box-shadow: inset 0px 0px 20px black;
+    width: calc((100% / 8.01) - 2px);
+    height: calc((100% / 8.01) - 2px);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .botonesMapas{
+    display: flex;
+    flex-direction: column;
+  }
+  .botonMapa{
+    padding: 3px;
+      background-color: orange;
+      box-shadow: 0px 0px 5px 2px orange;
+  }
+
+  @media (max-width: 768px) {
+    
+    .mapa {
+    margin: 1vh;
+    border: 5px solid orange;
+    width: 80vw;
+    height: 80vw;
+    padding: 1vw;
+    align-content: space-between;
+  }
+  .textoBotones{
+    font-size: large;
+  }
+
+  .botonesMapas{
+    width: 85vw;
+    flex-direction:row;
+    flex-wrap: wrap;
+    }
+  }

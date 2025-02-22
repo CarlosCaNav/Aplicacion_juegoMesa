@@ -1,0 +1,27 @@
+<div class="botonesMapas">
+  <div *ngFor="let mapa of this.mapasService.mapasDisponibles">
+    <button 
+      class="botonMapa textoBotones"
+      (click)="almacenamientoService.ejecutarMapa(mapa.nombre)"
+    >
+      {{ mapa.nombre }}</button
+    ><br />
+  </div>
+</div>
+
+<div class="mapa">
+  <div
+    class="loseta"
+    *ngFor="let mapa of datosService.mapaActual"
+    [ngStyle]="
+      mapa.visible
+        ? { 'background-color': mapa.carretera ? 'grey' : 'orange' }
+        : { 'background-color': ' rgba(0, 0, 0, 0)' }
+    "
+  ></div>
+</div>
+
+<button class="textoBotones" style="background-color: greenyellow;" (click)="this.almacenamientoService.ejecutarPrevisualizado()">
+  Jugar
+</button>
+<button class="textoBotones" style="background-color: red;" (click)="this.datosService.emergente('')">Cerrar</button>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Mapa } from './interfaz.mapa';
+import { Mapa } from '../interfaz.mapa';
 
 @Injectable({
   providedIn: 'root',
@@ -109,6 +109,10 @@ pistas(operacion: string){
   if(this.pistasEncontradas == 3){
     alert('El primigenio pierde 10 puntos de vida')
   }
+}
+
+emergente(emergente: string){
+  this.emergenteMostrado = emergente
 }
   
 }

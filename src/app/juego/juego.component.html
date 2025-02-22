@@ -1,8 +1,8 @@
 <div class="todo">
-  <div class="mapa" *ngIf="this.mostrarMapa">
+  <div class="mapa" *ngIf="this.almacenamientoService.mostrarMapa">
     <div
       class="loseta"
-      *ngFor="let mapa of datoservice.mapaActual"
+      *ngFor="let mapa of datosService.mapaActual"
       [ngStyle]="
         mapa.visible
           ? { 'background-color': mapa.carretera ? 'grey' : 'orange' }
@@ -18,18 +18,18 @@
         [ngStyle]="
           mapa.puertaSup ? { 'background-color': 'rgb(59, 22, 5)' } : {}
         "
-        (click)="puerta(mapa.id, 'sup')"
+        (click)="editarService.puerta(mapa.id, 'sup')"
         *ngIf="
           !mapa.carretera &&
           mapa.visible &&
           mapa.id >= 8 &&
-          this.datoservice.mapaActual[mapa.id - 8].carretera &&
-          (this.datoservice.casasDespejadas.includes(
-            this.datoservice.mapaActual[mapa.id].casa
+          this.datosService.mapaActual[mapa.id - 8].carretera &&
+          (this.datosService.casasDespejadas.includes(
+            this.datosService.mapaActual[mapa.id].casa
           ) ||
             (mapa.id >= 8 &&
-              this.datoservice.mapaActual[mapa.id - 8].visible)) &&
-          (this.datoservice.editar || mapa.puertaSup)
+              this.datosService.mapaActual[mapa.id - 8].visible)) &&
+          (this.datosService.editar || mapa.puertaSup)
         "
       ></div>
       <div
@@ -37,18 +37,18 @@
         [ngStyle]="
           mapa.puertaInf ? { 'background-color': 'rgb(59, 22, 5)' } : {}
         "
-        (click)="puerta(mapa.id, 'inf')"
+        (click)="editarService.puerta(mapa.id, 'inf')"
         *ngIf="
           !mapa.carretera &&
           mapa.visible &&
           mapa.id <= 55 &&
-          this.datoservice.mapaActual[mapa.id + 8].carretera &&
-          (this.datoservice.casasDespejadas.includes(
-            this.datoservice.mapaActual[mapa.id].casa
+          this.datosService.mapaActual[mapa.id + 8].carretera &&
+          (this.datosService.casasDespejadas.includes(
+            this.datosService.mapaActual[mapa.id].casa
           ) ||
             (mapa.id <= 55 &&
-              this.datoservice.mapaActual[mapa.id + 8].visible)) &&
-          (this.datoservice.editar || mapa.puertaInf)
+              this.datosService.mapaActual[mapa.id + 8].visible)) &&
+          (this.datosService.editar || mapa.puertaInf)
         "
       ></div>
 
@@ -58,18 +58,18 @@
         [ngStyle]="
           mapa.puertaDer ? { 'background-color': 'rgb(59, 22, 5)' } : {}
         "
-        (click)="puerta(mapa.id, 'der')"
+        (click)="editarService.puerta(mapa.id, 'der')"
         *ngIf="
           !mapa.carretera &&
-          this.datoservice.mapaActual[mapa.id].visible &&
+          this.datosService.mapaActual[mapa.id].visible &&
           mapa.id < 63 &&
-          this.datoservice.mapaActual[mapa.id + 1].carretera &&
-          (this.datoservice.casasDespejadas.includes(
-            this.datoservice.mapaActual[mapa.id].casa
+          this.datosService.mapaActual[mapa.id + 1].carretera &&
+          (this.datosService.casasDespejadas.includes(
+            this.datosService.mapaActual[mapa.id].casa
           ) ||
             (mapa.id < 63 &&
-              this.datoservice.mapaActual[mapa.id + 1].visible)) &&
-          (this.datoservice.editar || mapa.puertaDer)
+              this.datosService.mapaActual[mapa.id + 1].visible)) &&
+          (this.datosService.editar || mapa.puertaDer)
         "
       ></div>
       <div
@@ -77,42 +77,42 @@
         [ngStyle]="
           mapa.puertaIzq ? { 'background-color': 'rgb(59, 22, 5)' } : {}
         "
-        (click)="puerta(mapa.id, 'izq')"
+        (click)="editarService.puerta(mapa.id, 'izq')"
         *ngIf="
           !mapa.carretera &&
           mapa.visible &&
           mapa.id >= 1 &&
-          this.datoservice.mapaActual[mapa.id - 1].carretera &&
-          (this.datoservice.casasDespejadas.includes(
-            this.datoservice.mapaActual[mapa.id].casa
+          this.datosService.mapaActual[mapa.id - 1].carretera &&
+          (this.datosService.casasDespejadas.includes(
+            this.datosService.mapaActual[mapa.id].casa
           ) ||
             (mapa.id >= 1 &&
-              this.datoservice.mapaActual[mapa.id - 1].visible)) &&
-          (this.datoservice.editar || mapa.puertaIzq)
+              this.datosService.mapaActual[mapa.id - 1].visible)) &&
+          (this.datosService.editar || mapa.puertaIzq)
         "
       ></div>
 
       <div
         style="width: 60px; color: black; font-size: small; background-color: rgba(133, 103, 64, 0.518); position: absolute; z-index: 3; border-radius: 100px; box-shadow: 0px 0px 10px 5px rgba(255, 198, 123, 0.427); text-align: center;"
-        (click)="alternarTipo(mapa.id)"
-        *ngIf="this.datoservice.editar && !this.datoservice.editarRutas"
+        (click)="editarService.alternarTipo(mapa.id)"
+        *ngIf="this.datosService.editar && !this.datosService.editarRutas"
       >
         Alternar terreno
       </div>
 
       <!-- ------------------- ruta de salida enemigos ------------------- -->
-      <span *ngIf="this.datoservice.editar" style="font-size: 8px"
-        >{{ this.datoservice.mapaActual[mapa.id].rutasEnemigos }} 
+      <span *ngIf="this.datosService.editar" style="font-size: 8px"
+        >{{ this.datosService.mapaActual[mapa.id].rutasEnemigos }} 
       </span>
       <button
         style="width: 60px; margin-top: 15px; height: 20px; z-index: 3;"
         [ngStyle]="
-          this.rutaActual.includes(mapa.id)
+          this.editarService.rutaActual.includes(mapa.id)
             ? { 'background-color': 'green' }
             : {}
         "
-        (click)="editarRutas('ruta', mapa.id)"
-        *ngIf="this.datoservice.editar && this.datoservice.editarRutas"
+        (click)="editarService.editarRutas('ruta', mapa.id)"
+        *ngIf="this.datosService.editar && this.datosService.editarRutas"
       >
         Ruta
       </button>
@@ -121,12 +121,12 @@
       <span
       class="enemigos"
         *ngIf="
-          this.datoservice.editar ||
+          this.datosService.editar ||
           (mapa.visible &&
             (mapa.carretera ||
               (mapa.casa != '' &&
-                this.datoservice.casasDespejadas.includes(mapa.casa)))) ||
-          (this.datoservice.pistasEncontradas >= 2 &&
+                this.datosService.casasDespejadas.includes(mapa.casa)))) ||
+          (this.datosService.pistasEncontradas >= 2 &&
             mapa.enemigos.includes('PRIMIGENIO'))
         "
       
@@ -143,14 +143,14 @@
         class="pista"
         *ngIf="
           mapa.pista &&
-          (this.datoservice.editar ||
+          (this.datosService.editar ||
             (mapa.casa != '' &&
-              this.datoservice.casasDespejadas.includes(mapa.casa)))
+              this.datosService.casasDespejadas.includes(mapa.casa)))
         "
         >¡Pista!</span
       >
 
-      <div *ngIf="this.datoservice.editar" style="font-size: 10px; color: rgba(0, 0, 0, 0.218); margin-top: 8vh">
+      <div *ngIf="this.datosService.editar" style="font-size: 10px; color: rgba(0, 0, 0, 0.218); margin-top: 8vh">
         <span>cH= {{ mapa.calleH }} ... cV= {{ mapa.calleV }}</span
         ><br />
         <span>casa= {{ mapa.casa }}</span
@@ -158,14 +158,14 @@
         <br />
       </div>
 
-      <span *ngIf="this.datoservice.editar" style="margin-left: 18px;">{{ mapa.id }}</span>
+      <span *ngIf="this.datosService.editar" style="margin-left: 18px;">{{ mapa.id }}</span>
 
       <button
         class="boton"
-        (click)="despejar(mapa.id)"
+        (click)="editarService.despejar(mapa.id)"
         *ngIf="
-          !this.datoservice.editar &&
-          !this.datoservice.casasDespejadas.includes(mapa.casa)
+          !this.datosService.editar &&
+          !this.datosService.casasDespejadas.includes(mapa.casa)
         "
         style="position: absolute; z-index: 4;"
       >
@@ -173,10 +173,10 @@
       </button>
       <button
         class="boton"
-        (click)="buscar(mapa.casa)"
+        (click)="editarService.buscar(mapa.casa)"
         *ngIf="
-          !this.datoservice.editar &&
-          this.datoservice.casasDespejadas.includes(mapa.casa)
+          !this.datosService.editar &&
+          this.datosService.casasDespejadas.includes(mapa.casa)
         "
         style="
           position: absolute;
@@ -194,10 +194,10 @@
 
     <!------------------- Menú modo juego -------------------->
     <div
-      *ngIf="!this.datoservice.editar"
+      *ngIf="!this.datosService.editar"
       style="display: flex; flex-direction: column; align-items: center;"
     >
-      <span style="font-size:medium;">Ronda número {{ this.datoservice.ronda }}</span>
+      <span style="font-size:medium;">Ronda número {{ this.datosService.ronda }}</span>
 
       <button
         class="botonesInicio"
@@ -212,11 +212,11 @@
         enemigos
       </button>
       <br />
-      <span style="font-size:medium;">{{ this.datoservice.pistasEncontradas }} pistas encontradas.</span
+      <span style="font-size:medium;">{{ this.datosService.pistasEncontradas }} pistas encontradas.</span
       >
 
       <div >
-      <button class="botonesInicio" (click)="this.datoservice.pistas('sumar')" 
+      <button class="botonesInicio" (click)="this.datosService.pistas('sumar')" 
       style="background-color: green;
         box-shadow: 0px 0px 20px green;
         height: 30px; width: 30px;
@@ -224,7 +224,7 @@
         +</button
       ><button
         class="botonesInicio"
-        (click)="this.datoservice.pistas('restar')"
+        (click)="this.datosService.pistas('restar')"
         style="background-color: green;
           box-shadow: 0px 0px 20px green;
         height: 30px; width: 30px;
@@ -248,87 +248,97 @@
 
     <!-- ------------- Editar------------------ -->
     <div style="color: white; margin-top: 5px" 
-    *ngIf="this.datoservice.editar">
+    *ngIf="this.datosService.editar">
            <button class="botonesInicio"
-        (click)="cargarAleatorio()"
+        (click)="almacenamientoService.ejecutarMapa('aleatorio')"
         style="
           background-color: rgb(0, 141, 141);
           box-shadow: 0px 0px 20px aqua;
-          width: 100px;
+          width: 120px;
         "
       >
-        Empezar con <br />
+        Empezar con 
         mapa aleatorio</button
       ><br /><br />
       <button class="botonesInicio"
-        (click)="cargarPartidaAnterior()"
+        (click)="almacenamientoService.cargarPartidaAnterior()"
         style="
           background-color: rgb(85, 141, 0);
           box-shadow: 0px 0px 20px greenyellow;
-          width: 100px;
+          width: 120px;
         "
       >
-        Continuar la <br />
+        Continuar con la 
         partida anterior</button
+      ><br /><br />
+      <button class="botonesInicio"
+        (click)="datosService.emergente('elegirMapa')"
+        style="
+          background-color: rgb(162, 190, 0);
+          box-shadow: 0px 0px 20px greenyellow;
+          width: 120px;
+        "
+      >
+        Elegir Mapa</button
       ><br />
 
       <div
         style="color: white; margin-top: 2vh"
       >
-        <div *ngIf="this.mostrarMapa" style="color: white; margin-top: 2vh">
+        <div *ngIf="this.almacenamientoService.mostrarMapa" style="color: white; margin-top: 2vh">
           <!-- 
           <button (click)="editar()">
             Jugar</button
           ><br /> -->
-          <button *ngIf="!this.datoservice.editarRutas"
-          (click)="editarRutas('alternar', 99)"
+          <button *ngIf="!this.datosService.editarRutas"
+          (click)="editarService.editarRutas('alternar', 99)"
         >
           Crear rutas</button
         >
-        <button *ngIf="this.datoservice.editarRutas"
-          (click)="editarRutas('alternar', 99)"
+        <button *ngIf="this.datosService.editarRutas"
+          (click)="editarService.editarRutas('alternar', 99)"
         >
           Volver al editor</button
         ><br />
           <button
-            *ngIf="this.datoservice.editarRutas"
-            (click)="editarRutas('aplicar', 99)"
+            *ngIf="this.datosService.editarRutas"
+            (click)="editarService.editarRutas('aplicar', 99)"
           >
             Aplicar ruta actual</button
           >
           <br>
           <button
             *ngIf="
-              this.datoservice.editarRutas &&
-              this.rutaActual.length > 0
+              this.datosService.editarRutas &&
+              this.editarService.rutaActual.length > 0
             "
-            (click)="editarRutas('deshacer', 99)"
+            (click)="editarService.editarRutas('deshacer', 99)"
           >
             Deshacer ruta actual
           </button>
           <br />
 
-          <button (click)="aplicarAutomaticamente()">
+          <button (click)="editarService.aplicarAutomaticamente()">
             calcular visibilidad</button
           ><br />
-          <button (click)="generarInicio()">Generar inicio</button>
+          <button (click)="editarService.generarInicio()">Generar inicio</button>
           <br /><br /><!-- 
-    <br /><br /><span *ngFor="let arma of this.datoservice.recursosCasas[0]">{{arma}}<br></span>
-    <br /><br /><span *ngFor="let arma of this.datoservice.recursosCasas[1]">{{arma}}<br></span>
+    <br /><br /><span *ngFor="let arma of this.datosService.recursosCasas[0]">{{arma}}<br></span>
+    <br /><br /><span *ngFor="let arma of this.datosService.recursosCasas[1]">{{arma}}<br></span>
     <br /><br />  -->
           <!-- 
-          {{ this.datoservice.armaEncontrada }}
+          {{ this.datosService.armaEncontrada }}
           <br /><br /><br /> -->
 
-          <div>Nombre mapa: <br />{{ this.nombreMapa.value.nombre }}</div>
+          <div>Nombre mapa: <br />{{ this.editarService.nombreMapa.value.nombre }}</div>
           <details>
             <summary>Guardar y cargar datos</summary>
-            <button (click)="guardarDatos('sobrescribir')">
+            <button (click)="almacenamientoService.guardarDatos('sobrescribir')">
               Sobrescribir actual
             </button>
             <br />
 
-            <form [formGroup]="nombreMapa">
+            <form [formGroup]="editarService.nombreMapa">
               <input
                 formControlName="nombre"
                 type="text"
@@ -337,19 +347,19 @@
                 placeholder="Mapa"
               />
             </form>
-            <button (click)="guardarDatos('nuevo')">Guardar nuevo</button><br />
+            <button (click)="almacenamientoService.guardarDatos('nuevo')">Guardar nuevo</button><br />
 
-            <li *ngIf="this.datoservice.clavesLocalStorage.length === 0">
+            <li *ngIf="this.datosService.clavesLocalStorage.length === 0">
               No hay usuarios guardados
             </li>
 
-            <div *ngFor="let mapa of this.datoservice.clavesLocalStorage">
-              <button (click)="cargarDatos(mapa)">{{ mapa }}</button>
-              <button (click)="borrarDatos(mapa)">borrar</button>
+            <div *ngFor="let mapa of this.datosService.clavesLocalStorage">
+              <button (click)="almacenamientoService.cargarDatos(mapa)">{{ mapa }}</button>
+              <button (click)="almacenamientoService.borrarDatos(mapa)">borrar</button>
               <br />
             </div>
             <br />
-            <button (click)="descargarJSON()">descargarJSON</button>
+            <button (click)="almacenamientoService.descargarJSON()">descargarJSON</button>
           </details>
         </div>
       </div>
