@@ -173,8 +173,7 @@ export class JuegoComponent {
       this.nuevoEnemigo();
       //comprobamos si añadimos un tercero
       if (
-        numerOMAzoAleatorio + this.datosService.mazoEnemigosSimples <
-        this.datosService.ronda
+        numerOMAzoAleatorio + this.datosService.mazoEnemigosSimples < this.datosService.ronda
       ) {
         this.nuevoEnemigo();
       }
@@ -182,6 +181,16 @@ export class JuegoComponent {
       if (numerOMAzoAleatorio < this.datosService.ronda) {
         this.nuevoEnemigo();
       }
+    }
+
+    // si el primigenio está despierto, comprobamos si ataca:
+    if (this.datosService.ronda > this.datosService.rondaTerceraFase){
+     const aleatorio:number= Math.floor(Math.random() * 100);
+     console.log(aleatorio);
+     if (aleatorio < this.datosService.probabilidadAtaquePrimigenio){
+      
+      alert('el primigenio ataca')
+     }
     }
 
     // Incrementamos la ronda

@@ -17,6 +17,7 @@ export class DatosService {
   rondaTerceraFase: number = 18;
   rondaCuartaFase: number = 25;
   probabilidadAvanceDoble: number = 8; //sobre 100
+  probabilidadAtaquePrimigenio: number = 30;
   
   numeroLosetas: number = 63;
   ronda: number = 0;
@@ -73,8 +74,7 @@ export class DatosService {
     { enemigo: 'Reptador', rutas: [], fase: 0, probabilidad: 1, avance: 1, vida: 2},
     { enemigo: 'Caminante', rutas: [], fase: 1, probabilidad: 4, avance: 2, vida: 2},
     { enemigo: 'Gordo', rutas: [], fase: 2, probabilidad: 2, avance: 1, vida: 5},
-    { enemigo: 'Escupeácido', rutas: [], fase: 3, probabilidad: 1, avance: 1, vida: 2}, //lo repito para que en la fase 3 haya más reptadores
-    { enemigo: 'Primigenio', rutas: [], fase: 4, probabilidad: 0, avance: 1, vida: 2},
+    { enemigo: 'Caminante', rutas: [], fase: 3, probabilidad: 4, avance: 2, vida: 2}, //lo repito para que en la fase 3 haya más caminantes
   ];
   
 
