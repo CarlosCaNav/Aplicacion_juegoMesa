@@ -1,8 +1,42 @@
-<div (click)="cerrarBusqueda()"  *ngIf="this.datosService.armaEncontrada != ''">
-    <app-busqueda class="busqueda"/></div>
-
-<div *ngIf="this.datosService.emergenteMostrado === 'elegirMapa'">
-    <app-seleccion-mapa class="mapa" />
+<!-- Emergente de arma encontrada -->
+<div (click)="cerrarBusqueda()" *ngIf="this.datosService.armaEncontrada != ''">
+  <app-busqueda class="busqueda" />
 </div>
 
-<app-juego/>
+<!-- Elegir mapa -->
+<div *ngIf="this.datosService.emergenteMostrado === 'elegirMapa'">
+  <app-seleccion-mapa class="mapa" />
+</div>
+
+<!-- Alertas Emergentes -->
+
+<div class="fondoEmergente" (click)="this.datosService.emergente('')"
+*ngIf="this.datosService.emergenteMostrado === 'primigenioDespertando'">
+  <div class="emergente">
+    <p class="texto">El primigenio está despertando...</p>
+  </div>
+</div>
+
+<div class="fondoEmergente" (click)="this.datosService.emergente('')"
+*ngIf="this.datosService.emergenteMostrado === 'investigadoresPierden'">
+  <div class="emergente">
+    <p class="texto">El primigenio ha despertado.<br><br> Los investigadores pierden la partida.</p>
+  </div>
+</div>
+
+<div class="fondoEmergente" (click)="this.datosService.emergente('')"
+*ngIf="this.datosService.emergenteMostrado === 'primigenioAtaca'">
+  <div class="emergente">
+    <p class="texto">El primigenio ha despertado.<br><br> El primigenio ataca.</p>
+  </div>
+</div>
+
+<div class="fondoEmergente" (click)="this.datosService.emergente('')"
+*ngIf="this.datosService.emergenteMostrado === 'enemigoAvanza'">
+  <div class="emergente">
+    <p class="texto">Atención: Avanza una casilla adicional, los enemigos "{{this.datosService.enemigoAvanceAdicional}}"</p>
+  </div>
+</div>
+
+<!-- Juego -->
+<app-juego />

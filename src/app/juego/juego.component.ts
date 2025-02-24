@@ -116,11 +116,8 @@ export class JuegoComponent {
       numeroAleatorio < this.datosService.probabilidadAvanceDoble &&
       enemigoAleatorio < this.datosService.fase + 1
     ) {
-      alert(
-        'Atención, avanza una casilla adicional, los enemigos "' +
-          this.datosService.enemigos[enemigoAleatorio].enemigo +
-          '"'
-      );
+      this.datosService.enemigoAvanceAdicional = this.datosService.enemigos[enemigoAleatorio].enemigo;
+      this.datosService.emergente('enemigoAvanza');
     }
 
     //comprobamos si hay que incrementar la fase
@@ -133,7 +130,7 @@ export class JuegoComponent {
         break;
       case this.datosService.rondaTerceraFase:
         this.datosService.fase = 3;
-        alert('El primigenio está despertando');
+        this.datosService.emergenteMostrado = 'primigenioDespertando'
         const numeroAleatorio = Math.floor(
           Math.random() * this.datosService.numeroLosetas
         );
@@ -151,9 +148,7 @@ export class JuegoComponent {
         break;
       case this.datosService.rondaCuartaFase:
         this.datosService.fase = 4;
-        alert(
-          'El primigenio ha despertado, los investigadores pierden la partida'
-        );
+        this.datosService.emergente('investigadoresPierden');
         break;
     }
 
@@ -188,8 +183,7 @@ export class JuegoComponent {
      const aleatorio:number= Math.floor(Math.random() * 100);
      console.log(aleatorio);
      if (aleatorio < this.datosService.probabilidadAtaquePrimigenio){
-      
-      alert('el primigenio ataca')
+      this.datosService.emergente('primigenioAtaca')
      }
     }
 

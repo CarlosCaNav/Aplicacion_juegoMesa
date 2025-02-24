@@ -33,6 +33,7 @@ export class DatosService {
   casasDespejadas: string[] = [];
   recursosCasas: Array<string>[]=[];
   idenficadorCasas: string[]=[]; //esto es una chapuza... sirve para saber qué array va con qué casa. Lo suyo sería usar mapas o records
+  enemigoAvanceAdicional: string = ""; //el enemigo que tiene un turno adicional
   clavesLocalStorage: string[] = [];
 
   emergenteMostrado: string = '';
@@ -70,11 +71,12 @@ export class DatosService {
     { arma: 'Molotov', probabilidad: 1 },
   ];
 
+  //Aun no he aplicado probabilidad a los enemigos
   enemigos: { enemigo: string; rutas: Array<number>[];fase: number; probabilidad: number; avance: number; vida: number}[] = [
     { enemigo: 'Reptador', rutas: [], fase: 0, probabilidad: 1, avance: 1, vida: 2},
-    { enemigo: 'Caminante', rutas: [], fase: 1, probabilidad: 4, avance: 2, vida: 2},
-    { enemigo: 'Gordo', rutas: [], fase: 2, probabilidad: 2, avance: 1, vida: 5},
-    { enemigo: 'Caminante', rutas: [], fase: 3, probabilidad: 4, avance: 2, vida: 2}, //lo repito para que en la fase 3 haya más caminantes
+    { enemigo: 'Caminante', rutas: [], fase: 1, probabilidad: 1, avance: 2, vida: 2},
+    { enemigo: 'Gordo', rutas: [], fase: 2, probabilidad: 1, avance: 1, vida: 1},
+    { enemigo: 'Escupidor', rutas: [], fase: 3, probabilidad: 1, avance: 2, vida: 2}, //lo repito para que en la fase 3 haya más caminantes
   ];
   
 

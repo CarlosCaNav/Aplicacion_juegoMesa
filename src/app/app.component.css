@@ -26,6 +26,36 @@ align-items: center;
 justify-content: center;
 }
 
+.fondoEmergente{
+    position: absolute;
+    z-index: 9;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+}
+.emergente{
+    position: absolute;
+    z-index: 10;
+    margin-top: 10%;
+    margin-left: calc(50vw - 400px);
+    background-color: black;
+    height: 400px;
+    width: 800px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 50px 10px rgb(255, 94, 0), inset 0px 0px 20px 1px rgb(255, 94, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.texto{
+    font-size:x-large;
+    color: white;
+    width: 400px;
+    text-align: center;
+}
+
 @media (max-width: 768px) {
     .mapa{
         flex-direction: column;
