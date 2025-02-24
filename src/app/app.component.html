@@ -1,3 +1,7 @@
+
+<button class="cerrar" *ngIf="this.datosService.emergenteMostrado != ''"
+(click)="this.datosService.emergente('')">X</button>
+
 <!-- Emergente de arma encontrada -->
 <div (click)="cerrarBusqueda()" *ngIf="this.datosService.armaEncontrada != ''">
   <app-busqueda class="busqueda" />
@@ -35,6 +39,132 @@
 *ngIf="this.datosService.emergenteMostrado === 'enemigoAvanza'">
   <div class="emergente">
     <p class="texto">Atención: Avanza una casilla adicional, los enemigos "{{this.datosService.enemigoAvanceAdicional}}"</p>
+  </div>
+</div>
+ 
+<!-- Instrucciones -->
+
+<div class="fondoEmergente"
+*ngIf="this.datosService.emergenteMostrado === 'instrucciones'">
+  <div class="instrucciones" >
+    <p class="instruccionesTexto">
+        <details >
+        <summary>Objetivo</summary>
+        El objetivo del juego es derrotar al primigenio durante su aparición antes de que su creación se complete.
+         Para ello hay que conseguir pistas para saber dónde se formará y atacarle mientras emerja.<br>
+         <br>
+        Tras la primera pista, llegado el momento, podrás percibir donde emerge si ese lugar está explorado.<br>
+        Tras la segunda, sabrás el lugar esté explorado o no.<br>
+        Y con cada una extra que encuentras, le restará 5 puntos de vida al primigenio.<br>
+        <br>
+        Durante su formación, podrás atacarle sin réplica, tendrá 30 puntos de vida,
+         pero si pasado el tiempo no es derrotado, los investigadores pierden la partida.
+    </details><br>
+
+
+    <details >
+        <summary>Pistas</summary>        
+        Las pistas están en el interior de las casas, para conseguirlas, se tira un dado, si sale éxito (5 o 6) recoges la pista,
+         si no, la pierdes y tendrás que encontrar otra.<br><br>
+        
+        Cada vez que consigas una pista, debes sumarla en la aplicación.
+                </details><br>
+           
+                
+    <details >
+        <summary>Acciones</summary>    
+        La ronda se compone de dos fases. La de los investigadores, en la que cada uno, en el orden que quiera,
+         completará sus 3 acciones antes de pasar al siguiente investigador. Y la de los enemigos.<br><br>
+        
+        Las acciones disponibles son:<br>
+        Moverse. Te mueves a una casilla adyacente (En diagonal prohibido).<br>
+        Asomarse. Si quieres despejar una casilla adyacente.<br>
+        Buscar. Busca en el interior de un bloque de casas objetos.<br>
+        Usar botiquín – Si el investigador tiene un botiquín, lo puede descartar para curarse o curar dos puntos de vida.<br>
+        <br>
+        Acciones gratuitas:<br>
+        Despejar – Despejar una zona forma parte de la acción de movimiento o de asomarse.<br>
+        Usar Adrenalina – Unicamente gasta el objeto.<br>
+        Intercambiar – Si tu casilla no contiene enemigos,
+         puedes intercambiar cualquier cantidad de objetos o munición con un compañero que esté en tu casilla.<br>
+        Levantar – Si un enemigo es derrotado, puedes gastar dos acciones en levantarlo. Recupera un punto de vida.<br>
+        </details><br>
+        
+    <details >
+        <summary>Objetos y armas</summary>
+        -La cantidad de objetos que puedes albergar es ilimitada.<br>
+        -Sólo puedes atacar a un enemigo en cada acción.<br>
+        -Con cada éxito (5 o 6) restará un punto de vida al enemigo.<br>
+        -La cantidad de dados que se lancen será indicado por cada arma.<br>
+        -Las armas cuerpo a cuerpo sólo se pueden usar contra enemigos de tu casilla.<br>
+        -Las armas a distancia restarán un dado por cada cada casilla que tenga que recorrer para llegar al enemigo.<br>
+        -Por cada disparo de un arma a distancia, se gastará uno de munición independientemente del número de dados que se lance.<br>
+        <br><br>
+        Cuerpo a cuerpo		A Distancia (un dado menos por distancia)
+        Arma:		Dados:	Arma:		Dados:	
+        Puños: 	1		Pistola		4		
+        Palanca:	2		Escopeta	5	máximo una casilla de distancia 
+        Hacha:		3		Rifle		6		4
+        Espada:	4		Molotov*	0 
+                
+        El botiquín cura dos de daño y la adrenalina dos acciones adicionales. Ambos de un sólo uso.
+        *Molotov quita 5 de vida a cada enemigo o investigador que haya en una casilla adyacente
+         hasta que nuevamente empiece el turno de los investigadores. También de un solo uso.
+        </details><br>
+
+
+        <details >
+            <summary>Enemigos</summary>
+        Los enemigos entran en juego en cada ronda aunque no los veas, y se mueven siguiendo sus rutas.
+         Una vez entran dentro del terreno visible, debes colocarlos en el tablero y en su turno, moverlo hacia el investigador más cercano.<br>
+         <br>
+        Las acciones de los enemigos consisten en atacar, y si no es posible moverse una casilla.<br>
+        <br>
+        (nombres provisionales)
+        <table>
+            <tr>
+                <th>Enemigo</th>
+                <th>Acciones</th>
+                <th>Daño</th>
+                <th>Vida</th>
+            </tr>
+            <tr>
+                <td>Reptador</td>
+                <td>1</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>Errante</td>
+                <td>2</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>Gordo</td>
+                <td>1</td>
+                <td>2</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>Escupidor</td>
+                <td>1</td>
+                <td>2</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>Primigenio*</td>
+                <td>0</td>
+                <td>0</td>
+                <td>30</td>
+            </tr>
+        </table>
+        <br>
+        *El primigenio sólo atacará cuando la aplicación lo diga. 
+        En ese momento, todos los investigadores que estén en su casilla tiran un dado. Si sale un 5 o un 6 pierden 1 de vida.
+    </details>
+</p>
+
   </div>
 </div>
 
