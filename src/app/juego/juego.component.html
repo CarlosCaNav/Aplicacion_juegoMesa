@@ -105,7 +105,7 @@
         >{{ this.datosService.mapaActual[mapa.id].rutasEnemigos }} 
       </span>
       <button
-        style="width: 60px; margin-top: 15px; height: 20px; z-index: 3;"
+        style="width: 60px; height: 20px; position: absolute ; z-index: 3;"
         [ngStyle]="
           this.editarService.rutaActual.includes(mapa.id)
             ? { 'background-color': 'green' }
@@ -130,11 +130,7 @@
             mapa.enemigos.includes('PRIMIGENIO'))
         "
       
-      ><span *ngFor="let enemigos of mapa.enemigos"> {{enemigos}}</span>
-        <!-- 
-        {{ mapa.enemigos[0] }}<br />{{ mapa.enemigos[1] }}<br />{{
-          mapa.enemigos[2]
-        }}<br />{{ mapa.enemigos[3] }}<br />{{ mapa.enemigos[4] }}<br />{{ mapa.enemigos[5] }} --></span
+      ><span *ngFor="let enemigos of mapa.enemigos"> {{enemigos}}</span></span
       >
 
 
@@ -150,6 +146,7 @@
         >¡Pista!</span
       >
 
+      <!-- datos internos para despegar terreno y visibilidad -->
       <div *ngIf="this.datosService.editar" style="font-size: 10px; color: rgba(0, 0, 0, 0.218); margin-top: 8vh">
         <span>cH= {{ mapa.calleH }} ... cV= {{ mapa.calleV }}</span
         ><br />
@@ -158,7 +155,8 @@
         <br />
       </div>
 
-      <span *ngIf="this.datosService.editar" style="margin-left: 18px;">{{ mapa.id }}</span>
+      <!-- numero de loseta  -->
+      <span *ngIf="this.datosService.editar" style="margin-left: 7vh;margin-top: -5vh ; position: absolute;">{{ mapa.id }}</span>
 
       <button
         class="boton"
@@ -315,7 +313,7 @@
           <button *ngIf="!this.datosService.editarRutas"
           (click)="editarService.editarRutas('alternar', 99)"
         >
-          Crear rutas</button
+          Crear las rutas <br> de los enemigos</button
         >
         <button *ngIf="this.datosService.editarRutas"
           (click)="editarService.editarRutas('alternar', 99)"

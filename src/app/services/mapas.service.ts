@@ -18,8 +18,6 @@ export class MapasService {
     { nombre: 'Elara', url: '/mapas/elara.json' },
     { nombre: 'Diego', url: '/mapas/diego.json' },
     { nombre: 'Bro', url: '/mapas/bro.json' },
-    { nombre: 'Pedromi', url: '/mapas/pedroma.json' },
-    { nombre: 'Ajedrez', url: '/mapas/ajedrez.json' },
   ];
 
   cargarMapa(mapaElegido: string): any[] | void {
