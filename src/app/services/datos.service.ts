@@ -5,9 +5,9 @@ import { Mapa } from '../interfaz.mapa';
   providedIn: 'root',
 })
 export class DatosService {
-  enemigosIniciales: number = 10; // probabilidad sobre 100 de que haya un enemigo por cada loseta
+  enemigosIniciales: number = 15; // probabilidad sobre 100 de que haya un enemigo por cada loseta
   pistasIniciales: number = 8; 
-  numeroDeObjetos: number = 15; //numero de objetos en cada casa
+  numeroDeObjetos: number = 150; //numero de objetos en cada casa
   
     //dificultad
     //he añadido que cuando el mazo de enemigos simples se acabe, se vuelva a barajar añadiendo un enemigo más
@@ -33,7 +33,7 @@ export class DatosService {
   casasDespejadas: string[] = [];
   recursosCasas: Array<string>[]=[];
   idenficadorCasas: string[]=[]; //esto es una chapuza... sirve para saber qué array va con qué casa. Lo suyo sería usar mapas o records
-  enemigoAvanceAdicional: string = ""; //el enemigo que tiene un turno adicional
+  enemigoAvanceAdicional: string = ""; //nombre del enemigo que tiene un turno adicional
   clavesLocalStorage: string[] = [];
 
   emergenteMostrado: string = '';
@@ -57,18 +57,21 @@ export class DatosService {
   ];
 
   armasMunicion: { arma: string; probabilidad: number }[] = [
-    { arma: 'Palanca', probabilidad: 6 },
-    { arma: 'Hacha', probabilidad: 5 },
-    { arma: 'Espada', probabilidad: 4 },
-    { arma: 'Pistola', probabilidad: 6 },
-    { arma: 'Escopeta', probabilidad: 5 },
-    { arma: 'Rifle', probabilidad: 4 },
-    { arma: 'Munición Pistola', probabilidad: 8 },
-    { arma: 'Munición Escopeta', probabilidad: 7 },
-    { arma: 'Munición Rifle', probabilidad: 5 },
-    { arma: 'Botiquin', probabilidad: 1 },
-    { arma: 'Adrenalina', probabilidad: 3 },
-    { arma: 'Molotov', probabilidad: 1 },
+    { arma: 'Palanca', probabilidad: 10 },
+    { arma: 'Hacha', probabilidad: 8 },
+    { arma: 'Espada', probabilidad: 6 },
+
+    { arma: 'Pistola', probabilidad: 8 },
+    { arma: 'Escopeta', probabilidad: 7 },
+    { arma: 'Rifle', probabilidad: 5 },
+
+    { arma: 'Munición Pistola', probabilidad: 18 },
+    { arma: 'Munición Escopeta', probabilidad: 15 },
+    { arma: 'Munición Rifle', probabilidad: 12 },
+    
+    { arma: 'Botiquin', probabilidad: 3 },
+    { arma: 'Adrenalina', probabilidad: 5 },
+    { arma: 'Molotov', probabilidad: 3 },
   ];
 
   //Aun no he aplicado probabilidad a los enemigos
