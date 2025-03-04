@@ -2,6 +2,10 @@
 <button class="cerrar" *ngIf="this.datosService.emergenteMostrado != ''"
 (click)="this.datosService.emergente('')">X</button>
 
+<!-- cargando -->
+<div *ngIf="this.datosService.animacionCarga" class="carga">
+  <span class="cargando"> Cargando...</span>
+</div>
 <!-- Emergente de arma encontrada -->
 <div (click)="cerrarBusqueda()" *ngIf="this.datosService.armaEncontrada != ''">
   <app-busqueda class="busqueda" />
@@ -31,14 +35,14 @@
 <div class="fondoEmergente" (click)="this.datosService.emergente('')"
 *ngIf="this.datosService.emergenteMostrado === 'primigenioAtaca'">
   <div class="emergente">
-    <p class="texto">El primigenio ha despertado.<br><br> El primigenio ataca.</p>
+    <p class="texto"><b>Atención:</b> <br> <br> El primigenio ataca.</p>
   </div>
 </div>
 
 <div class="fondoEmergente" (click)="this.datosService.emergente('')"
 *ngIf="this.datosService.emergenteMostrado === 'enemigoAvanza'">
   <div class="emergente">
-    <p class="texto"><b>Atención:</b> <br> <br> Avanza una casilla adicional, los enemigos "{{this.datosService.enemigoAvanceAdicional}}"</p>
+    <p class="texto"><b>Atención:</b> <br> <br> Una acción adicional inmediata, los enemigos "{{this.datosService.enemigoAvanceAdicional}}"</p>
   </div>
 </div>
  

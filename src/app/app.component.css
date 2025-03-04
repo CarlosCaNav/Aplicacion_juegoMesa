@@ -26,6 +26,49 @@
   justify-content: center;
 }
 
+.carga {
+  position: absolute;
+  z-index: 10;
+  background-color: black;
+  height: 100vh;
+  width: 100vw;
+  box-shadow: 0px 0px 50px 10px rgb(255, 94, 0),
+    inset 0px 0px 20px 1px rgb(255, 94, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: wheat;
+  animation: desvanecer 3s;
+  opacity: 0;
+}
+@keyframes desvanecer {
+  0%, 100% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.cargando {
+  font-size: xx-large;
+  animation: cargando 3s ease-in-out infinite;
+}
+
+@keyframes cargando {
+  0%, 100% {
+    opacity: 1;
+    scale: 1.1;
+  }
+  50% {
+    opacity: 0.3;
+    scale: 1;
+  }
+}
+
 .fondoEmergente {
   position: absolute;
   z-index: 9;
@@ -64,7 +107,7 @@
 
 summary {
   font-weight: bold;
-  color: white
+  color: white;
 }
 
 .cerrar {
@@ -125,7 +168,7 @@ summary {
     flex-direction: column;
   }
   .instrucciones {
-    margin-left:0;
+    margin-left: 0;
     margin-top: 2vh;
     width: 100vw;
     height: 96vh;
@@ -144,21 +187,23 @@ summary {
     margin-top: 12px;
   }
 
-  .texto{width: 80vw;}
+  .texto {
+    width: 80vw;
+  }
 
-.emergente {
-  position: absolute;
-  z-index: 10;
-  margin-top: 10%;
-  margin-left: 5vw;
-  background-color: black;
-  height: 90vh;
-  width: 90vw;
-  border-radius: 20px;
-  box-shadow: 0px 0px 50px 10px rgb(255, 94, 0),
-    inset 0px 0px 20px 1px rgb(255, 94, 0);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .emergente {
+    position: absolute;
+    z-index: 10;
+    margin-top: 10%;
+    margin-left: 5vw;
+    background-color: black;
+    height: 90vh;
+    width: 90vw;
+    border-radius: 20px;
+    box-shadow: 0px 0px 50px 10px rgb(255, 94, 0),
+      inset 0px 0px 20px 1px rgb(255, 94, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

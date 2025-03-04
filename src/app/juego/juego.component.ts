@@ -2,9 +2,9 @@ import { NgFor, NgIf, NgStyle } from '@angular/common';
 import { Component } from '@angular/core';
 import { DatosService } from '../services/datos.service';
 import { MapasService } from '../services/mapas.service';
-import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { ReactiveFormsModule,/*  FormGroup, FormControl */ } from '@angular/forms';
+/* import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs'; */
 import { EditarService } from '../services/editar.service';
 import { AlmacenamientoService } from '../services/almacenamiento.service';
 
@@ -20,7 +20,7 @@ export class JuegoComponent {
     public mapasService: MapasService,
     public editarService: EditarService,
     public almacenamientoService: AlmacenamientoService,
-    private http: HttpClient
+   /*  private http: HttpClient */
   ) {
     this.editarService.crearmapa();
     this.almacenamientoService.obtenerClavesLocalStorage();
@@ -33,9 +33,6 @@ export class JuegoComponent {
       visible: boolean;
       enemigo: string;
       pista: boolean */
-
-
-
 
   ronda() {
     if (this.datosService.casillasConSalidaEnemigos.length === 0) {
@@ -116,7 +113,8 @@ export class JuegoComponent {
       numeroAleatorio < this.datosService.probabilidadAvanceDoble &&
       enemigoAleatorio < this.datosService.fase + 1
     ) {
-      this.datosService.enemigoAvanceAdicional = this.datosService.enemigos[enemigoAleatorio].enemigo;
+      this.datosService.enemigoAvanceAdicional =
+        this.datosService.enemigos[enemigoAleatorio].enemigo;
       this.datosService.emergente('enemigoAvanza');
     }
 
@@ -130,7 +128,7 @@ export class JuegoComponent {
         break;
       case this.datosService.rondaTerceraFase:
         this.datosService.fase = 3;
-        this.datosService.emergenteMostrado = 'primigenioDespertando'
+        this.datosService.emergenteMostrado = 'primigenioDespertando';
         const numeroAleatorio = Math.floor(
           Math.random() * this.datosService.numeroLosetas
         );
@@ -168,7 +166,8 @@ export class JuegoComponent {
       this.nuevoEnemigo();
       //comprobamos si añadimos un tercero
       if (
-        numerOMAzoAleatorio + this.datosService.mazoEnemigosSimples < this.datosService.ronda
+        numerOMAzoAleatorio + this.datosService.mazoEnemigosSimples <
+        this.datosService.ronda
       ) {
         this.nuevoEnemigo();
       }
@@ -179,12 +178,12 @@ export class JuegoComponent {
     }
 
     // si el primigenio está despierto, comprobamos si ataca:
-    if (this.datosService.ronda > this.datosService.rondaTerceraFase){
-     const aleatorio:number= Math.floor(Math.random() * 100);
-     console.log(aleatorio);
-     if (aleatorio < this.datosService.probabilidadAtaquePrimigenio){
-      this.datosService.emergente('primigenioAtaca')
-     }
+    if (this.datosService.ronda > this.datosService.rondaTerceraFase) {
+      const aleatorio: number = Math.floor(Math.random() * 100);
+      console.log(aleatorio);
+      if (aleatorio < this.datosService.probabilidadAtaquePrimigenio) {
+        this.datosService.emergente('primigenioAtaca');
+      }
     }
 
     // Incrementamos la ronda
@@ -195,12 +194,11 @@ export class JuegoComponent {
   }
 
   nuevoEnemigo() {
-    //El enemigo aleatorio hay que cambiarlo en un futuro, ya que ahora hay sólo 4,
-    // pero en el futuro puede haber diferentes enemigos en una misma fase.
-    //a demás no cuenta la probabilidad de cada uno
-    const enemigoAleatorio = Math.floor(
-      Math.random() * (this.datosService.fase + 1)
-    );
+    const enemigosPosibles = this.enemigosActuales();
+
+    const enemigoAleatorio = enemigosPosibles[Math.floor(
+      Math.random() * (enemigosPosibles.length)
+    )];
     const losetaAleatoria = Math.floor(
       Math.random() * this.datosService.casillasConSalidaEnemigos.length
     );
@@ -221,5 +219,18 @@ export class JuegoComponent {
     ].enemigos.push(this.datosService.enemigos[enemigoAleatorio].enemigo);
   }
 
+  enemigosActuales() {
+    //en un futuro añadir la posibilidad de cada uno en salir.
+let enemigosActuales: number[]=[]
 
+//comprobamos qué enemigos pueden aparecer
+    for (let i = 0; i < this.datosService.enemigos.length; ++i) {
+      if (this.datosService.enemigos[i].fase <= this.datosService.fase){
+        for (let j = 0; j < this.datosService.enemigos[i].probabilidad; j++) {
+          enemigosActuales.push(i);
+        }
+      }
+    }
+    return enemigosActuales
+  }
 }

@@ -169,6 +169,7 @@ export class AlmacenamientoService {
   }
 
   ejecutarMapa(mapaElegido: string) {
+
     const inicioJugadores: number = Math.floor(
       Math.random() * this.datosService.numeroLosetas
     );
@@ -181,20 +182,26 @@ export class AlmacenamientoService {
       console.error('Failed to load map');
     }
     if (this.datosService.emergenteMostrado != 'elegirMapa') {
+      this.datosService.animacionCarga = true;
       setTimeout(() => {
         this.editarService.aplicarAutomaticamente();
         setTimeout(() => {
           this.editarService.editar();
           this.datosService.mapaActual[inicioJugadores].visible = true;
-        }, 1000);
+          setTimeout(() => {
+            this.datosService.animacionCarga = false;
+          }, 1000);
+        }, 500);
         this.mostrarMapa = true;
-      }, 1500);
+        console.log(2);
+      }, 2000);
     }
 
     /* 
      this.aplicarAutomaticamente();
      this.generarInicio(); */
   }
+
   mapaPrevisualizado: string = '';
   ejecutarPrevisualizado() {
     this.datosService.emergenteMostrado = '';
