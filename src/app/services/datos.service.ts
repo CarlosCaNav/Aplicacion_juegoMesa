@@ -125,9 +125,9 @@ export class DatosService {
   ];
 
   imagenes: { [key: string]: string } = {
-    Palanca: './busqueda/Palanca.jpg',
-    Hacha: './busqueda/Hacha.jpg',
-    Espada: './busqueda/Espada.jpg',
+    'Palanca': './busqueda/Palanca.jpg',
+    'Hacha': './busqueda/Hacha.jpg',
+    'Espada': './busqueda/Espada.jpg',
     Pistola: './busqueda/Pistola.jpg',
     Escopeta: './busqueda/Escopeta.jpg',
     Rifle: './busqueda/Rifle.jpg',
@@ -156,8 +156,8 @@ export class DatosService {
     ) {
       this.mapaActual[this.casillaPrimigenio].visible = true;
     }
-    if (this.pistasEncontradas == 3) {
-      alert('El primigenio pierde 10 puntos de vida');
+    if (this.pistasEncontradas >= 3) {
+      alert('El primigenio pierde 5 puntos de vida.');
     }
   }
 

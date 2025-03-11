@@ -1,4 +1,18 @@
-# Mapas
+# Aplicación para juego de mesa
+
+![preview](https://raw.githubusercontent.com/CarlosCaNav/Aplicacion_juegoMesa/refs/heads/master/public/readme/barner.jpg)
+
+##Breve explicación
+
+La aplicación para el juego de mesa tiene como objetivo desvelar el mapa y enemigos a medida que los jugadores vayan avanzando, para que el jugador no pueda saber a qué se enfrenta.
+
+[Teaser en Youtube](https://www.youtube.com/watch?v=Sg87IhK12kE "Teaser en Youtube:")
+
+[Funcionamiento de la aplicación.](https://www.youtube.com/watch?v=Sg87IhK12kE "Teaser en Youtube:")
+
+La aplicación consta de dos partes. Un editor de mapas provisional, que no estará disponible para el usuario final, y el guiado del juego de mesa.
+
+Las losetas grises representan carreteras, y las naranjas el interior de las casas.
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.3.
 
