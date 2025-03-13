@@ -163,6 +163,17 @@ summary {
     scrollbar-color: darkgreen black;
   }
 }
+.portafolio{
+position: absolute;
+z-index: 10;
+background-color:aqua;
+box-shadow: 0px 0px 2px 2px aqua;
+width: 120px;
+margin-top: 15px;
+margin-left: calc(100vw - 130px);
+scale: 0.8;
+}
+
 @media (max-width: 768px) {
   .mapa {
     flex-direction: column;

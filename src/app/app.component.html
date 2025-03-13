@@ -1,3 +1,6 @@
+<button class="portafolio" *ngIf="this.datosService.emergenteMostrado === ''"
+>Ir a mi portafolio</button>
+
 
 <button class="cerrar" *ngIf="this.datosService.emergenteMostrado != ''"
 (click)="this.datosService.emergente('')">X</button>
