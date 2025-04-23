@@ -1,0 +1,10 @@
+<div class="map">
+  @for(tiles of map; track tiles.id){
+  <div class="tiles" [ngStyle]="{'background-color': tiles.house ? 'orange' : 'gray'}">    
+   id {{ tiles.id }} <br> colm{{ tiles.idC + 1}} <br> fila{{ tiles.idR + 1}}
+
+<button (click)="tiles.house = !tiles.house">alternar</button>  
+
+</div>
+  }
+</div>

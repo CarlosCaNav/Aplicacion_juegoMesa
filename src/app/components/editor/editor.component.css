@@ -1,0 +1,20 @@
+.map {
+  width: 95vh;
+  height: 95vh;
+  border: 2px solid;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.tiles {
+  height: calc((100% / 8 ) - 4px);
+  width: calc((100% / 8 ) - 4px);
+  margin: 0px;
+  border: 2px solid blue;
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
