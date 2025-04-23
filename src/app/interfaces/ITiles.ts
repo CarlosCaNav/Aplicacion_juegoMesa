@@ -2,7 +2,7 @@ export interface Tiles {
     idR: number;
     idC: number;
     house: boolean
-    houseName?: string;
+    houseName?: number;
     streetH?: number;
     streetV?: number;
     enemys?: string[];

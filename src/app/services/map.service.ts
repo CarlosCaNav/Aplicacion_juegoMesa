@@ -33,4 +33,8 @@ export class MapService {
   getTiles(): Tiles[][] {
     return this.tiles;
   }
+
+  alternateHause(idC: number, idR: number) {
+    this.tiles[idR][idC].house = !this.tiles[idR][idC].house;
+  }
 }

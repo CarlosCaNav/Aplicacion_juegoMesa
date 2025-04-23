@@ -2,68 +2,69 @@
   @for(rows of map; track rows){
   <div class="row">
     @for(tiles of rows; track tiles){
-    <div class="tiles"
-    [ngStyle]="{ 'background-color': tiles.house ? 'orange' : 'gray' }"
-  >
-    colm{{ tiles.idC + 1 }} <br />
-    fila{{ tiles.idR + 1 }}
+    <div
+      class="tiles"
+      [ngStyle]="{ 'background-color': tiles.house ? 'orange' : 'gray' }"
+    >
+      <p> colm{{ tiles.idC + 1 }} <br>
+       fila{{ tiles.idR + 1 }}<br>
+      @if(tiles.house){ <span> Nombre:{{ tiles.houseName }} </span>} <br>
+      <button (click)="alternateHause(tiles.idC, tiles.idR)">alternar</button></p>
 
-    <!-- puerta Norte -->
-    @if(tiles.idR > 0 && map[tiles.idR - 1][tiles.idC].house == false && tiles.house
-){
-    <button
-      class="doorN"
-      (click)="tiles.doorN = !tiles.doorN"
-      [ngStyle]="{
-        'background-color': tiles.doorN
-          ? 'rgb(71, 31, 12)'
-          : 'rgba(71, 31, 12, 0.212)'
-      }"
-    ></button
-    >}
+      <!-- puerta Norte -->
+      @if(tiles.idR > 0 && map[tiles.idR - 1][tiles.idC].house == false &&
+      tiles.house ){
+      <button
+        class="doorN"
+        (click)="tiles.doorN = !tiles.doorN"
+        [ngStyle]="{
+          'background-color': tiles.doorN
+            ? 'rgb(71, 31, 12)'
+            : 'rgba(71, 31, 12, 0.212)'
+        }"
+      ></button
+      >}
 
-    <!-- puerta Sur -->
-    @if(tiles.idR < 7 && map[tiles.idR + 1][tiles.idC].house == false && tiles.house
-){
-    <button
-      class="doorS"
-      (click)="tiles.doorS = !tiles.doorS"
-      [ngStyle]="{
-        'background-color': tiles.doorS
-          ? 'rgb(71, 31, 12)'
-          : 'rgba(71, 31, 12, 0.212)'
-      }"
-    ></button
-    >}
-    <!-- puerta W -->
-    @if(tiles.idC -1 >= 0 && map[tiles.idR][tiles.idC - 1].house == false && tiles.house
-){
-    <button
-      class="doorW"
-      (click)="tiles.doorW = !tiles.doorW"
-      [ngStyle]="{
-        'background-color': tiles.doorW
-          ? 'rgb(71, 31, 12)'
-          : 'rgba(71, 31, 12, 0.212)'
-      }"
-    ></button
-    >}
-    <!-- puerta E -->
-    @if(tiles.idC < 7 && map[tiles.idR][tiles.idC + 1].house == false && tiles.house
-){
-    <button
-      class="doorE"
-      (click)="tiles.doorE = !tiles.doorE"
-      [ngStyle]="{
-        'background-color': tiles.doorE
-          ? 'rgb(71, 31, 12)'
-          : 'rgba(71, 31, 12, 0.212)'
-      }"
-    ></button
-    >}
-
-    <button (click)="tiles.house = !tiles.house">alternar</button>
-  </div>
+      <!-- puerta Sur -->
+      @if(tiles.idR < 7 && map[tiles.idR + 1][tiles.idC].house == false &&
+      tiles.house ){
+      <button
+        class="doorS"
+        (click)="tiles.doorS = !tiles.doorS"
+        [ngStyle]="{
+          'background-color': tiles.doorS
+            ? 'rgb(71, 31, 12)'
+            : 'rgba(71, 31, 12, 0.212)'
+        }"
+      ></button
+      >}
+      <!-- puerta W -->
+      @if(tiles.idC -1 >= 0 && map[tiles.idR][tiles.idC - 1].house == false &&
+      tiles.house ){
+      <button
+        class="doorW"
+        (click)="tiles.doorW = !tiles.doorW"
+        [ngStyle]="{
+          'background-color': tiles.doorW
+            ? 'rgb(71, 31, 12)'
+            : 'rgba(71, 31, 12, 0.212)'
+        }"
+      ></button
+      >}
+      <!-- puerta E -->
+      @if(tiles.idC < 7 && map[tiles.idR][tiles.idC + 1].house == false &&
+      tiles.house ){
+      <button
+        class="doorE"
+        (click)="tiles.doorE = !tiles.doorE"
+        [ngStyle]="{
+          'background-color': tiles.doorE
+            ? 'rgb(71, 31, 12)'
+            : 'rgba(71, 31, 12, 0.212)'
+        }"
+      ></button
+      >}
+    </div>
     }
   </div>
   }
@@ -95,3 +96,4 @@
   </div>
   } -->
 </div>
+ <button (click)="createNameHouse()">Holi</button>
