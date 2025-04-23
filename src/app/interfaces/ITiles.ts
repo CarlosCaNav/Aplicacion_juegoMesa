@@ -1,5 +1,4 @@
 export interface Tiles {
-    id: number;
     idR: number;
     idC: number;
     house: boolean
@@ -14,9 +13,9 @@ export interface Tiles {
     roofS?: boolean;
     roofE?: boolean;
     roofW?: boolean;
-    doorN?: boolean;
-    doorS?: boolean;
-    doorE?: boolean;
-    doorW?: boolean;
+    doorN: boolean;
+    doorS: boolean;
+    doorE: boolean;
+    doorW: boolean;
 }
 

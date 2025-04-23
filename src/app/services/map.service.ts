@@ -11,41 +11,26 @@ export class MapService {
 
   rows: number = 8;
   columns: number = 8;
-  tiles: Tiles[] = [];
+  tiles: Tiles[][] = [];
 
   createMap() {
-    let rows = 0;
-    let columns = 0;
-
-    for (let i = 0; i < this.columns * this.rows; i++) {
-      columns = i % this.columns;
-      rows = Math.floor(i / this.columns);
-
-      this.tiles[i] = {
-        id: i,
-        idR: rows,
-        idC: columns,
-        house: false,
-        houseName: '',
-        streetH: 0,
-        streetV: 0,
-        enemys: [],
-        enemyRoute: [],
-        visible: false,
-        investigation: false,
-        roofN: false,
-        roofS: false,
-        roofE: false,
-        roofW: false,
-        doorN: false,
-        doorS: false,
-        doorE: false,
-        doorW: false,
-      };
+    for (let i = 0; i < this.rows; i++) {
+      this.tiles[i] = [];
+      for (let j = 0; j < this.columns; j++) {
+        this.tiles[i][j] = {
+          idR: i,
+          idC: j,
+          house: false,
+          doorN: false,
+          doorS: false,
+          doorE: false,
+          doorW: false,
+        }
+      }
     }
   }
 
-  getTiles(): Tiles[] {
+  getTiles(): Tiles[][] {
     return this.tiles;
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { NgStyle } from '@angular/common';
+import { NgStyle, NgIf } from '@angular/common';
 import { MapService } from '../../services/map.service';
 
 
@@ -7,7 +7,7 @@ import { MapService } from '../../services/map.service';
 @Component({
   selector: 'app-editor',
   standalone: true,
-  imports: [NgStyle],
+  imports: [NgStyle, NgIf],
   templateUrl: './editor.component.html',
   styleUrl: './editor.component.css'
 })
@@ -23,8 +23,5 @@ map = this.mapService.getTiles();
     this.mapService.createMap();
   }
 
-  alternateTerrain(id : number){
-    this.map[id].house = !this.map[id].house;
-  }
 
 }

@@ -3,18 +3,60 @@
   height: 95vh;
   border: 2px solid;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }
 
+.row{
+    width: 100%;
+    flex-grow: 8;
+    margin: 0px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
 .tiles {
-  height: calc((100% / 8 ) - 4px);
-  width: calc((100% / 8 ) - 4px);
+  height: 100%;
+  flex-grow: 8;
   margin: 0px;
   border: 2px solid blue;
   font-size: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+
+.doorN{
+    position: absolute;
+    border: 1px solid black;
+    height: 2vh;
+    width: 6vh;
+    margin-top: -10vh;
+}
+.doorS{
+    position: absolute;
+    border: 1px solid black;
+    height: 2vh;
+    width: 6vh;
+    margin-top: 10vh;
+}
+.doorW{
+    position: absolute;
+    border: 1px solid black;
+    height: 6vh;
+    width: 2vh;
+    margin-left: -10vh;
+}
+.doorE{
+    position: absolute;
+    border: 1px solid black;
+    height: 6vh;
+    width: 2vh;
+    margin-left: 10vh;
 }
