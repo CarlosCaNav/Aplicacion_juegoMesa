@@ -2,9 +2,29 @@
   @for(rows of map; track rows){
   <div class="row">
     @for(tiles of rows; track tiles){
-    <div class="tiles" (click)="clear(tiles.idC, tiles.idR)">
-      @if(tiles.visible){
 
+    <div class="tiles" (click)="clear(tiles.idC, tiles.idR)">
+      @if(tiles.roofN === true && tiles.visible != true) {
+      <div
+        class="roof"
+        style="background-image: url('/textures/roofN.png')"
+      ></div>
+      } @if(tiles.roofS === true && tiles.visible != true) {
+      <div
+        class="roof"
+        style="background-image: url('/textures/roofS.png')"
+      ></div>
+      } @if(tiles.roofW === true && tiles.visible != true) {
+      <div
+        class="roof"
+        style="background-image: url('/textures/roofW.png')"
+      ></div>
+      } @if(tiles.roofE === true && tiles.visible != true) {
+      <div
+        class="roof"
+        style="background-image: url('/textures/roofE.png')"
+      ></div>
+      } @if(tiles.visible){
       <div
         class="tilesInside"
         [ngStyle]="{ 'background-color': tiles.house ? 'orange' : 'gray' }"

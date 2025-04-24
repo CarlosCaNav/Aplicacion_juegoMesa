@@ -42,4 +42,15 @@ export class MapService {
   alternateVisibility(idC: number, idR: number, visiblility: boolean) {
     this.tiles[idR][idC].visible = visiblility;
   }
+  showRoof(idC: number, idR: number, roof: string) {
+   if(roof === 'N'){
+    this.tiles[idR][idC].roofN = true;
+   }else if(roof === 'S'){
+    this.tiles[idR][idC].roofS = true;
+   }else if(roof === 'E'){
+    this.tiles[idR][idC].roofE = true;
+   }else if(roof === 'W'){
+    this.tiles[idR][idC].roofW = true;
+   }
+  }
 }

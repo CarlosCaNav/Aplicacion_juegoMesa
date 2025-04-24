@@ -16,6 +16,7 @@ export class GameComponent {
   private mapService: MapService = inject(MapService);
   private loadMapService: LoadMapService = inject(LoadMapService);
 
+  /* map = this.mapService.getTiles(); */
   map = this.mapService.getTiles();
 
   loadMap(map: string) {
@@ -48,8 +49,12 @@ export class GameComponent {
         attempts++;
         if (this.map[idR - attempts][idC].house === false ) {
           this.mapService.alternateVisibility(idC, idR - attempts, true);
-        } else {
+   /*      } else if (this.map[idR - attempts][idC].house === true) {
+          this.map[idR - attempts][idC].roofS === true;
           
+          break; */
+        } else {
+          this.mapService.showRoof(idC, idR - attempts, 'S');
           break;
         }
       }
@@ -60,26 +65,29 @@ export class GameComponent {
         if (this.map[idR + attempts][idC].house === false) {
           this.mapService.alternateVisibility(idC, idR + attempts, true);
         } else {
+          this.mapService.showRoof(idC, idR + attempts, 'N');
           break;
         }
       }
-      // Comprobamos hasta donde llega la carretera hacia el sur
+      // Comprobamos hasta donde llega la carretera hacia el E
           attempts = 0;
       while (idC + attempts < 7) {
         attempts++;
         if (this.map[idR][idC + attempts].house === false) {
           this.mapService.alternateVisibility(idC + attempts, idR, true);
         } else {
+          this.mapService.showRoof(idC + attempts, idR, 'W');
           break;
         }
       }
-      // Comprobamos hasta donde llega la carretera hacia el sur
+      // Comprobamos hasta donde llega la carretera hacia el W
           attempts = 0;
       while (idC - attempts > 0) {
         attempts++;
         if (this.map[idR][idC - attempts].house === false) {
           this.mapService.alternateVisibility(idC - attempts, idR, true);
         } else {
+          this.mapService.showRoof(idC - attempts, idR, 'E');
           break;
         }
       }
