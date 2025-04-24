@@ -1,19 +1,21 @@
 import { Component, Injectable } from '@angular/core';
-import { Tiles } from '../interfaces/ITiles';
+import { ITiles } from '../interfaces/tiles';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MapService {
   constructor() {
-    this.createMap()
+   /*  this.createMap() */
   }
 
   rows: number = 8;
   columns: number = 8;
-  tiles: Tiles[][] = [];
+  tiles: ITiles[][] = [];
 
   createMap() {
+
+    
     for (let i = 0; i < this.rows; i++) {
       this.tiles[i] = [];
       for (let j = 0; j < this.columns; j++) {
@@ -30,7 +32,7 @@ export class MapService {
     }
   }
 
-  getTiles(): Tiles[][] {
+  getTiles(): ITiles[][] {
     return this.tiles;
   }
 

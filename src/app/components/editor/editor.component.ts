@@ -1,6 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { NgStyle, NgIf } from '@angular/common';
 import { MapService } from '../../services/map.service';
+import { LoadMapService } from '../../services/load-map.service';
+import { ITiles } from '../../interfaces/tiles';
 
 @Component({
   selector: 'app-editor',
@@ -13,8 +15,15 @@ export class EditorComponent implements OnInit {
   title = 'JuegoMesa';
 
   private mapService: MapService = inject(MapService);
+  private loadMapService: LoadMapService = inject(LoadMapService);
+/* 
+  map: ITiles[][] = this.loadMapService.loadMap('redemption') || [];
+ */
 
   map = this.mapService.getTiles();
+
+
+  reloadMap(){this.map = this.mapService.tiles;}
 
   ngOnInit(): void {
     this.mapService.createMap();
@@ -58,4 +67,35 @@ export class EditorComponent implements OnInit {
       }
     }
   }
+  saveMapLocalStorage() {
+    localStorage.setItem('map', JSON.stringify(this.map));
+    }
+  loadMapLocalStorage() {
+    const map = localStorage.getItem('map');
+    if (map) {
+      this.map = JSON.parse(map);
+    }
+  }
+  downloadMap() {
+
+    this.createNameHouse();
+
+    const data = JSON.stringify(this.map);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'map.json';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
+
+  loadMap(map : string) {
+    this.loadMapService.loadMap(map);
+    console.log("llegó aquí?");
+    
+  }
+
+
+
 }

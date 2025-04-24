@@ -1,10 +1,8 @@
-export interface Tiles {
+export interface ITiles {
     idR: number;
     idC: number;
     house: boolean
     houseName?: number;
-    streetH?: number;
-    streetV?: number;
     enemys?: string[];
     enemyRoute?: number[];
     visible?: boolean;
