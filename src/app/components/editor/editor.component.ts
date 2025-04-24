@@ -2,7 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { NgStyle, NgIf } from '@angular/common';
 import { MapService } from '../../services/map.service';
 import { LoadMapService } from '../../services/load-map.service';
-import { ITiles } from '../../interfaces/tiles';
 
 @Component({
   selector: 'app-editor',
@@ -23,7 +22,6 @@ export class EditorComponent implements OnInit {
   map = this.mapService.getTiles();
 
 
-  reloadMap(){this.map = this.mapService.tiles;}
 
   ngOnInit(): void {
     this.mapService.createMap();
@@ -92,9 +90,9 @@ export class EditorComponent implements OnInit {
 
   loadMap(map : string) {
     this.loadMapService.loadMap(map);
-    console.log("llegó aquí?");
     
   }
+  reloadMap(){this.map = this.mapService.tiles;}
 
 
 

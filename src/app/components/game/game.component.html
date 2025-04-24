@@ -1,1 +1,42 @@
-<p>game works!</p>
+<div class="map">
+  @for(rows of map; track rows){
+  <div class="row">
+    @for(tiles of rows; track tiles){
+    <div class="tiles" (click)="clear(tiles.idC, tiles.idR)">
+      @if(tiles.visible){
+
+      <div
+        class="tilesInside"
+        [ngStyle]="{ 'background-color': tiles.house ? 'orange' : 'gray' }"
+      >
+        <!-- puerta Norte -->
+        @if(tiles.idR > 0 && map[tiles.idR - 1][tiles.idC].house == false &&
+        tiles.house && tiles.doorN == true){
+        <div class="doorN doors"></div>
+        }
+
+        <!-- puerta Sur -->
+        @if(tiles.idR < 7 && map[tiles.idR + 1][tiles.idC].house == false &&
+        tiles.house && tiles.doorS == true){
+        <div class="doorS doors"></div>
+        }
+        <!-- puerta W -->
+        @if(tiles.idC -1 >= 0 && map[tiles.idR][tiles.idC - 1].house == false &&
+        tiles.house && tiles.doorW == true){
+        <div class="doorW doors"></div>
+        }
+        <!-- puerta E -->
+        @if(tiles.idC < 7 && map[tiles.idR][tiles.idC + 1].house == false &&
+        tiles.house && tiles.doorE == true){
+        <div class="doorE doors"></div>
+        }
+      </div>
+      }
+    </div>
+    }
+  </div>
+  }
+</div>
+
+<button (click)="loadMap('redemption')">Cargar mapa</button>
+<button (click)="reloadMap()">sustituir mapa</button>
