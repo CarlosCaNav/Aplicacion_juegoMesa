@@ -36,13 +36,13 @@ export class MapService {
     return this.tiles;
   }
 
-  alternateHause(idC: number, idR: number) {
+  alternateHause(idR: number, idC: number) {
     this.tiles[idR][idC].house = !this.tiles[idR][idC].house;
   }
-  alternateVisibility(idC: number, idR: number, visiblility: boolean) {
+  alternateVisibility(idR: number, idC: number, visiblility: boolean) {
     this.tiles[idR][idC].visible = visiblility;
   }
-  showRoof(idC: number, idR: number, roof: string) {
+  showRoof(idR: number, idC: number, roof: string) {
    if(roof === 'N'){
     this.tiles[idR][idC].roofN = true;
    }else if(roof === 'S'){

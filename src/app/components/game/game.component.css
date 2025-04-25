@@ -7,7 +7,7 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    background-color: lightblue;
+    background-color: rgb(6, 1, 24);
   }
   
   .row{
@@ -25,15 +25,18 @@
     height: 100%;
     flex-grow: 8;
     margin: 0px;
-    border: 1px solid blue;
+    border: 1px solid rgb(40, 37, 65);
   }
   .tilesInside {
-    height: 100%;
+    position: absolute;
+    height: 12vh;   
+    width: 12vh;
     margin: 0px;
     font-size: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 1px solid rgb(40, 37, 65);
   }
   .roof{
     position: absolute;

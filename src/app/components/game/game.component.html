@@ -2,8 +2,16 @@
   @for(rows of map; track rows){
   <div class="row">
     @for(tiles of rows; track tiles){
-
-    <div class="tiles" (click)="clear(tiles.idC, tiles.idR)">
+    <div
+      class="tiles"
+      (click)="clear(tiles.idR, tiles.idC)"
+      [ngStyle]="{
+        'background-color':
+          tiles.roofS || tiles.roofN || tiles.roofE || tiles.roofW
+            ? 'rgb(77, 43, 0)'
+            : ''
+      }"
+    >
       @if(tiles.roofN === true && tiles.visible != true) {
       <div
         class="roof"
@@ -24,34 +32,36 @@
         class="roof"
         style="background-image: url('/textures/roofE.png')"
       ></div>
-      } @if(tiles.visible){
+      }
+      @if(tiles.visible){
       <div
         class="tilesInside"
         [ngStyle]="{ 'background-color': tiles.house ? 'orange' : 'gray' }"
-      >
+      ></div>
+      }
+      <div class="tilesInside">
         <!-- puerta Norte -->
         @if(tiles.idR > 0 && map[tiles.idR - 1][tiles.idC].house == false &&
-        tiles.house && tiles.doorN == true){
+        tiles.house && tiles.doorN == true && (tiles.visible || tiles.roofN)){
         <div class="doorN doors"></div>
         }
 
         <!-- puerta Sur -->
         @if(tiles.idR < 7 && map[tiles.idR + 1][tiles.idC].house == false &&
-        tiles.house && tiles.doorS == true){
+        tiles.house && tiles.doorS == true && (tiles.visible || tiles.roofS)){
         <div class="doorS doors"></div>
         }
         <!-- puerta W -->
         @if(tiles.idC -1 >= 0 && map[tiles.idR][tiles.idC - 1].house == false &&
-        tiles.house && tiles.doorW == true){
+        tiles.house && tiles.doorW == true && (tiles.visible || tiles.roofW)){
         <div class="doorW doors"></div>
         }
         <!-- puerta E -->
         @if(tiles.idC < 7 && map[tiles.idR][tiles.idC + 1].house == false &&
-        tiles.house && tiles.doorE == true){
+        tiles.house && tiles.doorE == true && (tiles.visible || tiles.roofE)){
         <div class="doorE doors"></div>
         }
       </div>
-      }
     </div>
     }
   </div>
