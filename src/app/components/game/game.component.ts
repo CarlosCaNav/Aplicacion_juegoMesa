@@ -18,6 +18,8 @@ export class GameComponent {
 
   /* map = this.mapService.getTiles(); */
   map = this.mapService.getTiles();
+  rows = this.mapService.rows - 1;
+  columns = this.mapService.columns - 1;
 
   loadMap(map: string) {
     this.loadMapService.loadMap(map);
@@ -41,75 +43,132 @@ export class GameComponent {
 
       //Despejamos toda la carretera
     } else {
-      let attempts: number = 0;
+      let steps: number = 0;
 
       // Comprobamos hasta donde llega la carretera hacia el Norte
-      while (idR - attempts > 0) {
-        attempts++;
-        if (this.map[idR - attempts][idC].house === false) {
-          this.mapService.alternateVisibility( idR - attempts, idC, true);
+      while (idR - steps > 0) {
+        steps++;
+        if (this.map[idR - steps][idC].house === false) {
+          this.mapService.alternateVisibility(idR - steps, idC, true);
 
-          if (this.map[idR - attempts][idC - 1].house === true && idC > 1) { // arreglar esto            
-            this.mapService.showRoof(idR - attempts, idC - 1, 'E');
+          if (idC > 0 && this.map[idR - steps][idC - 1].house === true) {
+            this.mapService.showRoof(idR - steps, idC - 1, 'E');
+          } else {
+            this.mapService.clearableTile(idR - steps, idC, true);
           }
 
-          if (this.map[idR - attempts][idC + 1].house === true && idC < 6) {
-            this.mapService.showRoof(idR - attempts, idC + 1, 'W');
+          if (idC < 7 && this.map[idR - steps][idC + 1].house === true) {
+            this.mapService.showRoof(idR - steps, idC + 1, 'W');
           }
         } else {
-          this.mapService.showRoof(idR - attempts, idC, 'S');
+          this.mapService.showRoof(idR - steps, idC, 'S');
           break;
         }
       }
       // Comprobamos hasta donde llega la carretera hacia el sur
-      attempts = 0;
-      while (idR + attempts < 7) {
-        attempts++;
-        if (this.map[idR + attempts][idC].house === false) {
-          this.mapService.alternateVisibility(idR + attempts, idC, true);
-          if (this.map[idR + attempts][idC + 1].house === true && idC < 8) {
-            this.mapService.showRoof(idR + attempts, idC + 1, 'W');
-          } 
-          if (this.map[idR + attempts][idC - 1].house === true && idC > 0) {
-            this.mapService.showRoof(idR + attempts, idC - 1, 'E');
-          } 
+      steps = 0;
+      while (idR + steps < this.rows) {
+        steps++;
+        if (this.map[idR + steps][idC].house === false) {
+          this.mapService.alternateVisibility(idR + steps, idC, true);
+          if (idC < 7 && this.map[idR + steps][idC + 1].house === true) {
+            this.mapService.showRoof(idR + steps, idC + 1, 'W');
+          } else {
+            this.mapService.clearableTile(idR + steps, idC, true);
+          }
+          if (idC > 0 && this.map[idR + steps][idC - 1].house === true) {
+            this.mapService.showRoof(idR + steps, idC - 1, 'E');
+          }
         } else {
-          this.mapService.showRoof(idR + attempts, idC, 'N');
+          this.mapService.showRoof(idR + steps, idC, 'N');
           break;
         }
       }
       // Comprobamos hasta donde llega la carretera hacia el E
-      attempts = 0;
-      while (idC + attempts < 7) {
-        attempts++;
-        if (this.map[idR][idC + attempts].house === false) {
-          this.mapService.alternateVisibility(idR, idC + attempts, true);
-          if (this.map[idR + 1][idC + attempts].house === true && idR < 8) {
-            this.mapService.showRoof(idR + 1, idC + attempts, 'N');
+      steps = 0;
+      while (idC + steps < this.columns) {
+        steps++;
+        if (this.map[idR][idC + steps].house === false) {
+          this.mapService.alternateVisibility(idR, idC + steps, true);
+          if (idR < 7 && this.map[idR + 1][idC + steps].house === true) {
+            this.mapService.showRoof(idR + 1, idC + steps, 'N');
+          } else {
+            this.mapService.clearableTile(idR, idC + steps, true);
           }
-          if (this.map[idR - 1][idC + attempts].house === true && idR > 0) {
-            this.mapService.showRoof(idR - 1, idC + attempts, 'S');
+          if (idR > 0 && this.map[idR - 1][idC + steps].house === true) {
+            this.mapService.showRoof(idR - 1, idC + steps, 'S');
           }
         } else {
-          this.mapService.showRoof(idR, idC + attempts, 'W');
+          this.mapService.showRoof(idR, idC + steps, 'W');
           break;
         }
       }
       // Comprobamos hasta donde llega la carretera hacia el W
-      attempts = 0;
-      while (idC - attempts > 0) {
-        attempts++;
-        if (this.map[idR][idC - attempts].house === false) {
-          this.mapService.alternateVisibility(idR, idC - attempts, true);
-          if (this.map[idR - 1][idC - attempts].house === true && idR > 0) {
-            this.mapService.showRoof(idR - 1, idC - attempts, 'S');
+      steps = 0;
+      while (idC - steps > 0) {
+        steps++;
+        if (this.map[idR][idC - steps].house === false) {
+          this.mapService.alternateVisibility(idR, idC - steps, true);
+          if (idR > 0 && this.map[idR - 1][idC - steps].house === true) {
+            this.mapService.showRoof(idR - 1, idC - steps, 'S');
+          } else {
+            this.mapService.clearableTile(idR, idC - steps, true);
           }
-          if (this.map[idR + 1][idC - attempts].house === true && idR < 8) {
-            this.mapService.showRoof(idR + 1, idC - attempts, 'N');
+          if (idR < 7 && this.map[idR + 1][idC - steps].house === true) {
+            this.mapService.showRoof(idR + 1, idC - steps, 'N');
           }
         } else {
-          this.mapService.showRoof( idR, idC - attempts,'E');
+          this.mapService.showRoof(idR, idC - steps, 'E');
           break;
+        }
+      }
+
+      // comprobamos si la casilla es expandible
+      let clerable = false;
+      for (let i = 0; i < this.map.length; i++) {
+        for (let j = 0; j < this.map[i].length; j++) {
+          if (this.map[i][j].visible === true) {
+            console.log(i, j);
+
+            if (
+              i < this.rows &&
+              this.map[i + 1][j].visible != true &&
+              this.map[i + 1][j].house === false
+            ) {
+              clerable = true;
+              console.log('clerable1');
+            }
+            if (
+              i > 0 &&
+              this.map[i - 1][j].visible != true &&
+              this.map[i - 1][j].house === false
+            ) {
+              clerable = true;
+              console.log('clerable2');
+            }
+            if (
+              j < this.columns &&
+              this.map[i][j + 1].visible != true &&
+              this.map[i][j + 1].house === false
+            ) {
+              clerable = true;
+              console.log('clerable3');
+            }
+            if (
+              j > 0 &&
+              this.map[i][j - 1].visible != true &&
+              this.map[i][j - 1].house === false
+            ) {
+              clerable = true;
+              console.log('clerable4');
+            }
+            if (clerable) {
+              this.mapService.clearableTile(i, j, true);
+              clerable = false;
+            } else {
+              this.mapService.clearableTile(i, j, false);
+            }
+          }
         }
       }
     }

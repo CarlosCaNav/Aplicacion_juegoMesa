@@ -9,7 +9,7 @@
       <p> colm{{ tiles.idC + 1 }} <br>
        fila{{ tiles.idR + 1 }}<br>
       @if(tiles.house){ <span> Nombre:{{ tiles.houseName }} </span>} <br>
-      <button (click)="alternateHause(tiles.idC, tiles.idR)">alternar</button></p>
+      <button (click)="alternateHouse(tiles.idR, tiles.idC)">alternar</button></p>
 
       <!-- puerta Norte -->
       @if(tiles.idR > 0 && map[tiles.idR - 1][tiles.idC].house == false &&

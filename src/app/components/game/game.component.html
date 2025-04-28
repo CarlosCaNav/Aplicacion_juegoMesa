@@ -10,7 +10,7 @@
           tiles.roofS || tiles.roofN || tiles.roofE || tiles.roofW
             ? 'rgb(77, 43, 0)'
             : ''
-      }"
+         }"
     >
       @if(tiles.roofN === true && tiles.visible != true) {
       <div
@@ -36,7 +36,11 @@
       @if(tiles.visible){
       <div
         class="tilesInside"
-        [ngStyle]="{ 'background-color': tiles.house ? 'orange' : 'gray' }"
+        [ngStyle]="{ 'background-color': tiles.house ? 'orange' : 'gray',
+        'box-shadow':
+          tiles.clearableTile == true ? 'inset 0px 0px 10px 10px white' : '',
+        'border': tiles.house ? '1px solid black' : '',
+       }"
       ></div>
       }
       <div class="tilesInside">

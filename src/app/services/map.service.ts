@@ -53,4 +53,7 @@ export class MapService {
     this.tiles[idR][idC].roofW = true;
    }
   }
+  clearableTile(idR: number, idC: number, clearableTile: boolean) {
+    this.tiles[idR][idC].clearableTile = clearableTile;
+  }
 }
