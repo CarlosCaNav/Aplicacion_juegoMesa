@@ -3,11 +3,12 @@ export interface ITiles {
   idC: number;
   house: boolean;
   houseName?: number;
-  enemys?: string[];
+  enemies: string[];
   enemyRoute?: number[];
   clearableTile?: boolean;
   visible?: boolean;
   investigation?: boolean;
+  roof?: boolean;
   roofN?: boolean;
   roofS?: boolean;
   roofE?: boolean;

@@ -6,7 +6,7 @@ import { ITiles } from '../interfaces/tiles';
 })
 export class MapService {
   constructor() {
-   /*  this.createMap() */
+    /*  this.createMap() */
   }
 
   rows: number = 8;
@@ -14,20 +14,22 @@ export class MapService {
   tiles: ITiles[][] = [];
 
   createMap() {
-
-    
     for (let i = 0; i < this.rows; i++) {
       this.tiles[i] = [];
       for (let j = 0; j < this.columns; j++) {
         this.tiles[i][j] = {
           idR: i,
           idC: j,
+          enemies: [],
+          enemyRoute: [],
+          clearableTile: false,
+          visible: false,
           house: false,
           doorN: false,
           doorS: false,
           doorE: false,
           doorW: false,
-        }
+        };
       }
     }
   }
@@ -43,17 +45,23 @@ export class MapService {
     this.tiles[idR][idC].visible = visiblility;
   }
   showRoof(idR: number, idC: number, roof: string) {
-   if(roof === 'N'){
-    this.tiles[idR][idC].roofN = true;
-   }else if(roof === 'S'){
-    this.tiles[idR][idC].roofS = true;
-   }else if(roof === 'E'){
-    this.tiles[idR][idC].roofE = true;
-   }else if(roof === 'W'){
-    this.tiles[idR][idC].roofW = true;
-   }
+    this.tiles[idR][idC].roof = true;
+    if (roof === 'N') {
+      this.tiles[idR][idC].roofN = true;
+    } else if (roof === 'S') {
+      this.tiles[idR][idC].roofS = true;
+    } else if (roof === 'E') {
+      this.tiles[idR][idC].roofE = true;
+    } else if (roof === 'W') {
+      this.tiles[idR][idC].roofW = true;
+    }
   }
   clearableTile(idR: number, idC: number, clearableTile: boolean) {
     this.tiles[idR][idC].clearableTile = clearableTile;
   }
+  createEnemy(idR: number, idC: number) {
+      this.tiles[idR][idC].enemies.push('enemy');
+      this.tiles[idR][idC].enemies = [...this.tiles[idR][idC].enemies];
+    }
+  
 }

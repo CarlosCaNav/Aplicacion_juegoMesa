@@ -1,6 +1,7 @@
 import { MapService } from '../../services/map.service';
 import { NgStyle, NgIf } from '@angular/common';
 import { LoadMapService } from '../../services/load-map.service';
+import { EnemiesService } from '../../services/enemies.service';
 import { Component, OnInit, inject } from '@angular/core';
 
 @Component({
@@ -15,11 +16,18 @@ export class GameComponent {
 
   private mapService: MapService = inject(MapService);
   private loadMapService: LoadMapService = inject(LoadMapService);
+  private enemiesService: EnemiesService = inject(EnemiesService);
 
   /* map = this.mapService.getTiles(); */
   map = this.mapService.getTiles();
   rows = this.mapService.rows - 1;
   columns = this.mapService.columns - 1;
+
+createEnemy(){
+  this.enemiesService.createEnemy();
+
+}
+
 
   loadMap(map: string) {
     this.loadMapService.loadMap(map);
@@ -127,8 +135,7 @@ export class GameComponent {
       let clerable = false;
       for (let i = 0; i < this.map.length; i++) {
         for (let j = 0; j < this.map[i].length; j++) {
-          if (this.map[i][j].visible === true) {
-            console.log(i, j);
+          if (this.map[i][j].visible === true && this.map[i][j].house === false) {
 
             if (
               i < this.rows &&
@@ -136,7 +143,6 @@ export class GameComponent {
               this.map[i + 1][j].house === false
             ) {
               clerable = true;
-              console.log('clerable1');
             }
             if (
               i > 0 &&
@@ -144,7 +150,6 @@ export class GameComponent {
               this.map[i - 1][j].house === false
             ) {
               clerable = true;
-              console.log('clerable2');
             }
             if (
               j < this.columns &&
@@ -152,7 +157,6 @@ export class GameComponent {
               this.map[i][j + 1].house === false
             ) {
               clerable = true;
-              console.log('clerable3');
             }
             if (
               j > 0 &&
@@ -160,7 +164,6 @@ export class GameComponent {
               this.map[i][j - 1].house === false
             ) {
               clerable = true;
-              console.log('clerable4');
             }
             if (clerable) {
               this.mapService.clearableTile(i, j, true);

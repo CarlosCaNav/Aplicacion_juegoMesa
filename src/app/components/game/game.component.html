@@ -10,8 +10,24 @@
           tiles.roofS || tiles.roofN || tiles.roofE || tiles.roofW
             ? 'rgb(77, 43, 0)'
             : ''
-         }"
+      }"
     >
+      <!-- ----------------------------------Enemies---------------------------------- -->
+      <div class="enemies">
+        <div>
+          {{ tiles.enemies }}
+        </div>
+      </div>
+
+      @if(tiles.roof === true && tiles.visible != true) {
+      <div
+        class="roof shadowsHome"
+        style="background-image: url('/textures/roof.jpg')"
+      ></div>
+      }
+      <!-- 
+
+
       @if(tiles.roofN === true && tiles.visible != true) {
       <div
         class="roof"
@@ -32,15 +48,21 @@
         class="roof"
         style="background-image: url('/textures/roofE.png')"
       ></div>
-      }
+      } -->
       @if(tiles.visible){
       <div
         class="tilesInside"
-        [ngStyle]="{ 'background-color': tiles.house ? 'orange' : 'gray',
-        'box-shadow':
-          tiles.clearableTile == true ? 'inset 0px 0px 10px 10px white' : '',
-        'border': tiles.house ? '1px solid black' : '',
-       }"
+        [ngStyle]="{
+          'background-image': tiles.house
+            ? 'url(/textures/inside.jpg)'
+            : 'url(/textures/floor.jpg)',
+          'box-shadow': tiles.clearableTile
+            ? 'inset 0px 0px 3px 3px white'
+            : tiles.house
+            ? '5px 5px 15px black'
+            : '',
+          'z-index': tiles.house ? 1 : 0
+        }"
       ></div>
       }
       <div class="tilesInside">
@@ -74,3 +96,5 @@
 
 <button (click)="loadMap('redemption')">Cargar mapa</button>
 <button (click)="reloadMap()">sustituir mapa</button>
+<button (click)="createEnemy()">enemigo</button>
+"

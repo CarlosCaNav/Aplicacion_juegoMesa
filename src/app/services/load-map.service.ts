@@ -12,16 +12,13 @@ export class LoadMapService {
   constructor() { }
 
   private http: HttpClient = inject(HttpClient);
-  public mapService: MapService = inject(MapService);
+  private mapService: MapService = inject(MapService);
 
   mapasDisponibles: { name: string; url: string }[] = [
     { name: 'redemption', url: '/maps/redemption.json' },
   ];
 
   loadMap(mapaElegido: string): ITiles[][]| void {
-    console.log("llegó aquí también? ",
-      this.mapService.getTiles()
-    );
     /* 
     if (mapaElegido === 'aleatorio') {
       const aleatorio = Math.floor(

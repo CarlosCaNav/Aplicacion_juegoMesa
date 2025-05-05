@@ -25,7 +25,7 @@
     height: 100%;
     flex-grow: 8;
     margin: 0px;
-    border: 1px solid rgb(40, 37, 65);
+  /*   border: 1px solid rgb(40, 37, 65); */
   }
   .tilesInside {
     position: absolute;
@@ -36,7 +36,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid rgb(40, 37, 65);
+    background-repeat: no-repeat;
+    background-size: cover;    
+  /*   border: 1px solid rgb(40, 37, 65); */
   }
   .roof{
     position: absolute;
@@ -47,35 +49,50 @@
     background-repeat: no-repeat;
     background-size: cover;
   }
+
   .doors{
-    background-color: rgb(102, 24, 4);
+    background-color: rgb(26, 1, 0);
+    border: none;
+    box-shadow: 0px 0px 10px white;
+    z-index: 3;
   }
 
   .doorN{
       position: absolute;
-      border: 1px solid black;
-      height: 2vh;
-      width: 6vh;
-      margin-top: -10vh;
+      height: 1.2vh;
+      width: 4vh;
+      margin-top: -12vh;
   }
   .doorS{
       position: absolute;
-      border: 1px solid black;
-      height: 2vh;
-      width: 6vh;
-      margin-top: 10vh;
+      height: 1.2vh;
+      width: 4vh;
+      margin-top: 12vh;
   }
   .doorW{
       position: absolute;
-      border: 1px solid black;
-      height: 6vh;
-      width: 2vh;
-      margin-left: -10vh;
+      height: 4vh;
+      width: 1.2vh;
+      margin-left: -12vh;
   }
   .doorE{
       position: absolute;
-      border: 1px solid black;
-      height: 6vh;
-      width: 2vh;
-      margin-left: 10vh;
+      height: 4vh;
+      width: 1.2vh;
+      margin-left: 12vh;
+  }
+
+  .shadowsHome{
+    box-shadow: 10px 10px 20px 0px black;
+  }
+
+  .enemies{
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    color: red;
+    height: 12vh;   
+    width: 12vh;
+    align-items: center;
+    justify-content: center;
   }
