@@ -18,16 +18,13 @@ export class GameComponent {
   private loadMapService: LoadMapService = inject(LoadMapService);
   private enemiesService: EnemiesService = inject(EnemiesService);
 
-  /* map = this.mapService.getTiles(); */
   map = this.mapService.getTiles();
   rows = this.mapService.rows - 1;
   columns = this.mapService.columns - 1;
 
-createEnemy(){
-  this.enemiesService.createEnemy();
-
-}
-
+  createRandomEnemy() {
+    this.enemiesService.createRandomEnemy();
+  }
 
   loadMap(map: string) {
     this.loadMapService.loadMap(map);
@@ -36,10 +33,14 @@ createEnemy(){
     this.map = this.mapService.tiles;
   }
 
+  moveEnemy() {
+    this.enemiesService.enemyAdvance();
+  }
+
   clear(idR: number, idC: number) {
     this.mapService.alternateVisibility(idR, idC, true);
 
-    //Si fuera casa, despejamos toda al casa
+    //Si fuera casa, despejamos toda la manzana
     if (this.map[idR][idC].house) {
       for (let i = 0; i < this.map.length; i++) {
         for (let j = 0; j < this.map[i].length; j++) {
@@ -59,12 +60,12 @@ createEnemy(){
         if (this.map[idR - steps][idC].house === false) {
           this.mapService.alternateVisibility(idR - steps, idC, true);
 
+          //Comprobamos qué fachadas se verían hacia e este y las despejamos
           if (idC > 0 && this.map[idR - steps][idC - 1].house === true) {
             this.mapService.showRoof(idR - steps, idC - 1, 'E');
-          } else {
-            this.mapService.clearableTile(idR - steps, idC, true);
           }
 
+          //Comprobamos qué fachadas se verían hacia e oeste y las despejamos
           if (idC < 7 && this.map[idR - steps][idC + 1].house === true) {
             this.mapService.showRoof(idR - steps, idC + 1, 'W');
           }
@@ -81,8 +82,6 @@ createEnemy(){
           this.mapService.alternateVisibility(idR + steps, idC, true);
           if (idC < 7 && this.map[idR + steps][idC + 1].house === true) {
             this.mapService.showRoof(idR + steps, idC + 1, 'W');
-          } else {
-            this.mapService.clearableTile(idR + steps, idC, true);
           }
           if (idC > 0 && this.map[idR + steps][idC - 1].house === true) {
             this.mapService.showRoof(idR + steps, idC - 1, 'E');
@@ -100,8 +99,6 @@ createEnemy(){
           this.mapService.alternateVisibility(idR, idC + steps, true);
           if (idR < 7 && this.map[idR + 1][idC + steps].house === true) {
             this.mapService.showRoof(idR + 1, idC + steps, 'N');
-          } else {
-            this.mapService.clearableTile(idR, idC + steps, true);
           }
           if (idR > 0 && this.map[idR - 1][idC + steps].house === true) {
             this.mapService.showRoof(idR - 1, idC + steps, 'S');
@@ -119,8 +116,6 @@ createEnemy(){
           this.mapService.alternateVisibility(idR, idC - steps, true);
           if (idR > 0 && this.map[idR - 1][idC - steps].house === true) {
             this.mapService.showRoof(idR - 1, idC - steps, 'S');
-          } else {
-            this.mapService.clearableTile(idR, idC - steps, true);
           }
           if (idR < 7 && this.map[idR + 1][idC - steps].house === true) {
             this.mapService.showRoof(idR + 1, idC - steps, 'N');
@@ -135,8 +130,10 @@ createEnemy(){
       let clerable = false;
       for (let i = 0; i < this.map.length; i++) {
         for (let j = 0; j < this.map[i].length; j++) {
-          if (this.map[i][j].visible === true && this.map[i][j].house === false) {
-
+          if (
+            this.map[i][j].visible === true &&
+            this.map[i][j].house === false
+          ) {
             if (
               i < this.rows &&
               this.map[i + 1][j].visible != true &&

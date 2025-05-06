@@ -16,6 +16,7 @@
       <div class="enemies">
         <div>
           {{ tiles.enemies }}
+          {{tiles.enemyRoute}}
         </div>
       </div>
 
@@ -96,5 +97,5 @@
 
 <button (click)="loadMap('redemption')">Cargar mapa</button>
 <button (click)="reloadMap()">sustituir mapa</button>
-<button (click)="createEnemy()">enemigo</button>
-"
+<button (click)="createRandomEnemy()">enemigo</button>
+<button (click)="moveEnemy()">rutas enemigos</button>

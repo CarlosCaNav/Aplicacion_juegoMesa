@@ -4,7 +4,7 @@ export interface ITiles {
   house: boolean;
   houseName?: number;
   enemies: string[];
-  enemyRoute?: number[];
+  enemyRoute?: number;
   clearableTile?: boolean;
   visible?: boolean;
   investigation?: boolean;

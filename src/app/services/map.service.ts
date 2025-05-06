@@ -21,7 +21,6 @@ export class MapService {
           idR: i,
           idC: j,
           enemies: [],
-          enemyRoute: [],
           clearableTile: false,
           visible: false,
           house: false,
@@ -63,5 +62,7 @@ export class MapService {
       this.tiles[idR][idC].enemies.push('enemy');
       this.tiles[idR][idC].enemies = [...this.tiles[idR][idC].enemies];
     }
-  
+    enemyRoute(idR: number, idC: number, number: number) {
+    this.tiles[idR][idC].enemyRoute = number;
+  }
 }
