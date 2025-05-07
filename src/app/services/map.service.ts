@@ -62,6 +62,10 @@ export class MapService {
       this.tiles[idR][idC].enemies.push('enemy');
       this.tiles[idR][idC].enemies = [...this.tiles[idR][idC].enemies];
     }
+eliminateEnemies(idR: number, idC: number) {
+    this.tiles[idR][idC].enemies = [];
+  }
+
     enemyRoute(idR: number, idC: number, number: number) {
     this.tiles[idR][idC].enemyRoute = number;
   }

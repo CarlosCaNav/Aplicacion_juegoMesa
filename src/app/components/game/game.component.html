@@ -13,12 +13,14 @@
       }"
     >
       <!-- ----------------------------------Enemies---------------------------------- -->
+     <!--   @if(tiles.visible){ -->
       <div class="enemies">
         <div>
           {{ tiles.enemies }}
           {{tiles.enemyRoute}}
         </div>
       </div>
+<!--     } -->
 
       @if(tiles.roof === true && tiles.visible != true) {
       <div
