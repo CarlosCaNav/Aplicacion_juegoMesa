@@ -1,2 +1,7 @@
-<!-- <app-editor></app-editor> -->
-<app-game></app-game>
+
+@if (page() == 'editor') {
+<app-editor class="aplication"></app-editor> }
+@if (page() == 'game') {
+<app-game class="aplication"></app-game>}
+@if (page() == 'menu') {
+<app-menus class="aplication"></app-menus>}

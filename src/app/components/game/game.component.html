@@ -13,14 +13,14 @@
       }"
     >
       <!-- ----------------------------------Enemies---------------------------------- -->
-     <!--   @if(tiles.visible){ -->
+      <!--   @if(tiles.visible){ -->
       <div class="enemies">
         <div>
           {{ tiles.enemies }}
-          {{tiles.enemyRoute}}
+          {{ tiles.enemyRoute }}
         </div>
       </div>
-<!--     } -->
+      <!--     } -->
 
       @if(tiles.roof === true && tiles.visible != true) {
       <div
@@ -96,8 +96,9 @@
   </div>
   }
 </div>
-
-<button (click)="loadMap('redemption')">Cargar mapa</button>
-<button (click)="reloadMap()">sustituir mapa</button>
-<button (click)="createRandomEnemy()">enemigo</button>
-<button (click)="moveEnemy()">rutas enemigos</button>
+<div class="buttons">
+  <button (click)="loadMap('redemption')">Cargar mapa</button>
+  <button (click)="reloadMap()">sustituir mapa</button>
+  <button (click)="createRandomEnemy()">enemigo</button>
+  <button (click)="moveEnemy()">rutas enemigos</button>
+</div>

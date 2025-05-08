@@ -18,9 +18,11 @@ export class GameComponent {
   private loadMapService: LoadMapService = inject(LoadMapService);
   private enemiesService: EnemiesService = inject(EnemiesService);
 
+
   map = this.mapService.getTiles();
   rows = this.mapService.rows - 1;
   columns = this.mapService.columns - 1;
+
 
   createRandomEnemy() {
     this.enemiesService.createRandomEnemy();

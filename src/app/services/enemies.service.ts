@@ -16,6 +16,13 @@ export class EnemiesService {
   /*  map = this.mapService.getTiles(); */
   map: ITiles[][] = this.mapService.tiles;
 
+  enemies: {id: number, name: string, advance: number, phase: number, probability: number }[] =[
+  {id: 0, name: 'crawler', advance: 1, phase: 0, probability: 8},
+  {id: 1, name: 'humanoid', advance: 2, phase: 1, probability: 5 }, //noctumbra?
+  {id: 2, name: 'spitter', advance: 1, phase: 2 , probability: 4},
+  {id: 3, name: 'Megalon', advance: 1, phase: 2 , probability: 4},  
+  ]
+
   enemyAdvance() {
     let enemiesSteep = [];
 
