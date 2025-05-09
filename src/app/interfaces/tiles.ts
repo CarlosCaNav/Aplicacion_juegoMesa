@@ -3,8 +3,13 @@ export interface ITiles {
   idC: number;
   house: boolean;
   houseName?: number;
-  enemies: string[];
-  enemyRoute?: number;
+  enemyRoute: number;
+/*   enemies: string[]; */
+  enemyLow: number;
+  enemyMedium: number;
+  enemySplitter: number;
+  enemyHigh: number;
+  enemyFinal: boolean;
   clearableTile?: boolean;
   visible?: boolean;
   investigation?: boolean;

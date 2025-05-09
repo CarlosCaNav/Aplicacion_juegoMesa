@@ -2,6 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MapService } from './map.service';
 import { ITiles } from '../interfaces/tiles';
+import { ConfigurationsService } from './configurations.service';
+import { EnemiesService } from './enemies.service';
 
 
 @Injectable({
@@ -13,6 +15,8 @@ export class LoadMapService {
 
   private http: HttpClient = inject(HttpClient);
   private mapService: MapService = inject(MapService);
+  private configurationsService: ConfigurationsService = inject(ConfigurationsService);
+  private enemiesService: EnemiesService = inject(EnemiesService);
 
   mapasDisponibles: { name: string; url: string }[] = [
     { name: 'redemption', url: '/maps/redemption.json' },
@@ -41,13 +45,16 @@ export class LoadMapService {
         return;
       }
 
+      this.configurationsService.clearRoad = false;
+
       this.http
         .get<ITiles[][]>(mapaEncontrado.url)
         .subscribe((data: ITiles[][]) => {
           console.log(data);
           
           this.mapService.tiles  = data ;
+          this.enemiesService.initialEnemies();
         });
-        console.log(this.mapService.getTiles());
+        this.configurationsService.changePage('game');
     }
 }

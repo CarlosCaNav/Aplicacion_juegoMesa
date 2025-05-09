@@ -20,9 +20,14 @@ export class MapService {
         this.tiles[i][j] = {
           idR: i,
           idC: j,
-          enemies: [],
           clearableTile: false,
           visible: false,
+          enemyLow: 0,
+          enemyMedium: 0,
+          enemySplitter: 0,
+          enemyHigh: 0,
+          enemyFinal: false,
+          enemyRoute: 0,
           house: false,
           doorN: false,
           doorS: false,
@@ -43,6 +48,7 @@ export class MapService {
   alternateVisibility(idR: number, idC: number, visiblility: boolean) {
     this.tiles[idR][idC].visible = visiblility;
   }
+
   showRoof(idR: number, idC: number, roof: string) {
     this.tiles[idR][idC].roof = true;
     if (roof === 'N') {
@@ -58,15 +64,35 @@ export class MapService {
   clearableTile(idR: number, idC: number, clearableTile: boolean) {
     this.tiles[idR][idC].clearableTile = clearableTile;
   }
-  createEnemy(idR: number, idC: number) {
-      this.tiles[idR][idC].enemies.push('enemy');
-      this.tiles[idR][idC].enemies = [...this.tiles[idR][idC].enemies];
-    }
-eliminateEnemies(idR: number, idC: number) {
-    this.tiles[idR][idC].enemies = [];
+  createEnemy(idR: number, idC: number, enemy: string) {
+switch(enemy) {
+  case 'enemyLow':
+    this.tiles[idR][idC].enemyLow =+ 1;
+    break;
+  case 'enemyMedium':
+    this.tiles[idR][idC].enemyMedium =+ 1;
+    break;
+  case 'enemySplitter':
+    this.tiles[idR][idC].enemySplitter =+ 1;
+    break;  
+    case 'enemyHigh':
+    this.tiles[idR][idC].enemyHigh =+ 1;
+    break;
+  default:
+    window.alert("error en la creación de enemigos")
   }
 
-    enemyRoute(idR: number, idC: number, number: number) {
+  }
+  eliminateAllEnemies(idR: number, idC: number) {
+this.tiles[idR][idC].enemyLow = 0;
+this.tiles[idR][idC].enemyMedium = 0;
+this.tiles[idR][idC].enemySplitter = 0;
+this.tiles[idR][idC].enemyHigh = 0;
+  }
+
+  
+
+  enemyRoute(idR: number, idC: number, number: number) {
     this.tiles[idR][idC].enemyRoute = number;
   }
 }

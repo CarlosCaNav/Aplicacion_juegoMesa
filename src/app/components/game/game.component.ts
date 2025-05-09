@@ -2,6 +2,7 @@ import { MapService } from '../../services/map.service';
 import { NgStyle, NgIf } from '@angular/common';
 import { LoadMapService } from '../../services/load-map.service';
 import { EnemiesService } from '../../services/enemies.service';
+import { ConfigurationsService } from '../../services/configurations.service';
 import { Component, OnInit, inject } from '@angular/core';
 
 @Component({
@@ -12,17 +13,23 @@ import { Component, OnInit, inject } from '@angular/core';
   styleUrl: './game.component.css',
 })
 export class GameComponent {
-  constructor() {}
+  constructor() {
+    
+  }
 
   private mapService: MapService = inject(MapService);
   private loadMapService: LoadMapService = inject(LoadMapService);
   private enemiesService: EnemiesService = inject(EnemiesService);
+  private configurationsService: ConfigurationsService = inject(
+    ConfigurationsService
+  );
 
 
   map = this.mapService.getTiles();
   rows = this.mapService.rows - 1;
   columns = this.mapService.columns - 1;
 
+  
 
   createRandomEnemy() {
     this.enemiesService.createRandomEnemy();
@@ -54,7 +61,11 @@ export class GameComponent {
 
       //Despejamos toda la carretera
     } else {
-      let steps: number = 0;
+
+     let steps: number = 0;
+
+     // avisamos que al menos hay una carretera despejada
+     this.configurationsService.clearRoad = true;
 
       // Comprobamos hasta donde llega la carretera hacia el Norte
       while (idR - steps > 0) {
