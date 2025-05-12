@@ -27,11 +27,34 @@ export class EnemiesService {
     advance: number;
     phase: number;
     probability: number;
+    health: number;
   }[] = [
-    { id: 0, name: 'crawler', advance: 1, phase: 0, probability: 8 }, //Terráqueo? Quitino? Escoria reptante, minios larvario, crawler, reptante
-    { id: 1, name: 'humanoid', advance: 2, phase: 1, probability: 5 }, //noctumbra? infestado común,
-    { id: 2, name: 'spitter', advance: 1, phase: 2, probability: 4 }, //salivante, artillero biológico
-    { id: 3, name: 'Megalon', advance: 1, phase: 2, probability: 4 }, //megalon(no, existe), plomizo, acorazado terrestre
+    { id: 0, name: 'crawler', advance: 1, phase: 0, probability: 8, health: 2 }, //Terráqueo? Quitino? Escoria reptante, minios larvario, crawler, reptante
+    {
+      id: 1,
+      name: 'humanoid',
+      advance: 2,
+      phase: 1,
+      probability: 5,
+      health: 2,
+    }, //noctumbra? infestado común,
+    { id: 2, name: 'spitter', advance: 1, phase: 2, probability: 4, health: 1 }, //salivante, artillero biológico
+    {
+      id: 3,
+      name: 'acorazado',
+      advance: 1,
+      phase: 2,
+      probability: 4,
+      health: 5,
+    }, //megalon(no, existe), plomizo, acorazado terrestre
+    {
+      id: 3,
+      name: 'Primigenio',
+      advance: 1,
+      phase: 2,
+      probability: 4,
+      health: 30,
+    },
   ];
 
   enemyAdvance() {
@@ -53,29 +76,52 @@ export class EnemiesService {
         if (this.map()[i][j].enemyRoute > 0) {
           //esto lo puse para que si está dentro de una casa, se quede quieto
           if (this.map()[i][j].enemyLow > 0) {
-            enemyLow.push(
-              this.followThePath(i, j, this.map()[i][j].enemyRoute - 1)
-            );
+            for (let k = 0; k < this.map()[i][j].enemyLow; k++) {
+              enemyLow.push(
+                this.followThePath(i, j, this.map()[i][j].enemyRoute - 1)
+              );
+            }
           }
           if (this.map()[i][j].enemyMedium > 0) {
-            //aquí debo hacer lo del doble paso. Pero aseguremos que funciona
-            enemyMedium.push(
-              this.followThePath(i, j, this.map()[i][j].enemyRoute - 1)
-            );
+            // Comentar esto para que se entienda ++++++++++++++++++++++++++++++++++++++++++++++
+            for (let k = 0; k < this.map()[i][j].enemyMedium; k++) {
+              let enemyMediumSteepOne = [];
+              if (this.map()[i][j].enemyRoute >= 1) {
+                enemyMediumSteepOne = this.followThePath(i, j, this.map()[i][j].enemyRoute - 1)
+                console.log("supu", enemyMediumSteepOne);
+                
+                enemyMedium.push(
+                  this.followThePath(
+                    enemyMediumSteepOne[0],
+                    enemyMediumSteepOne[1],
+                    this.map()[enemyMediumSteepOne[0]][
+                      enemyMediumSteepOne[1]
+                    ].enemyRoute - 1
+                  )
+                ); 
+              } else { 
+                enemyMedium.push(
+                  this.followThePath(i, j, this.map()[i][j].enemyRoute - 1)
+                );
+              }
+            }
           }
           if (this.map()[i][j].enemySplitter > 0) {
-            enemySplitter.push(
-              this.followThePath(i, j, this.map()[i][j].enemyRoute - 1)
-            );
+            for (let k = 0; k < this.map()[i][j].enemySplitter; k++) {
+              enemySplitter.push(
+                this.followThePath(i, j, this.map()[i][j].enemyRoute - 1)
+              );
+            }
           }
           if (this.map()[i][j].enemyHigh > 0) {
-            enemyHigh.push(
-              this.followThePath(i, j, this.map()[i][j].enemyRoute - 1)
-            );
+            for (let k = 0; k < this.map()[i][j].enemyRoute; k++) {
+              enemyHigh.push(
+                this.followThePath(i, j, this.map()[i][j].enemyRoute - 1)
+              );
+            }
           }
           this.mapService.eliminateAllEnemies(i, j);
         }
-
       }
     }
 
@@ -130,7 +176,8 @@ export class EnemiesService {
       possibleRoutes.push([idR, idC + 1]);
     }
     if (possibleRoutes.length == 0) {
-      alert('error en la ruta de los enemigos');
+      alert('error en la ruta de los enemigos: idR' + idR + ' idC' + idC + '  distancia' + number);
+
       return [];
     }
     let randomRoute = Math.floor(Math.random() * possibleRoutes.length);

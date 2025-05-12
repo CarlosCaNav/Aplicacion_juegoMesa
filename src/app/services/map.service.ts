@@ -67,22 +67,26 @@ export class MapService {
   createEnemy(idR: number, idC: number, enemy: string) {
 switch(enemy) {
   case 'enemyLow':
-    this.tiles[idR][idC].enemyLow =+ 1;
+    this.tiles[idR][idC].enemyLow++;
     break;
   case 'enemyMedium':
-    this.tiles[idR][idC].enemyMedium =+ 1;
+    this.tiles[idR][idC].enemyMedium++;
     break;
   case 'enemySplitter':
-    this.tiles[idR][idC].enemySplitter =+ 1;
+    this.tiles[idR][idC].enemySplitter++;
     break;  
     case 'enemyHigh':
-    this.tiles[idR][idC].enemyHigh =+ 1;
+    this.tiles[idR][idC].enemyHigh++;
     break;
   default:
     window.alert("error en la creación de enemigos")
   }
+}
 
+investigation(idR: number, idC: number, parameter: boolean) {
+this.tiles[idR][idC].investigation = parameter;
   }
+  
   eliminateAllEnemies(idR: number, idC: number) {
 this.tiles[idR][idC].enemyLow = 0;
 this.tiles[idR][idC].enemyMedium = 0;

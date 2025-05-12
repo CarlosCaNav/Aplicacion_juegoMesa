@@ -18,6 +18,10 @@ export class LoadMapService {
   private configurationsService: ConfigurationsService = inject(ConfigurationsService);
   private enemiesService: EnemiesService = inject(EnemiesService);
 
+map(): ITiles[][] {
+  return this.mapService.getTiles();
+}
+
   mapasDisponibles: { name: string; url: string }[] = [
     { name: 'redemption', url: '/maps/redemption.json' },
   ];
@@ -54,7 +58,34 @@ export class LoadMapService {
           
           this.mapService.tiles  = data ;
           this.enemiesService.initialEnemies();
+          this.investigation();
         });
         this.configurationsService.changePage('game');
     }
+    investigation(){
+      let houses=[];
+      let choseHouse = [];
+  
+      for (let i = 0; i < this.map().length; i++) {
+        for (let j = 0; j < this.map()[i].length; j++) {
+          if(this.map()[i][j].house){
+            houses.push([i,j])
+            
+        }}
+    }
+    while(choseHouse.length < this.configurationsService.investigations){
+    let randomHouse = Math.floor(Math.random() * houses.length);
+    console.log("holi?");
+    
+    if (houses[randomHouse]!)
+      choseHouse.push(houses[randomHouse]); }
+  
+    for (let i = 0; i < choseHouse.length; i++) {
+      this.mapService.investigation(choseHouse[i][0], choseHouse[i][1], true);
+      console.log("casas", choseHouse[i]);      
+    }
+  
+    
+    }
+  
 }

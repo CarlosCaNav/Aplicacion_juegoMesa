@@ -16,9 +16,7 @@ export class ConfigurationsService {
 
   changePage(page: string) {
     this.page = page;
-    console.log(this.page);
-    
-  }
+    }
 
   returnPage() {
     return this.page;

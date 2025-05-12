@@ -1,5 +1,5 @@
 <div class="map">
-  @for(rows of map; track rows){
+  @for(rows of map(); track rows){
   <div class="row">
     @for(tiles of rows; track tiles){
     <div
@@ -16,12 +16,13 @@
       <!--   @if(tiles.visible){ -->
       <div class="enemies">
         <div>
-          @if(tiles.enemyLow > 0){ {{ tiles.enemyLow }} Low<br />}
-          @if(tiles.enemyMedium > 0){ {{ tiles.enemyMedium }} Medio<br />}
+          @if(tiles.enemyLow > 0){ {{ tiles.enemyLow }} Reptante<br />}
+          @if(tiles.enemyMedium > 0){ {{ tiles.enemyMedium }} Noctumbra<br />}
           @if(tiles.enemySplitter > 0){ {{ tiles.enemySplitter }} Escupidor<br />}
-          @if(tiles.enemyHigh > 0){ {{ tiles.enemyHigh }} grande<br />}
+          @if(tiles.enemyHigh > 0){ {{ tiles.enemyHigh }} acorazado<br />}
+          @if(tiles.investigation){ <span style="color: green;">Pista!!</span>}
 
-         Ruta {{ tiles.enemyRoute }}
+        <!--  Ruta {{ tiles.enemyRoute }} -->
         </div>
       </div>
 
@@ -73,24 +74,24 @@
         }
         <div class="tilesInside">
           <!-- puerta Norte -->
-          @if(tiles.idR > 0 && map[tiles.idR - 1][tiles.idC].house == false &&
+          @if(tiles.idR > 0 && map()[tiles.idR - 1][tiles.idC].house == false &&
           tiles.house && tiles.doorN == true && (tiles.visible || tiles.roofN)){
           <div class="doorN doors"></div>
           }
 
           <!-- puerta Sur -->
-          @if(tiles.idR < 7 && map[tiles.idR + 1][tiles.idC].house == false &&
+          @if(tiles.idR < 7 && map()[tiles.idR + 1][tiles.idC].house == false &&
           tiles.house && tiles.doorS == true && (tiles.visible || tiles.roofS)){
           <div class="doorS doors"></div>
           }
           <!-- puerta W -->
-          @if(tiles.idC -1 >= 0 && map[tiles.idR][tiles.idC - 1].house == false
+          @if(tiles.idC -1 >= 0 && map()[tiles.idR][tiles.idC - 1].house == false
           && tiles.house && tiles.doorW == true && (tiles.visible ||
           tiles.roofW)){
           <div class="doorW doors"></div>
           }
           <!-- puerta E -->
-          @if(tiles.idC < 7 && map[tiles.idR][tiles.idC + 1].house == false &&
+          @if(tiles.idC < 7 && map()[tiles.idR][tiles.idC + 1].house == false &&
           tiles.house && tiles.doorE == true && (tiles.visible || tiles.roofE)){
           <div class="doorE doors"></div>
           }
@@ -102,7 +103,6 @@
   </div>
   <div class="buttons">
     <button (click)="loadMap('redemption')">Cargar mapa</button>
-    <button (click)="reloadMap()">sustituir mapa</button>
     <button (click)="createRandomEnemy()">enemigo</button>
     <button (click)="moveEnemy()">rutas enemigos</button>
   </div>
