@@ -1,5 +1,5 @@
 import { MapService } from '../../services/map.service';
-import { NgStyle, NgIf } from '@angular/common';
+import { NgStyle, NgIf, NgClass } from '@angular/common';
 import { LoadMapService } from '../../services/load-map.service';
 import { EnemiesService } from '../../services/enemies.service';
 import { ConfigurationsService } from '../../services/configurations.service';
@@ -9,15 +9,12 @@ import { ITiles } from '../../interfaces/tiles';
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports: [NgStyle, NgIf],
+  imports: [NgStyle, NgIf, NgClass],
   templateUrl: './game.component.html',
   styleUrl: './game.component.css',
 })
 export class GameComponent {
-  constructor() {
-    
-    
-  }
+  constructor() {}
 
   private mapService: MapService = inject(MapService);
   private loadMapService: LoadMapService = inject(LoadMapService);
@@ -27,36 +24,60 @@ export class GameComponent {
   );
 
 
- map(): ITiles[][] {
+  map(): ITiles[][] {
     return this.mapService.getTiles();
   }
 
- /*  map = this.mapService.getTiles(); */
+  /*  map = this.mapService.getTiles(); */
   rows = this.mapService.rows - 1;
   columns = this.mapService.columns - 1;
 
-  
+  currentRound: number = 0;
+  currentPhase: number = 0;
 
-  investigation(){
-    let houses=[];
+  round() {
+    this.phase();
+    this.moveEnemy();
+    this.createRandomEnemy();
+
+    this.currentRound++;
+  }
+
+  phase() {
+    switch (this.currentRound) {
+      case this.configurationsService.phaseOne:
+        this.currentPhase = 1;
+        break;
+      case this.configurationsService.phaseTwo:
+        this.currentPhase = 2;
+        break;
+      case this.configurationsService.phaseThree:
+        this.currentPhase = 3;
+        break;
+      default:
+        window.alert('error en la fase');
+    }
+  }
+
+  investigation() {
+    let houses = [];
     let choseHouse = [];
 
     for (let i = 0; i < this.map().length; i++) {
       for (let j = 0; j < this.map()[i].length; j++) {
-        if(this.map()[i][j].house){
-          houses.push([i,j])
-      }}
-  }
-  while(houses.length < this.configurationsService.investigations){
-  let randomHouse = Math.floor(Math.random() * houses.length);
-  if (houses[randomHouse]!)
-    choseHouse.push(houses[randomHouse]); }
+        if (this.map()[i][j].house) {
+          houses.push([i, j]);
+        }
+      }
+    }
+    while (houses.length < this.configurationsService.investigations) {
+      let randomHouse = Math.floor(Math.random() * houses.length);
+      if (houses[randomHouse]!) choseHouse.push(houses[randomHouse]);
+    }
 
-  for (let i = 0; i < choseHouse.length; i++) {
-    this.mapService.investigation(choseHouse[i][0], choseHouse[i][1], true);
-  }
-
-  
+    for (let i = 0; i < choseHouse.length; i++) {
+      this.mapService.investigation(choseHouse[i][0], choseHouse[i][1], true);
+    }
   }
 
   createRandomEnemy() {
@@ -76,7 +97,7 @@ export class GameComponent {
 
     //Si fuera casa, despejamos toda la manzana
     if (this.map()[idR][idC].house) {
-      for (let i = 0; i < this.map.length; i++) {
+      for (let i = 0; i < this.map().length; i++) {
         for (let j = 0; j < this.map()[i].length; j++) {
           if (this.map()[i][j].houseName === this.map()[idR][idC].houseName) {
             this.mapService.alternateVisibility(i, j, true);
@@ -86,11 +107,10 @@ export class GameComponent {
 
       //Despejamos toda la carretera
     } else {
+      let steps: number = 0;
 
-     let steps: number = 0;
-
-     // avisamos que al menos hay una carretera despejada
-     this.configurationsService.clearRoad = true;
+      // avisamos que al menos hay una carretera despejada
+      this.configurationsService.clearRoad = true;
 
       // Comprobamos hasta donde llega la carretera hacia el Norte
       while (idR - steps > 0) {
@@ -166,7 +186,7 @@ export class GameComponent {
 
       // comprobamos si la casilla es expandible
       let clerable = false;
-      for (let i = 0; i < this.map.length; i++) {
+      for (let i = 0; i < this.map().length; i++) {
         for (let j = 0; j < this.map()[i].length; j++) {
           if (
             this.map()[i][j].visible === true &&

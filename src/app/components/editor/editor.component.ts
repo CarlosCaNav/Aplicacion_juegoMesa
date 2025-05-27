@@ -28,7 +28,7 @@ export class EditorComponent implements OnInit {
   }
 
   alternateHouse(idR: number, idC: number) {
-    this.mapService.alternateHause(idR, idC);
+    this.mapService.alternateHouse(idR, idC);
   }
   createNameHouse() {
     let name: number = 0;

@@ -96,3 +96,11 @@
     align-items: center;
     justify-content: center;
   }
+  
+  .clearableTiles{
+    position: absolute;
+    z-index:999;
+    box-shadow: 'inset 0px 0px 3px 3px white';
+    border: 3px solid red;
+    background-color: aqua;
+  }

@@ -42,7 +42,7 @@ export class MapService {
     return this.tiles;
   }
 
-  alternateHause(idR: number, idC: number) {
+  alternateHouse(idR: number, idC: number) {
     this.tiles[idR][idC].house = !this.tiles[idR][idC].house;
   }
   alternateVisibility(idR: number, idC: number, visiblility: boolean) {

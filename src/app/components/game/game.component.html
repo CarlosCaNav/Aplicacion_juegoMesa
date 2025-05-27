@@ -56,7 +56,27 @@
         style="background-image: url('/textures/roofE.png')"
       ></div>
       } -->
-        @if(tiles.visible){
+
+             @if(tiles.visible){
+
+              <!-- 
+        <div
+          class="tilesInside"
+          [ngStyle]="{
+            'background-image': tiles.house
+              ? 'url(/textures/inside.jpg)'
+              : 'url(/textures/floor.jpg)',
+            'box-shadow': tiles.clearableTile
+              ? ''
+              : tiles.house
+              ? '5px 5px 15px black'
+              : '',
+            'z-index': tiles.house ? 1 : 0
+          }"
+          [ngClass]="{'clearableTiles' : tiles.clearableTile}"
+
+        ></div>  -->
+
         <div
           class="tilesInside"
           [ngStyle]="{
@@ -71,7 +91,11 @@
             'z-index': tiles.house ? 1 : 0
           }"
         ></div>
+
         }
+
+
+
         <div class="tilesInside">
           <!-- puerta Norte -->
           @if(tiles.idR > 0 && map()[tiles.idR - 1][tiles.idC].house == false &&
@@ -105,5 +129,6 @@
     <button (click)="loadMap('redemption')">Cargar mapa</button>
     <button (click)="createRandomEnemy()">enemigo</button>
     <button (click)="moveEnemy()">rutas enemigos</button>
+    
   </div>
 

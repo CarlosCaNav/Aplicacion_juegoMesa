@@ -12,7 +12,13 @@ export class ConfigurationsService {
   investigations: number = 8;
   objetsPerHouse: number = 15;
   doubleBreaakthoughProbability: number = 8; //sobre 100
+  phaseOne: number = 2;
+  phaseTwo: number = 6;
+  phaseThree: number = 8;
+
   clearRoad: boolean = false; // if investigartos start in a house, enemies have no route.
+
+ 
 
   changePage(page: string) {
     this.page = page;

@@ -23,24 +23,44 @@ export class EnemiesService {
 
   enemies: {
     id: number;
+    internalName: string;
     name: string;
     advance: number;
     phase: number;
     probability: number;
     health: number;
   }[] = [
-    { id: 0, name: 'crawler', advance: 1, phase: 0, probability: 8, health: 2 }, //Terráqueo? Quitino? Escoria reptante, minios larvario, crawler, reptante
+    //Terráqueo? Quitino? Escoria reptante, minios larvario, crawler, reptante
+    {
+      id: 0,
+      internalName: 'enemyLow',
+      name: 'crawler',
+      advance: 1,
+      phase: 0,
+      probability: 8,
+      health: 2,
+    },
     {
       id: 1,
+      internalName: 'enemyMedium',
       name: 'humanoid',
       advance: 2,
       phase: 1,
       probability: 5,
       health: 2,
     }, //noctumbra? infestado común,
-    { id: 2, name: 'spitter', advance: 1, phase: 2, probability: 4, health: 1 }, //salivante, artillero biológico
+    {
+      id: 2,
+      internalName: 'spitter',
+      name: 'spitter',
+      advance: 1,
+      phase: 2,
+      probability: 4,
+      health: 1,
+    }, //salivante, artillero biológico
     {
       id: 3,
+      internalName: 'enemyHigh',
       name: 'acorazado',
       advance: 1,
       phase: 2,
@@ -49,6 +69,7 @@ export class EnemiesService {
     }, //megalon(no, existe), plomizo, acorazado terrestre
     {
       id: 3,
+      internalName: 'bossEnemy',
       name: 'Primigenio',
       advance: 1,
       phase: 2,
@@ -87,19 +108,21 @@ export class EnemiesService {
             for (let k = 0; k < this.map()[i][j].enemyMedium; k++) {
               let enemyMediumSteepOne = [];
               if (this.map()[i][j].enemyRoute >= 1) {
-                enemyMediumSteepOne = this.followThePath(i, j, this.map()[i][j].enemyRoute - 1)
-                console.log("supu", enemyMediumSteepOne);
-                
+                enemyMediumSteepOne = this.followThePath(
+                  i,
+                  j,
+                  this.map()[i][j].enemyRoute - 1
+                );
+
                 enemyMedium.push(
                   this.followThePath(
                     enemyMediumSteepOne[0],
                     enemyMediumSteepOne[1],
-                    this.map()[enemyMediumSteepOne[0]][
-                      enemyMediumSteepOne[1]
-                    ].enemyRoute - 1
+                    this.map()[enemyMediumSteepOne[0]][enemyMediumSteepOne[1]]
+                      .enemyRoute - 1
                   )
-                ); 
-              } else { 
+                );
+              } else {
                 enemyMedium.push(
                   this.followThePath(i, j, this.map()[i][j].enemyRoute - 1)
                 );
@@ -127,7 +150,6 @@ export class EnemiesService {
 
     for (let i = 0; i < enemyLow.length; i++) {
       this.mapService.createEnemy(enemyLow[i][0], enemyLow[i][1], 'enemyLow');
-      console.log('se movió un enemigo bajo');
     }
     for (let i = 0; i < enemyMedium.length; i++) {
       this.mapService.createEnemy(
@@ -176,7 +198,14 @@ export class EnemiesService {
       possibleRoutes.push([idR, idC + 1]);
     }
     if (possibleRoutes.length == 0) {
-      alert('error en la ruta de los enemigos: idR' + idR + ' idC' + idC + '  distancia' + number);
+      alert(
+        'error en la ruta de los enemigos: idR' +
+          idR +
+          ' idC' +
+          idC +
+          '  distancia' +
+          number
+      );
 
       return [];
     }
@@ -291,8 +320,6 @@ export class EnemiesService {
           randomProbability <
           this.configurationsService.initialEnemyProbabilityPerSquare
         ) {
-          console.log('peta aquí?');
-
           this.mapService.createEnemy(i, j, 'enemyLow');
         }
       }
