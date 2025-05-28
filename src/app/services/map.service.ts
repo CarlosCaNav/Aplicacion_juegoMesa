@@ -1,5 +1,6 @@
-import { Component, Injectable } from '@angular/core';
+import { Component, Injectable, inject } from '@angular/core';
 import { ITiles } from '../interfaces/tiles';
+import { ConfigurationsService } from './configurations.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,6 +9,9 @@ export class MapService {
   constructor() {
     /*  this.createMap() */
   }
+  private configurationsService: ConfigurationsService = inject(
+    ConfigurationsService
+  );
 
   rows: number = 8;
   columns: number = 8;
@@ -65,38 +69,52 @@ export class MapService {
     this.tiles[idR][idC].clearableTile = clearableTile;
   }
   createEnemy(idR: number, idC: number, enemy: string) {
-switch(enemy) {
-  case 'enemyLow':
-    this.tiles[idR][idC].enemyLow++;
-    break;
-  case 'enemyMedium':
-    this.tiles[idR][idC].enemyMedium++;
-    break;
-  case 'enemySplitter':
-    this.tiles[idR][idC].enemySplitter++;
-    break;  
-    case 'enemyHigh':
-    this.tiles[idR][idC].enemyHigh++;
-    break;
-  default:
-    window.alert("error en la creación de enemigos")
+    switch (enemy) {
+      case 'enemyLow':
+        this.tiles[idR][idC].enemyLow++;
+        break;
+      case 'enemyMedium':
+        this.tiles[idR][idC].enemyMedium++;
+        break;
+      case 'enemySplitter':
+        this.tiles[idR][idC].enemySplitter++;
+        break;
+      case 'enemyHigh':
+        this.tiles[idR][idC].enemyHigh++;
+        break;
+      default:
+        window.alert('error en la creación de enemigos');
+    }
   }
-}
 
-investigation(idR: number, idC: number, parameter: boolean) {
-this.tiles[idR][idC].investigation = parameter;
+  investigation(idR: number, idC: number, parameter: boolean) {
+    this.tiles[idR][idC].investigation = parameter;
   }
-  
+
   eliminateAllEnemies(idR: number, idC: number) {
-this.tiles[idR][idC].enemyLow = 0;
-this.tiles[idR][idC].enemyMedium = 0;
-this.tiles[idR][idC].enemySplitter = 0;
-this.tiles[idR][idC].enemyHigh = 0;
+    this.tiles[idR][idC].enemyLow = 0;
+    this.tiles[idR][idC].enemyMedium = 0;
+    this.tiles[idR][idC].enemySplitter = 0;
+    this.tiles[idR][idC].enemyHigh = 0;
   }
-
-  
 
   enemyRoute(idR: number, idC: number, number: number) {
     this.tiles[idR][idC].enemyRoute = number;
+  }
+
+  objects(idR: number, idC: number, objects: number) {
+    this.tiles[idR][idC].objects = objects;
+  }
+
+  search(idR: number, idC: number) {
+    let ramdonNumber: number = Math.floor(
+      Math.random() * this.configurationsService.objetsPerRoom
+    ) + 1;
+    if (this.tiles[idR][idC].objects! >= ramdonNumber) {
+      this.tiles[idR][idC].objects = this.tiles[idR][idC].objects! - 1;
+     
+    }
+    console.log("número aleatorio", ramdonNumber);
+    console.log("objetos", this.tiles[idR][idC].objects);
   }
 }

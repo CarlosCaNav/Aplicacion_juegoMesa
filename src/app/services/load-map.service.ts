@@ -77,6 +77,7 @@ if (chosenMap === 'random') {
         this.enemiesService.initialEnemies();
         this.investigation();
         this.startTile();
+        this.createObjects();
       });
     this.configurationsService.changePage('game');
   }
@@ -113,6 +114,13 @@ if (chosenMap === 'random') {
     );
 
     this.mapService.clearableTile(randomTile, randomTile2, true);
-
   }
+
+createObjects() {
+  for (let i = 0; i < this.map().length; i++) {
+    for (let j = 0; j < this.map()[i].length; j++) {
+      this.mapService.objects(i, j, this.configurationsService.objetsPerRoom);
+    }
+  }
+}
 }

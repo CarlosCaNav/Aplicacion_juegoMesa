@@ -39,6 +39,8 @@ export class GameComponent {
     this.phase();
     this.moveEnemy();
     this.createRandomEnemy();
+    this.eliminateInvestigation();
+    
 
     this.currentRound++;
   }
@@ -54,11 +56,9 @@ export class GameComponent {
       case this.configurationsService.phaseThree:
         this.currentPhase = 3;
         break;
-      default:
-        window.alert('error en la fase');
     }
   }
-
+/* 
   investigation() {
     let houses = [];
     let choseHouse = [];
@@ -77,6 +77,16 @@ export class GameComponent {
 
     for (let i = 0; i < choseHouse.length; i++) {
       this.mapService.investigation(choseHouse[i][0], choseHouse[i][1], true);
+    }
+  } */
+
+  eliminateInvestigation(){
+    for (let i = 0; i < this.map().length; i++) {
+      for (let j = 0; j < this.map()[i].length; j++) {
+        if (this.map()[i][j].investigation && this.map()[i][j].visible) {
+          this.mapService.investigation(i, j, false);
+        }
+      }
     }
   }
 
@@ -231,4 +241,6 @@ export class GameComponent {
       }
     }
   }
+  search(idR : number, idC : number) {
+    this.mapService.search(idR, idC); }
 }

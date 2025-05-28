@@ -10,7 +10,7 @@ export class ConfigurationsService {
   menu: string = 'home'; //home, instructions, save
   initialEnemyProbabilityPerSquare: number = 10; //chance in 100 that there is an enemy per tile
   investigations: number = 8;
-  objetsPerHouse: number = 15;
+  objetsPerRoom: number = 5;
   doubleBreaakthoughProbability: number = 8; //sobre 100
   phaseOne: number = 2;
   phaseTwo: number = 6;

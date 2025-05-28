@@ -104,3 +104,9 @@
     border: 3px solid red;
     background-color: aqua;
   }
+
+  .search{
+    border: none;
+    background-color: antiquewhite;
+    border-radius: 1vh;
+  }

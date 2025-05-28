@@ -3,6 +3,7 @@ export interface ITiles {
   idC: number;
   house: boolean;
   houseName?: number;
+  objects?: number;
   enemyRoute: number;
 /*   enemies: string[]; */
   enemyLow: number;
