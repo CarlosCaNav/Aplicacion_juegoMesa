@@ -32,8 +32,8 @@ export class GameComponent {
   rows = this.mapService.rows - 1;
   columns = this.mapService.columns - 1;
 
-  currentRound: number = 0;
-  currentPhase: number = 0;
+
+  
 
   round() {
     this.phase();
@@ -42,19 +42,19 @@ export class GameComponent {
     this.eliminateInvestigation();
     
 
-    this.currentRound++;
+    this.configurationsService.increaseCurrentRound();
   }
 
   phase() {
-    switch (this.currentRound) {
+    switch (this.configurationsService.currentRound) {
       case this.configurationsService.phaseOne:
-        this.currentPhase = 1;
+        this.configurationsService.currentPhase = 1;
         break;
       case this.configurationsService.phaseTwo:
-        this.currentPhase = 2;
+        this.configurationsService.currentPhase = 2;
         break;
       case this.configurationsService.phaseThree:
-        this.currentPhase = 3;
+        this.configurationsService.currentPhase = 3;
         break;
     }
   }

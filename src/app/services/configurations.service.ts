@@ -17,15 +17,18 @@ export class ConfigurationsService {
   phaseThree: number = 8;
 
   clearRoad: boolean = false; // if investigartos start in a house, enemies have no route.
-
- 
+  currentPhase: number = 0;
+  currentRound: number = 0;
 
   changePage(page: string) {
     this.page = page;
-    }
+  }
 
   returnPage() {
     return this.page;
   }
-}
 
+  increaseCurrentRound() {
+    this.currentRound++;
+  }
+}

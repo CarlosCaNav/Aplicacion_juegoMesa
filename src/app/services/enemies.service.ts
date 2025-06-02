@@ -51,7 +51,7 @@ export class EnemiesService {
     }, //noctumbra? infestado común,
     {
       id: 2,
-      internalName: 'spitter',
+      internalName: 'enemySplitter',
       name: 'spitter',
       advance: 1,
       phase: 2,
@@ -72,7 +72,7 @@ export class EnemiesService {
       internalName: 'bossEnemy',
       name: 'Primigenio',
       advance: 1,
-      phase: 2,
+      phase: 3,
       probability: 4,
       health: 30,
     },
@@ -237,10 +237,36 @@ export class EnemiesService {
 
     let randomEntry = Math.floor(Math.random() * this.entryOfEnemies.length);
 
+
+
+    let totalProbability = 0;
+    let phaseEnemies = [];
+    for (let i = 0; i < this.enemies.length; i++) {
+      if (this.enemies[i].phase <= this.configurationsService.currentPhase) {
+        phaseEnemies.push(this.enemies[i]);
+        totalProbability += this.enemies[i].probability;
+      }
+    }
+
+    let randomEnemyProbability = Math.floor(Math.random() * totalProbability);
+    let chosenEnemy = null;
+    let cumulativeProbability = 0;
+    for (let i = 0; i < phaseEnemies.length; i++) {
+      cumulativeProbability += phaseEnemies[i].probability;
+      if (randomEnemyProbability < cumulativeProbability) {
+        chosenEnemy = phaseEnemies[i];
+        break;
+      }
+    }
+    if (chosenEnemy === null) {
+      chosenEnemy = phaseEnemies[0];
+    }
+
+
     let idR = this.entryOfEnemies[randomEntry][0];
     let idC = this.entryOfEnemies[randomEntry][1];
 
-    this.mapService.createEnemy(idR, idC, 'enemyLow'); //Esto también cambiarlo en un futuro
+    this.mapService.createEnemy(idR, idC, chosenEnemy.internalName); //Esto también cambiarlo en un futuro
   }
 
   createRoutes() {
