@@ -14,7 +14,8 @@ export class ConfigurationsService {
   doubleBreaakthoughProbability: number = 8; //sobre 100
   phaseOne: number = 2;
   phaseTwo: number = 6;
-  phaseThree: number = 8;
+  phaseThree: number = 10;
+  phasefour: number = 25;
 
   clearRoad: boolean = false; // if investigartos start in a house, enemies have no route.
   currentPhase: number = 0;

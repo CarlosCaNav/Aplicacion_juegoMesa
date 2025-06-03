@@ -63,7 +63,7 @@ export class EnemiesService {
       internalName: 'enemyHigh',
       name: 'acorazado',
       advance: 1,
-      phase: 2,
+      phase: 3,
       probability: 4,
       health: 5,
     }, //megalon(no, existe), plomizo, acorazado terrestre
@@ -72,7 +72,7 @@ export class EnemiesService {
       internalName: 'bossEnemy',
       name: 'Primigenio',
       advance: 1,
-      phase: 3,
+      phase: 4,
       probability: 4,
       health: 30,
     },
@@ -137,7 +137,7 @@ export class EnemiesService {
             }
           }
           if (this.map()[i][j].enemyHigh > 0) {
-            for (let k = 0; k < this.map()[i][j].enemyRoute; k++) {
+            for (let k = 0; k < this.map()[i][j].enemyHigh; k++) {
               enemyHigh.push(
                 this.followThePath(i, j, this.map()[i][j].enemyRoute - 1)
               );
@@ -266,7 +266,12 @@ export class EnemiesService {
     let idR = this.entryOfEnemies[randomEntry][0];
     let idC = this.entryOfEnemies[randomEntry][1];
 
-    this.mapService.createEnemy(idR, idC, chosenEnemy.internalName); //Esto también cambiarlo en un futuro
+    this.mapService.createEnemy(idR, idC, chosenEnemy.internalName); 
+
+    console.log(chosenEnemy.internalName);
+    console.log("fase actual", this.configurationsService.currentPhase);
+    
+    
   }
 
   createRoutes() {
