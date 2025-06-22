@@ -1,6 +1,7 @@
 import { Component, Injectable, inject } from '@angular/core';
 import { ITiles } from '../interfaces/tiles';
 import { ConfigurationsService } from './configurations.service';
+import { ObjectsService } from './objects.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,9 @@ export class MapService {
   }
   private configurationsService: ConfigurationsService = inject(
     ConfigurationsService
+  );
+  private objectService: ObjectsService = inject(
+    ObjectsService
   );
 
   rows: number = 8;
@@ -112,8 +116,9 @@ export class MapService {
     ) + 1;
     if (this.tiles[idR][idC].objects! >= ramdonNumber) {
       this.tiles[idR][idC].objects = this.tiles[idR][idC].objects! - 1;
-     
+     alert("Has encontrado un/a: " + this.objectService.randomObject())
     }
+    else {alert("No has encontrado nada en la habitación")}
     console.log("número aleatorio", ramdonNumber);
     console.log("objetos", this.tiles[idR][idC].objects);
   }
