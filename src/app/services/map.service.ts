@@ -21,6 +21,14 @@ export class MapService {
   columns: number = 8;
   tiles: ITiles[][] = [];
 
+  foundObject(): string {
+    return this.configurationsService.foundObject; }
+
+    changeFoundObject(object: string) {
+    this.configurationsService.changeFoundObject(object);
+  }
+
+
   createMap() {
     for (let i = 0; i < this.rows; i++) {
       this.tiles[i] = [];
@@ -111,14 +119,19 @@ export class MapService {
   }
 
   search(idR: number, idC: number) {
+    this.changeFoundObject( this.objectService.randomObject());
+    
     let ramdonNumber: number = Math.floor(
       Math.random() * this.configurationsService.objetsPerRoom
     ) + 1;
     if (this.tiles[idR][idC].objects! >= ramdonNumber) {
       this.tiles[idR][idC].objects = this.tiles[idR][idC].objects! - 1;
-     alert("Has encontrado un/a: " + this.objectService.randomObject())
+    /*  alert("Has encontrado: " + this.foundObject) */
     }
-    else {alert("No has encontrado nada en la habitación")}
+    else {/* alert("No has encontrado nada en la habitación") */
+
+    this.changeFoundObject( "nothing");
+    }
     console.log("número aleatorio", ramdonNumber);
     console.log("objetos", this.tiles[idR][idC].objects);
   }

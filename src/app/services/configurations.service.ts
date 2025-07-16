@@ -10,7 +10,7 @@ export class ConfigurationsService {
   menu: string = 'home'; //home, instructions, save
   initialEnemyProbabilityPerSquare: number = 10; //chance in 100 that there is an enemy per tile
   investigations: number = 8;
-  objetsPerRoom: number = 5;
+  objetsPerRoom: number = 4;
   doubleBreaakthoughProbability: number = 8; //sobre 100
   phaseOne: number = 2;
   phaseTwo: number = 6;
@@ -20,6 +20,8 @@ export class ConfigurationsService {
   clearRoad: boolean = false; // if investigartos start in a house, enemies have no route.
   currentPhase: number = 0;
   currentRound: number = 0;
+  foundObject: string = '';
+
 
   changePage(page: string) {
     this.page = page;
@@ -28,6 +30,17 @@ export class ConfigurationsService {
   returnPage() {
     return this.page;
   }
+  returnFoundObject() {
+    return this.foundObject;
+  }
+  changeMenu(menu: string) {
+    this.menu = menu;
+  }
+
+  changeFoundObject(object: string) {
+    this.foundObject = object;
+  }
+
 
   increaseCurrentRound() {
     this.currentRound++;

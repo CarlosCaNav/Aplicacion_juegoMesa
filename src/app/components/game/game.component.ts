@@ -23,9 +23,11 @@ export class GameComponent {
     ConfigurationsService
   );
 
-
   map(): ITiles[][] {
     return this.mapService.getTiles();
+  }
+  foundObject(): string {
+    return this.configurationsService.foundObject;
   }
 
   /*  map = this.mapService.getTiles(); */

@@ -16,10 +16,10 @@
       <!--   @if(tiles.visible){ -->
       <div class="enemies">
         <div>
-          @if(tiles.enemyLow > 0){ {{ tiles.enemyLow }} Reptante<br />}
-          @if(tiles.enemyMedium > 0){ {{ tiles.enemyMedium }} Noctumbra<br />}
-          @if(tiles.enemySplitter > 0){ {{ tiles.enemySplitter }} Escupidor<br />}
-          @if(tiles.enemyHigh > 0){ {{ tiles.enemyHigh }} Acorazado<br />}
+          @if(tiles.enemyLow > 0 && tiles.visible){ {{ tiles.enemyLow }} Reptante<br />}
+          @if(tiles.enemyMedium > 0 && tiles.visible){ {{ tiles.enemyMedium }} Noctumbra<br />}
+          @if(tiles.enemySplitter > 0 && tiles.visible){ {{ tiles.enemySplitter }} Escupidor<br />}
+          @if(tiles.enemyHigh > 0 && tiles.visible){ {{ tiles.enemyHigh }} Acorazado<br />}
           @if(tiles.investigation && tiles.visible){ <span style="color: green;">¡¡Pista!!</span><br>}
           @if(tiles.house && tiles.visible){
           <button class="search" (click)="search(tiles.idR, tiles.idC)" [ngStyle]="{'box-shadow': '0vh 0vh ' + (tiles.objects! * 0.2) + 'vh 0vh red'}">Buscar</button>}

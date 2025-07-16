@@ -1,7 +1,4 @@
-
-@if (page() == 'editor') {
-<app-editor class="aplication"></app-editor> }
-@if (page() == 'game') {
-<app-game class="aplication"></app-game>}
-@if (page() == 'menu') {
-<app-menus class="aplication"></app-menus>}
+@if (foundObject() != '') {<app-found-object class="emergent" (click)="closeEmergent()"/>}
+ @if (page() == 'editor') { <app-editor class="aplication"></app-editor> } 
+ @if(page() == 'game') { <app-game class="aplication"></app-game>} 
+@if (page() =='menu') { <app-menus class="aplication"></app-menus>}

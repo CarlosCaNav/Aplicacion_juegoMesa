@@ -9,7 +9,7 @@ export class ObjectsService {
 
 
   //No es necesario que la suma de las probabilidades de 100, pero sí es más fácil de visualizarlo así
-  armasMunicion: { object: string; probability: number }[] = [
+  objects: { object: string; probability: number }[] = [
     { object: 'Palanca', probability: 10 },
     { object: 'Hacha', probability: 8 }, //23%
     { object: 'Espada', probability: 5 },
@@ -27,24 +27,27 @@ export class ObjectsService {
     { object: 'Molotov', probability: 2 },
   ];
 
+
+
   randomObject() {
     let totalProbability = 0;
-    for (let i = 0; i < this.armasMunicion.length; i++) {
-      totalProbability += this.armasMunicion[i].probability;
+    for (let i = 0; i < this.objects.length; i++) {
+      totalProbability += this.objects[i].probability;
     }
 
     let randomProbability = Math.floor(Math.random() * totalProbability);
     let chosenObject = null;
     let cumulativeProbability = 0;
-    for (let i = 0; i < this.armasMunicion.length; i++) {
-      cumulativeProbability += this.armasMunicion[i].probability;
+    for (let i = 0; i < this.objects.length; i++) {
+      cumulativeProbability += this.objects[i].probability;
       if (randomProbability < cumulativeProbability) {
-        chosenObject = this.armasMunicion[i];
+        chosenObject = this.objects[i];
         break;
       }
     }
     if (chosenObject === null) {
-      chosenObject = this.armasMunicion[0];
+      alert("Aquí algo falla! Número aleatorio es" + randomProbability )
+      chosenObject = this.objects[0];
     }
     return chosenObject.object;
   }
